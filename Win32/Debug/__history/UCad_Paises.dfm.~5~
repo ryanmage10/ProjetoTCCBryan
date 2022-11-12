@@ -1,0 +1,130 @@
+inherited Cad_Paises: TCad_Paises
+  Caption = 'Cadastro Paises'
+  ClientHeight = 161
+  ClientWidth = 452
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  ExplicitWidth = 468
+  ExplicitHeight = 200
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited dxLayoutControl1: TdxLayoutControl
+    Width = 452
+    Height = 161
+    ExplicitWidth = 429
+    ExplicitHeight = 197
+    inherited btn_Salvar: TcxButton
+      Left = 286
+      Top = 119
+      TabOrder = 4
+      OnClick = btn_SalvarClick
+      ExplicitLeft = 286
+      ExplicitTop = 119
+    end
+    inherited btn_Cancelar: TcxButton
+      Left = 367
+      Top = 119
+      TabOrder = 5
+      ExplicitLeft = 367
+      ExplicitTop = 119
+    end
+    inherited Lbl_Alt: TcxLabel
+      Top = 138
+      ExplicitTop = 138
+    end
+    inherited lbl_Cad: TcxLabel
+      Top = 119
+      ExplicitTop = 119
+    end
+    inherited lbl_DataCad: TcxLabel
+      Top = 119
+      ExplicitTop = 119
+    end
+    inherited lbl_DataAlt: TcxLabel
+      Top = 138
+      ExplicitTop = 138
+    end
+    object edt_pais: TcxTextEdit [7]
+      Left = 10
+      Top = 75
+      Style.HotTrack = False
+      Style.TransparentBorder = False
+      TabOrder = 1
+      Width = 294
+    end
+    object edt_sigla: TcxTextEdit [8]
+      Left = 310
+      Top = 75
+      Style.HotTrack = False
+      Style.TransparentBorder = False
+      TabOrder = 2
+      Width = 63
+    end
+    object edt_DDI: TcxTextEdit [9]
+      Left = 379
+      Top = 75
+      Style.HotTrack = False
+      Style.TransparentBorder = False
+      TabOrder = 3
+      Width = 63
+    end
+    inherited dxLayoutGroup2: TdxLayoutGroup
+      ItemIndex = 1
+      Index = 2
+    end
+    object dxLayoutGroup6: TdxLayoutGroup
+      Parent = dxLayoutControl1Group_Root
+      AlignHorz = ahClient
+      AlignVert = avClient
+      CaptionOptions.Text = 'New Group'
+      LayoutDirection = ldHorizontal
+      ShowBorder = False
+      Index = 1
+    end
+    object dxLayoutItem9: TdxLayoutItem
+      Parent = dxLayoutGroup6
+      AlignHorz = ahClient
+      LayoutLookAndFeel = LayoutObrigatorio
+      CaptionOptions.Text = 'Pa'#237's*'
+      CaptionOptions.Layout = clTop
+      Control = edt_pais
+      ControlOptions.OriginalHeight = 21
+      ControlOptions.OriginalWidth = 121
+      ControlOptions.ShowBorder = False
+      Index = 0
+    end
+    object dxLayoutItem10: TdxLayoutItem
+      Parent = dxLayoutGroup6
+      AlignHorz = ahRight
+      LayoutLookAndFeel = LayoutObrigatorio
+      CaptionOptions.Text = 'Sigla*'
+      CaptionOptions.Layout = clTop
+      Control = edt_sigla
+      ControlOptions.OriginalHeight = 21
+      ControlOptions.OriginalWidth = 63
+      ControlOptions.ShowBorder = False
+      Index = 1
+    end
+    object dxLayoutItem11: TdxLayoutItem
+      Parent = dxLayoutGroup6
+      AlignHorz = ahRight
+      LayoutLookAndFeel = LayoutObrigatorio
+      CaptionOptions.Text = 'DDI*'
+      CaptionOptions.Layout = clTop
+      Control = edt_DDI
+      ControlOptions.OriginalHeight = 21
+      ControlOptions.OriginalWidth = 63
+      ControlOptions.ShowBorder = False
+      Index = 2
+    end
+  end
+  inherited dxLayoutLookAndFeelList1: TdxLayoutLookAndFeelList
+    inherited LayoutObrigatorio: TdxLayoutCxLookAndFeel
+      PixelsPerInch = 96
+    end
+    inherited LayoutPadrao: TdxLayoutStandardLookAndFeel
+      PixelsPerInch = 96
+    end
+  end
+end

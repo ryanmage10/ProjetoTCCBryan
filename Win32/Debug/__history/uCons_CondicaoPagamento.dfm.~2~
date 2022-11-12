@@ -1,0 +1,28 @@
+inherited Cons_CondicaoPagamento: TCons_CondicaoPagamento
+  Caption = 'Consulta de Condi'#231#245'es de Pagamento'
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  PixelsPerInch = 96
+  TextHeight = 13
+  object ds_CondicaoPagamento: TDataSource
+    DataSet = dset_CondicaoPagamento
+    Left = 288
+    Top = 168
+  end
+  object dset_CondicaoPagamento: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 360
+    Top = 168
+    object dset_CondicaoPagamentoID: TIntegerField
+      FieldName = 'ID'
+    end
+    object dset_CondicaoPagamentoDESCRICAO: TStringField
+      FieldName = 'DESCRICAO'
+      Size = 50
+    end
+    object dset_CondicaoPagamentoDATA_INSERT: TDateField
+      FieldName = 'DATA_INSERT'
+    end
+  end
+end

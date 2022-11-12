@@ -1,0 +1,30 @@
+inherited Cons_Empresas: TCons_Empresas
+  Caption = 'Consulta de Empresas'
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  PixelsPerInch = 96
+  TextHeight = 13
+  object dset_Empresas: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 320
+    Top = 272
+    object dset_Empresasid: TIntegerField
+      FieldName = 'id'
+    end
+    object dset_EmpresasEmpresa: TStringField
+      FieldName = 'Empresa'
+    end
+    object dset_Empresascpfcnpj: TStringField
+      FieldName = 'cpfcnpj'
+    end
+    object dset_Empresasdata_insert: TDateField
+      FieldName = 'data_insert'
+    end
+  end
+  object ds_Empresas: TDataSource
+    DataSet = dset_Empresas
+    Left = 432
+    Top = 272
+  end
+end

@@ -1,0 +1,210 @@
+object Cons_Base1: TCons_Base1
+  Left = 0
+  Top = 0
+  Caption = 'Cons_Base'
+  ClientHeight = 372
+  ClientWidth = 543
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object dxLayoutControl1: TdxLayoutControl
+    Left = 0
+    Top = 0
+    Width = 543
+    Height = 372
+    Align = alClient
+    TabOrder = 0
+    object Edt_Pesquisa: TcxTextEdit
+      Left = 10
+      Top = 28
+      Style.BorderColor = clWindowFrame
+      Style.BorderStyle = ebs3D
+      Style.HotTrack = False
+      Style.TransparentBorder = False
+      TabOrder = 0
+      Width = 442
+    end
+    object btn_Pesquisar: TcxButton
+      Left = 458
+      Top = 24
+      Width = 75
+      Height = 25
+      Caption = 'Pesquisar'
+      TabOrder = 1
+    end
+    object btn_Novo: TcxButton
+      Left = 215
+      Top = 337
+      Width = 75
+      Height = 25
+      Caption = 'Novo'
+      TabOrder = 4
+    end
+    object btn_Alterar: TcxButton
+      Left = 296
+      Top = 337
+      Width = 75
+      Height = 25
+      Caption = 'Alterar'
+      TabOrder = 5
+    end
+    object btn_Excluir: TcxButton
+      Left = 377
+      Top = 337
+      Width = 75
+      Height = 25
+      Caption = 'Excluir'
+      TabOrder = 6
+    end
+    object btn_Sair: TcxButton
+      Left = 458
+      Top = 337
+      Width = 75
+      Height = 25
+      Caption = 'Sair'
+      TabOrder = 7
+    end
+    object btn_Selecionar: TcxButton
+      Left = 134
+      Top = 337
+      Width = 75
+      Height = 25
+      Caption = 'Selecionar'
+      TabOrder = 3
+    end
+    object GridPesquisa: TcxGrid
+      Left = 10
+      Top = 55
+      Width = 523
+      Height = 276
+      TabOrder = 2
+      object GridPesquisaDBTableView1: TcxGridDBTableView
+        Navigator.Buttons.CustomButtons = <>
+        ScrollbarAnnotations.CustomAnnotations = <>
+        DataController.Summary.DefaultGroupSummaryItems = <>
+        DataController.Summary.FooterSummaryItems = <>
+        DataController.Summary.SummaryGroups = <>
+        OptionsView.GroupByBox = False
+      end
+      object GridPesquisaLevel1: TcxGridLevel
+        GridView = GridPesquisaDBTableView1
+      end
+    end
+    object dxLayoutControl1Group_Root: TdxLayoutGroup
+      AlignHorz = ahClient
+      AlignVert = avClient
+      Hidden = True
+      ItemIndex = 1
+      ShowBorder = False
+      Index = -1
+    end
+    object dxLayoutGroup1: TdxLayoutGroup
+      Parent = dxLayoutControl1Group_Root
+      AlignHorz = ahClient
+      AlignVert = avTop
+      CaptionOptions.Text = 'New Group'
+      LayoutDirection = ldHorizontal
+      ShowBorder = False
+      Index = 0
+    end
+    object dxLayoutGroup2: TdxLayoutGroup
+      Parent = dxLayoutControl1Group_Root
+      AlignHorz = ahClient
+      AlignVert = avBottom
+      CaptionOptions.Text = 'New Group'
+      LayoutDirection = ldHorizontal
+      ShowBorder = False
+      Index = 2
+    end
+    object dxLayoutItem2: TdxLayoutItem
+      Parent = dxLayoutGroup1
+      AlignHorz = ahClient
+      CaptionOptions.Text = 'Informe o Param'#234'tro para Consulta:'
+      CaptionOptions.Layout = clTop
+      Control = Edt_Pesquisa
+      ControlOptions.OriginalHeight = 21
+      ControlOptions.OriginalWidth = 121
+      ControlOptions.ShowBorder = False
+      Index = 0
+    end
+    object dxLayoutItem3: TdxLayoutItem
+      Parent = dxLayoutGroup1
+      AlignVert = avBottom
+      CaptionOptions.Text = 'cxButton1'
+      CaptionOptions.Visible = False
+      Control = btn_Pesquisar
+      ControlOptions.OriginalHeight = 25
+      ControlOptions.OriginalWidth = 75
+      ControlOptions.ShowBorder = False
+      Index = 1
+    end
+    object dxLayoutItem4: TdxLayoutItem
+      Parent = dxLayoutGroup2
+      AlignHorz = ahRight
+      CaptionOptions.Text = 'cxButton2'
+      CaptionOptions.Visible = False
+      Control = btn_Novo
+      ControlOptions.OriginalHeight = 25
+      ControlOptions.OriginalWidth = 75
+      ControlOptions.ShowBorder = False
+      Index = 1
+    end
+    object dxLayoutItem5: TdxLayoutItem
+      Parent = dxLayoutGroup2
+      AlignHorz = ahRight
+      CaptionOptions.Visible = False
+      Control = btn_Alterar
+      ControlOptions.OriginalHeight = 25
+      ControlOptions.OriginalWidth = 75
+      ControlOptions.ShowBorder = False
+      Index = 2
+    end
+    object dxLayoutItem6: TdxLayoutItem
+      Parent = dxLayoutGroup2
+      AlignHorz = ahRight
+      CaptionOptions.Visible = False
+      Control = btn_Excluir
+      ControlOptions.OriginalHeight = 25
+      ControlOptions.OriginalWidth = 75
+      ControlOptions.ShowBorder = False
+      Index = 3
+    end
+    object dxLayoutItem7: TdxLayoutItem
+      Parent = dxLayoutGroup2
+      AlignHorz = ahRight
+      CaptionOptions.Visible = False
+      Control = btn_Sair
+      ControlOptions.OriginalHeight = 25
+      ControlOptions.OriginalWidth = 75
+      ControlOptions.ShowBorder = False
+      Index = 4
+    end
+    object dxLayoutItem8: TdxLayoutItem
+      Parent = dxLayoutGroup2
+      AlignHorz = ahRight
+      CaptionOptions.Visible = False
+      Control = btn_Selecionar
+      ControlOptions.OriginalHeight = 25
+      ControlOptions.OriginalWidth = 75
+      ControlOptions.ShowBorder = False
+      Index = 0
+    end
+    object dxLayoutItem1: TdxLayoutItem
+      Parent = dxLayoutControl1Group_Root
+      AlignHorz = ahClient
+      AlignVert = avClient
+      CaptionOptions.Layout = clTop
+      Control = GridPesquisa
+      ControlOptions.OriginalHeight = 200
+      ControlOptions.OriginalWidth = 250
+      ControlOptions.ShowBorder = False
+      Index = 1
+    end
+  end
+end

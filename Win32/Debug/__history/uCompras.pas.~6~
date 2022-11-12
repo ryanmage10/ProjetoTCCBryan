@@ -1,0 +1,103 @@
+unit uCompras;
+
+interface
+
+uses
+  uBase, uUnidades, System.Generics.Collections, System.SysUtils, uFornecedores,
+  uProdutos, uCondicaoPagamento;
+
+type
+  TCompras = class(TBase)
+  protected
+      FModelo: string;
+      FSerie: string;
+      FNumero: string;
+      FFornecedor : TFornecedores;
+      FDataEmissao: TDateTime;
+      FDataChegada: TDateTime;
+      FListaProdutos: TObjectList<TProdutos>;
+      FCondicaoPagamento: TCondicaoPagamento;
+      FFrete: Currency;
+      FPedagio: Currency;
+      FDespesas: Currency;
+      FTotal: Currency;
+
+      function GetModelo: string;
+      function GetSerie: string;
+      function GetNumero: string;
+      function GetFornecedor : TFornecedores;
+      function GetDataEmissao: TDateTime;
+      function GetDataChegada: TDateTime;
+      function GetListaProdutos: TObjectList<TProdutos>;
+      function GetCondicaoPagamento: TCondicaoPagamento;
+      function GetFrete: Currency;
+      function GetPedagio: Currency;
+      function GetDespesas: Currency;
+      function GetTotal: Currency;
+
+      procedure SetModelo(Value: string);
+      procedure SetSerie(Value: string);
+      procedure SetNumero(Value: string);
+      procedure SetFornecedor(Value: TFornecedores);
+      procedure SetDataEmissao(Value: TDateTime);
+      procedure SetDataChegada(Value: TDateTime);
+      procedure SetListaProdutos(Value: TObjectList<TProdutos>);
+      procedure SetCondicaoPagamento(Value: TCondicaoPagamento);
+      procedure SetFrete(Value: Currency);
+      procedure SetPedagio(Value: Currency);
+      procedure SetDespesas(Value: Currency);
+
+  public
+
+
+
+    constructor Create;
+    Destructor Free;
+    function clone: TCompras;
+    procedure CopiarDados(Value: TCompras);
+
+    procedure LimparDados;
+  end;
+
+implementation
+
+{ TCompras }
+
+function TCompras.clone: TCompras;
+begin
+  result := TCompras.Create;
+  result.CopiarDados(Self);
+end;
+
+procedure TCompras.CopiarDados(Value: TCompras);
+begin
+  inherited CopiarDados(Value);
+//  FDescricao := Value.Descricao;
+//  FCodigo := Value.Codigo;
+//  FUnidade.CopiarDados(Value.Unidade);
+//  FNCM := Value.NCM;
+end;
+
+constructor TCompras.Create;
+begin
+  Inherited;
+
+end;
+
+destructor TCompras.Free;
+begin
+
+  inherited;
+end;
+
+procedure TCompras.LimparDados;
+begin
+  inherited LimparDados;
+//  FDescricao := '';
+//  FCodigo := '';
+//  FUnidade.LimparDados;
+//  FNCM := '';
+end;
+
+
+end.

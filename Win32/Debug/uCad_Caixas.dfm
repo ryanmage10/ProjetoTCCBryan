@@ -1,0 +1,158 @@
+inherited Cad_Caixas: TCad_Caixas
+  Caption = 'Cadastro de Caixas'
+  ClientHeight = 190
+  OnCreate = FormCreate
+  OnShow = FormShow
+  ExplicitHeight = 229
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited dxLayoutControl1: TdxLayoutControl
+    Height = 190
+    ExplicitHeight = 190
+    inherited btn_Salvar: TcxButton
+      Top = 148
+      TabOrder = 5
+      OnClick = btn_SalvarClick
+      ExplicitTop = 148
+    end
+    inherited btn_Cancelar: TcxButton
+      Top = 148
+      TabOrder = 6
+      ExplicitTop = 148
+    end
+    inherited Lbl_Alt: TcxLabel
+      Top = 167
+      ExplicitTop = 167
+    end
+    inherited lbl_Cad: TcxLabel
+      Top = 148
+      ExplicitTop = 148
+    end
+    inherited lbl_DataCad: TcxLabel
+      Top = 148
+      ExplicitTop = 148
+    end
+    inherited lbl_DataAlt: TcxLabel
+      Top = 167
+      ExplicitTop = 167
+    end
+    object edt_Caixa: TcxTextEdit [7]
+      Left = 10
+      Top = 75
+      Properties.CharCase = ecUpperCase
+      Properties.MaxLength = 50
+      Style.HotTrack = False
+      Style.TransparentBorder = False
+      TabOrder = 1
+      Width = 346
+    end
+    object edt_Moeda: TcxTextEdit [8]
+      Left = 362
+      Top = 75
+      Properties.CharCase = ecUpperCase
+      Properties.MaxLength = 3
+      Style.HotTrack = False
+      Style.TransparentBorder = False
+      TabOrder = 2
+      Width = 75
+    end
+    object edt_Empresa: TcxTextEdit [9]
+      Left = 10
+      Top = 121
+      Properties.CharCase = ecUpperCase
+      Properties.MaxLength = 50
+      Properties.ReadOnly = True
+      Properties.UseLeftAlignmentOnEditing = False
+      Style.HotTrack = False
+      Style.TransparentBorder = False
+      TabOrder = 3
+      Width = 346
+    end
+    object btn_pesquisar: TcxButton [10]
+      Left = 362
+      Top = 117
+      Width = 75
+      Height = 25
+      Caption = 'Pesquisar'
+      TabOrder = 4
+      OnClick = btn_pesquisarClick
+    end
+    inherited dxLayoutControl1Group_Root: TdxLayoutGroup
+      ItemIndex = 2
+    end
+    inherited dxLayoutGroup2: TdxLayoutGroup
+      Index = 3
+    end
+    object dxLayoutGroup6: TdxLayoutGroup
+      Parent = dxLayoutControl1Group_Root
+      CaptionOptions.Text = 'New Group'
+      LayoutDirection = ldHorizontal
+      ShowBorder = False
+      Index = 1
+    end
+    object dxLayoutGroup7: TdxLayoutGroup
+      Parent = dxLayoutControl1Group_Root
+      CaptionOptions.Text = 'New Group'
+      ItemIndex = 1
+      LayoutDirection = ldHorizontal
+      ShowBorder = False
+      Index = 2
+    end
+    object dxLayoutItem9: TdxLayoutItem
+      Parent = dxLayoutGroup6
+      AlignHorz = ahClient
+      LayoutLookAndFeel = LayoutObrigatorio
+      CaptionOptions.Text = 'Caixa*'
+      CaptionOptions.Layout = clTop
+      Control = edt_Caixa
+      ControlOptions.OriginalHeight = 21
+      ControlOptions.OriginalWidth = 121
+      ControlOptions.ShowBorder = False
+      Index = 0
+    end
+    object dxLayoutItem10: TdxLayoutItem
+      Parent = dxLayoutGroup6
+      AlignHorz = ahRight
+      LayoutLookAndFeel = LayoutObrigatorio
+      CaptionOptions.Text = 'Moeda*'
+      CaptionOptions.Layout = clTop
+      Control = edt_Moeda
+      ControlOptions.OriginalHeight = 21
+      ControlOptions.OriginalWidth = 75
+      ControlOptions.ShowBorder = False
+      Index = 1
+    end
+    object dxLayoutItem11: TdxLayoutItem
+      Parent = dxLayoutGroup7
+      AlignHorz = ahClient
+      LayoutLookAndFeel = LayoutObrigatorio
+      CaptionOptions.Text = 'Empresa*'
+      CaptionOptions.Layout = clTop
+      Control = edt_Empresa
+      ControlOptions.OriginalHeight = 21
+      ControlOptions.OriginalWidth = 121
+      ControlOptions.ShowBorder = False
+      Index = 0
+    end
+    object dxLayoutItem12: TdxLayoutItem
+      Parent = dxLayoutGroup7
+      AlignHorz = ahRight
+      Offsets.Top = 15
+      CaptionOptions.Text = 'cxButton1'
+      CaptionOptions.Visible = False
+      Control = btn_pesquisar
+      ControlOptions.OriginalHeight = 25
+      ControlOptions.OriginalWidth = 75
+      ControlOptions.ShowBorder = False
+      Index = 1
+    end
+  end
+  inherited dxLayoutLookAndFeelList1: TdxLayoutLookAndFeelList
+    inherited LayoutObrigatorio: TdxLayoutCxLookAndFeel
+      PixelsPerInch = 96
+    end
+    inherited LayoutPadrao: TdxLayoutStandardLookAndFeel
+      PixelsPerInch = 96
+    end
+  end
+end

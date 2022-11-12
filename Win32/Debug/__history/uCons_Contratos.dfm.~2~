@@ -1,0 +1,43 @@
+inherited Cons_Contratos: TCons_Contratos
+  Caption = 'Consulta de Contratos'
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  PixelsPerInch = 96
+  TextHeight = 13
+  object dset_Contratos: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 304
+    Top = 256
+    object dset_ContratosID: TIntegerField
+      FieldName = 'ID'
+    end
+    object dset_ContratosCODIGODOC: TStringField
+      FieldName = 'CODIGODOC'
+      Size = 10
+    end
+    object dset_ContratosDESCRICAO: TStringField
+      FieldName = 'DESCRICAO'
+      Size = 30
+    end
+    object dset_ContratosMOEDA: TStringField
+      FieldName = 'MOEDA'
+      Size = 3
+    end
+    object dset_ContratosTIPO: TStringField
+      FieldName = 'TIPO'
+      Size = 15
+    end
+    object dset_ContratosVALOR: TCurrencyField
+      FieldName = 'VALOR'
+    end
+    object dset_ContratosDATA_INSERT: TDateField
+      FieldName = 'DATA_INSERT'
+    end
+  end
+  object ds_Contratos: TDataSource
+    DataSet = dset_Contratos
+    Left = 384
+    Top = 256
+  end
+end

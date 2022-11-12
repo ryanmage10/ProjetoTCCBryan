@@ -1,0 +1,118 @@
+unit uCad_Pessoa;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uCad_Base, Vcl.StdCtrls, Vcl.ExtCtrls,
+  Vcl.ComCtrls, Vcl.Mask, cxGraphics, cxControls, cxLookAndFeels,
+  cxLookAndFeelPainters, dxSkinsCore, dxSkinBasic, dxSkinBlack, dxSkinBlue,
+  dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkroom, dxSkinDarkSide,
+  dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
+  dxSkinGlassOceans, dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian,
+  dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2007Black,
+  dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
+  dxSkinOffice2010Silver, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinOffice2013White, dxSkinOffice2016Colorful, dxSkinOffice2016Dark,
+  dxSkinOffice2019Black, dxSkinOffice2019Colorful, dxSkinOffice2019DarkGray,
+  dxSkinOffice2019White, dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic,
+  dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringtime, dxSkinStardust,
+  dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinTheBezier,
+  dxSkinsDefaultPainters, dxSkinValentine, dxSkinVisualStudio2013Blue,
+  dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxSkinVS2010,
+  dxSkinWhiteprint, dxSkinXmas2008Blue, cxContainer, cxEdit, Vcl.Menus,
+  dxLayoutcxEditAdapters, dxLayoutControlAdapters, cxClasses,
+  dxLayoutLookAndFeels, dxLayoutContainer, cxLabel, cxButtons, cxTextEdit,
+  dxLayoutControl, dxCore, cxDateUtils, cxGroupBox, cxRadioGroup,
+  cxDropDownEdit, cxCalendar, cxMaskEdit;
+
+type
+  TCad_Pessoa = class(TCad_Base)
+    dxLayoutGroup6: TdxLayoutGroup;
+    dxLayoutGroup7: TdxLayoutGroup;
+    dxLayoutGroup8: TdxLayoutGroup;
+    dxLayoutGroup9: TdxLayoutGroup;
+    dxLayoutGroup10: TdxLayoutGroup;
+    dxLayoutGroup11: TdxLayoutGroup;
+    dxLayoutGroup12: TdxLayoutGroup;
+    cxTextEdit1: TcxTextEdit;
+    dxLayoutItem9: TdxLayoutItem;
+    cxTextEdit2: TcxTextEdit;
+    dxLayoutItem10: TdxLayoutItem;
+    cxTextEdit3: TcxTextEdit;
+    dxLayoutItem11: TdxLayoutItem;
+    cxMaskEdit1: TcxMaskEdit;
+    dxLayoutItem12: TdxLayoutItem;
+    cxMaskEdit2: TcxMaskEdit;
+    dxLayoutItem13: TdxLayoutItem;
+    cxDateEdit1: TcxDateEdit;
+    dxLayoutItem14: TdxLayoutItem;
+    cxTextEdit4: TcxTextEdit;
+    dxLayoutItem15: TdxLayoutItem;
+    cxMaskEdit3: TcxMaskEdit;
+    dxLayoutItem16: TdxLayoutItem;
+    cxRadioGroup1: TcxRadioGroup;
+    dxLayoutItem17: TdxLayoutItem;
+    cxRadioGroup2: TcxRadioGroup;
+    dxLayoutItem18: TdxLayoutItem;
+    cxTextEdit5: TcxTextEdit;
+    dxLayoutItem19: TdxLayoutItem;
+    cxTextEdit6: TcxTextEdit;
+    dxLayoutItem20: TdxLayoutItem;
+    cxTextEdit7: TcxTextEdit;
+    dxLayoutItem21: TdxLayoutItem;
+    cxTextEdit8: TcxTextEdit;
+    dxLayoutItem22: TdxLayoutItem;
+    cxButton1: TcxButton;
+    dxLayoutItem23: TdxLayoutItem;
+    cxMaskEdit4: TcxMaskEdit;
+    dxLayoutItem24: TdxLayoutItem;
+    cxMaskEdit5: TcxMaskEdit;
+    dxLayoutItem25: TdxLayoutItem;
+//    edt_Nome: TEdit;
+//    edt_Cidade: TEdit;
+//    edt_Logradouro: TEdit;
+//    edt_Bairro: TEdit;
+//    lbl_Nome: TLabel;
+//    lbl_CPFCNPJ: TLabel;
+//    Rg_TipoPessoa: TRadioGroup;
+//    edt_CPFCNPJ: TMaskEdit;
+//    rg_Sexo: TRadioGroup;
+//    edt_RGIE: TMaskEdit;
+//    lbl_RGIE: TLabel;
+//    edt_dataNasc: TDateTimePicker;
+//    lbl_DataNasc: TLabel;
+//    lbl_logradouro: TLabel;
+//    edt_numero: TEdit;
+//    lbl_numero: TLabel;
+//    lbl_Cep: TLabel;
+//    lbl_Bairro: TLabel;
+//    edt_Complemento: TEdit;
+//    lbl_Complemento: TLabel;
+//    Label1: TLabel;
+//    btn_Pesquisar: TButton;
+//    edt_UF: TEdit;
+//    lbl_UF: TLabel;
+//    lbl_Tel_Fixo: TLabel;
+//    lbl_Tel_Cel: TLabel;
+//    edt_Razao_Social: TEdit;
+//    lbl_RazaoSocial: TLabel;
+//    edt_Cep: TMaskEdit;
+//    edt_Tel_Fixo: TMaskEdit;
+//    edt_Tel_Cel: TMaskEdit;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Cad_Pessoa: TCad_Pessoa;
+
+implementation
+
+{$R *.dfm}
+
+end.

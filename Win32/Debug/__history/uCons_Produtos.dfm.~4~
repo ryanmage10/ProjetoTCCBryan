@@ -1,0 +1,53 @@
+inherited Cons_Produtos: TCons_Produtos
+  Caption = 'Consulta Produtos'
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited dxLayoutControl1: TdxLayoutControl
+    inherited btn_Pesquisar: TcxButton
+      OnClick = btn_PesquisarClick
+    end
+    inherited btn_Novo: TcxButton
+      OnClick = btn_NovoClick
+    end
+    inherited btn_Alterar: TcxButton
+      OnClick = btn_AlterarClick
+    end
+    inherited btn_Excluir: TcxButton
+      OnClick = btn_ExcluirClick
+    end
+    inherited btn_Selecionar: TcxButton
+      OnClick = btn_SelecionarClick
+    end
+  end
+  object ds_produtos: TDataSource
+    DataSet = dset_produtos
+    Left = 424
+    Top = 152
+  end
+  object dset_produtos: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 424
+    Top = 224
+    object dset_produtosid: TIntegerField
+      FieldName = 'id'
+    end
+    object dset_produtosdescricao: TStringField
+      FieldName = 'descricao'
+      Size = 50
+    end
+    object dset_produtoscodigo: TStringField
+      FieldName = 'codigo'
+      Size = 10
+    end
+    object dset_produtosunidade: TStringField
+      FieldName = 'unidade'
+      Size = 50
+    end
+    object dset_produtosdata_insert: TDateTimeField
+      FieldName = 'data_insert'
+    end
+  end
+end

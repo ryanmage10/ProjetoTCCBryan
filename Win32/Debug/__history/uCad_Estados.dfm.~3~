@@ -1,0 +1,154 @@
+inherited Cad_Estados: TCad_Estados
+  Caption = 'Cadastro de Estados'
+  ClientHeight = 196
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  ExplicitHeight = 235
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited dxLayoutControl1: TdxLayoutControl
+    Height = 196
+    inherited btn_Salvar: TcxButton
+      Top = 154
+      TabOrder = 5
+      ExplicitTop = 154
+    end
+    inherited btn_Cancelar: TcxButton
+      Top = 154
+      TabOrder = 6
+      ExplicitTop = 154
+    end
+    inherited Lbl_Alt: TcxLabel
+      Top = 173
+      ExplicitTop = 173
+    end
+    inherited lbl_Cad: TcxLabel
+      Top = 154
+      ExplicitTop = 154
+    end
+    inherited lbl_DataCad: TcxLabel
+      Top = 154
+      ExplicitTop = 154
+    end
+    inherited lbl_DataAlt: TcxLabel
+      Top = 173
+      ExplicitTop = 173
+    end
+    object cxTextEdit1: TcxTextEdit [7]
+      Left = 10
+      Top = 75
+      Style.BorderColor = clSkyBlue
+      Style.BorderStyle = ebs3D
+      Style.HotTrack = False
+      Style.TransparentBorder = False
+      TabOrder = 1
+      Width = 346
+    end
+    object cxTextEdit2: TcxTextEdit [8]
+      Left = 362
+      Top = 75
+      Style.BorderColor = clSkyBlue
+      Style.BorderStyle = ebs3D
+      Style.HotTrack = False
+      Style.TransparentBorder = False
+      TabOrder = 2
+      Width = 75
+    end
+    object cxTextEdit3: TcxTextEdit [9]
+      Left = 10
+      Top = 124
+      Style.BorderColor = clSkyBlue
+      Style.BorderStyle = ebs3D
+      Style.HotTrack = False
+      Style.TransparentBorder = False
+      TabOrder = 3
+      Width = 346
+    end
+    object cxButton1: TcxButton [10]
+      Left = 362
+      Top = 120
+      Width = 75
+      Height = 25
+      Caption = 'cxButton1'
+      TabOrder = 4
+    end
+    inherited dxLayoutControl1Group_Root: TdxLayoutGroup
+      ItemIndex = 2
+    end
+    inherited dxLayoutGroup2: TdxLayoutGroup
+      Index = 3
+    end
+    object dxLayoutGroup6: TdxLayoutGroup
+      Parent = dxLayoutControl1Group_Root
+      AlignHorz = ahClient
+      AlignVert = avClient
+      CaptionOptions.Text = 'New Group'
+      LayoutDirection = ldHorizontal
+      ShowBorder = False
+      Index = 1
+    end
+    object dxLayoutGroup7: TdxLayoutGroup
+      Parent = dxLayoutControl1Group_Root
+      AlignHorz = ahClient
+      AlignVert = avClient
+      CaptionOptions.Text = 'New Group'
+      LayoutDirection = ldHorizontal
+      ShowBorder = False
+      Index = 2
+    end
+    object dxLayoutItem9: TdxLayoutItem
+      Parent = dxLayoutGroup6
+      AlignHorz = ahClient
+      CaptionOptions.Text = 'cxTextEdit1'
+      CaptionOptions.Layout = clTop
+      Control = cxTextEdit1
+      ControlOptions.OriginalHeight = 21
+      ControlOptions.OriginalWidth = 121
+      ControlOptions.ShowBorder = False
+      Index = 0
+    end
+    object dxLayoutItem10: TdxLayoutItem
+      Parent = dxLayoutGroup6
+      AlignHorz = ahRight
+      CaptionOptions.Text = 'cxTextEdit2'
+      CaptionOptions.Layout = clTop
+      Control = cxTextEdit2
+      ControlOptions.OriginalHeight = 21
+      ControlOptions.OriginalWidth = 75
+      ControlOptions.ShowBorder = False
+      Index = 1
+    end
+    object dxLayoutItem11: TdxLayoutItem
+      Parent = dxLayoutGroup7
+      AlignHorz = ahClient
+      CaptionOptions.Text = 'cxTextEdit3'
+      CaptionOptions.Layout = clTop
+      Control = cxTextEdit3
+      ControlOptions.OriginalHeight = 21
+      ControlOptions.OriginalWidth = 121
+      ControlOptions.ShowBorder = False
+      Index = 0
+    end
+    object dxLayoutItem12: TdxLayoutItem
+      Parent = dxLayoutGroup7
+      AlignHorz = ahRight
+      Offsets.Top = 15
+      CaptionOptions.Text = 'cxButton1'
+      CaptionOptions.Visible = False
+      Control = cxButton1
+      ControlOptions.OriginalHeight = 25
+      ControlOptions.OriginalWidth = 75
+      ControlOptions.ShowBorder = False
+      Index = 1
+    end
+  end
+  inherited dxLayoutLookAndFeelList1: TdxLayoutLookAndFeelList
+    inherited LayoutObrigatorio: TdxLayoutCxLookAndFeel
+      PixelsPerInch = 96
+    end
+    inherited LayoutPadrao: TdxLayoutStandardLookAndFeel
+      PixelsPerInch = 96
+    end
+  end
+end

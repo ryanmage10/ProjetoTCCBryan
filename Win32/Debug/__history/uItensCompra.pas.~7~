@@ -1,0 +1,160 @@
+unit uItensCompra;
+
+interface
+    uses uBase, uProdutos, uUnidades;
+Type
+   TItensCompra = class(TBase)
+   protected
+        FProduto: TProdutos;
+        FUnidade: TUnidades;
+        Fqtd: Currency;
+        FPreco: Currency;
+        FTotal: Currency;
+        FDesconto: Currency;
+        FCusto: Currency;
+
+        Function getProduto: TProdutos;
+        Function getUnidade: TUnidades;
+        Function getqtd: Currency;
+        Function getPreco: Currency;
+        Function getTotal: Currency;
+        Function getDesconto: Currency;
+        Function getCusto: Currency;
+
+        procedure SetProduto(Value: TProdutos);
+        procedure SetUnidade(Value: TUnidades);
+        procedure Setqtd(Value: Currency);
+        procedure SetPreco(Value: Currency);
+        procedure SetTotal(Value: Currency);
+        procedure SetDesconto(Value: Currency);
+        procedure SetCusto(Value: Currency);
+
+   public
+    property Produto: TProdutos read getProduto write setProduto;
+    property Unidade: TUnidades read getUnidade write setUnidade;
+    property Qtd: Currency read getQtd write setQtd;
+    property Preco: Currency read getPreco write setPreco;
+    property Total: Currency read getTotal write setTotal;
+    property Desconto: Currency read getDesconto write setDesconto;
+    property Custo: Currency read getCusto write setCusto;
+
+    constructor Create;
+    Destructor Free;
+    function clone: TItensCompra;
+    procedure CopiarDados(Value: TItensCompra);
+
+    procedure LimparDados;
+  end;
+
+implementation
+
+{ TItensCompra }
+
+function TItensCompra.clone: TItensCompra;
+begin
+  result := TItensCompra.Create;
+  result.CopiarDados(Self);
+end;
+
+procedure TItensCompra.CopiarDados(Value: TItensCompra);
+begin
+  inherited CopiarDados(Value);
+  Produto.CopiarDados(Produto);
+  Unidade.CopiarDados(Unidade);
+  qtd := Value.Qtd;
+  Preco := Value.Preco;
+  Total := Value.Total;
+  Desconto := Value.Desconto;
+  Custo := Value.Custo;
+end;
+
+constructor TItensCompra.Create;
+begin
+  inherited;
+  FProduto := TProdutos.Create;
+  FUnidade := TUnidades.Create;
+end;
+
+destructor TItensCompra.Free;
+begin
+  FProduto.Free;
+  FUnidade.Free;
+  inherited;
+end;
+
+function TItensCompra.getCusto: Currency;
+begin
+
+end;
+
+function TItensCompra.getDesconto: Currency;
+begin
+
+end;
+
+function TItensCompra.getPreco: Currency;
+begin
+
+end;
+
+function TItensCompra.getProduto: TProdutos;
+begin
+
+end;
+
+function TItensCompra.getqtd: Currency;
+begin
+
+end;
+
+function TItensCompra.getTotal: Currency;
+begin
+
+end;
+
+function TItensCompra.getUnidade: TUnidades;
+begin
+
+end;
+
+procedure TItensCompra.LimparDados;
+begin
+
+end;
+
+procedure TItensCompra.SetCusto(Value: Currency);
+begin
+
+end;
+
+procedure TItensCompra.SetDesconto(Value: Currency);
+begin
+
+end;
+
+procedure TItensCompra.SetPreco(Value: Currency);
+begin
+
+end;
+
+procedure TItensCompra.SetProduto(Value: TProdutos);
+begin
+
+end;
+
+procedure TItensCompra.Setqtd(Value: Currency);
+begin
+
+end;
+
+procedure TItensCompra.SetTotal(Value: Currency);
+begin
+
+end;
+
+procedure TItensCompra.SetUnidade(Value: TUnidades);
+begin
+
+end;
+
+end.

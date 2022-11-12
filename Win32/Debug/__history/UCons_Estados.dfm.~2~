@@ -1,0 +1,47 @@
+inherited Cons_Estados: TCons_Estados
+  Caption = 'Consulta Estados'
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  PixelsPerInch = 96
+  TextHeight = 13
+  object ds_Estados: TDataSource
+    DataSet = Dset_Estados
+    Left = 400
+    Top = 96
+  end
+  object Dset_Estados: TClientDataSet
+    Aggregates = <>
+    Params = <
+      item
+        DataType = ftString
+        Name = 'NOME'
+        ParamType = ptUnknown
+      end>
+    ProviderName = 'dspEstados'
+    Left = 456
+    Top = 96
+    object Dset_EstadosID: TIntegerField
+      DisplayLabel = 'Id'
+      FieldName = 'ID'
+    end
+    object Dset_EstadosESTADO: TStringField
+      DisplayLabel = 'Estado'
+      FieldName = 'ESTADO'
+      Size = 50
+    end
+    object Dset_EstadosSIGLA: TStringField
+      DisplayLabel = 'Sigla'
+      FieldName = 'SIGLA'
+      Size = 3
+    end
+    object Dset_EstadosDATA_INSERT: TDateField
+      DisplayLabel = 'Data Inser'#231#227'o'
+      FieldName = 'DATA_INSERT'
+    end
+    object Dset_EstadosPAIS: TStringField
+      DisplayLabel = 'Pais'
+      FieldName = 'PAIS'
+      Size = 50
+    end
+  end
+end

@@ -1,0 +1,231 @@
+unit uComprasDao;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, Data.FMTBcd, Data.DB, Data.SqlExpr,
+  Datasnap.Provider, Datasnap.DBClient, uDmConexao, uCompras, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+
+type
+  TComprasDao = class(TObject)
+
+  private
+    { Private declarations }
+    constructor Create;
+    destructor free;
+    procedure FieldToObj(var oCompra: TCompras; Qry: TFDQuery);
+    procedure ObjToField(var oCompra: TCompras; Qry: TFDQuery);
+  public
+    { Public declarations }
+    procedure Pesquisar(Value: string; var dset: TClientDataSet);
+    function Recuperar(Var oCompra: TCompras): boolean;
+    function inserir(oCompra: TCompras): boolean;
+    function Alterar(oCompra: TCompras): boolean;
+    function Excluir(oCompra: TCompras): boolean;
+    function VerificarExiste(Value: TCompras): boolean;
+    function VerificarExclusao(Value: TCompras): boolean;
+
+  end;
+
+var
+  ComprasDao: TComprasDao;
+
+implementation
+
+function TComprasDao.Alterar(oCompra: TCompras): boolean;
+begin
+  result := False;
+  with DmConexao.Qry, oCompra do
+  begin
+    Sql.Clear;
+    sql.add('UPDATE COMPRAS SET MODELO = :MODELO, SERIE = :SERIE, NUMERO = :NUMERO, ID_FORNECEDOR = :ID_FORNECEDOR, ');
+    sql.add('DATA_EMISSAO = :DATA_EMISSAO, DATA_CHEGADA = :DATA_GHEGADA, ID_CONDICAO = :ID_CONDICAO, FRETE = :FRETE,');
+    sql.add('PEDAGIO = :PEDAGIO, DESPESAS = :DESPESAS, TOTAL = :TOTAL,');
+    Sql.Add('USER_INSERT = :USER_INSERT, USER_UPDATE = :USER_UPDATE, DATE_INSERT = :DATE_INSERT, DATE_UPDATE = :DATE_UPDATE');
+    Sql.Add(' WHERE ID = :ID');
+
+    paramByName('id').AsInteger := oCompra.Id;
+    ObjToField(oCompra, DmConexao.Qry);
+    ExecSql();
+    result := true;
+    close;
+  end;
+end;
+
+constructor TComprasDao.Create;
+begin
+   //
+end;
+
+function TComprasDao.Excluir(oCompra: TCompras): boolean;
+begin
+    result := False;
+    with DmConexao.Qry do
+    begin
+      Sql.Clear;
+      Sql.Add('DELETE FROM Compras WHERE ID = :ID');
+      paramByName('ID').AsInteger := oCompra.ID;
+      ExecSql();
+      result := true;
+      close;
+    end;
+end;
+
+procedure TComprasDao.FieldToObj(var oCompra: TCompras; Qry: TFDQuery);
+begin
+  with oCompra, Qry do
+  begin
+    ID := FieldByName('ID').AsInteger;
+    Modelo := FieldByName('MODELO').AsString;
+    Serie := FieldByName('SERIE').AsString;
+    Numero := FieldByName('NUMERO').AsString;
+    DataEmissao := FieldByName('DATA_EMISSAO').AsDateTime;
+    DataChegada := FieldByName('DATA_CHEGADA').AsDateTime;
+    Frete := FieldByName('FRETE').AsCurrency;
+    Pedagio := FieldByName('PEDAGIO').AsCurrency;
+    Despesas := FieldByName('DESPESAS').AsCurrency;
+    Total := FieldByName('TOTAL').AsCurrency;
+
+    DataCad := FieldByName('date_insert').AsDatetime;
+    DataUltAlt := FieldByName('date_update').AsDatetime;
+    user_insert := FieldByName('User_Insert').AsString;
+    user_update := FieldByName('User_Update').AsString;
+  end;
+end;
+
+destructor TComprasDao.free;
+begin
+  //
+end;
+
+function TComprasDao.inserir(oCompra: TCompras): boolean;
+begin
+  result := False;
+  with DmConexao.Qry, oCompra do
+  begin
+      Sql.Clear;
+      sql.add('INSERT INTO Compras (MODELO, SERIE, NUMERO, ID_FORNECEDOR, DATA_EMISSAO, DATA_CHEGADA, ID_CONDICAO, FRETE,');
+      sql.add('PEDAGIO, DESPESAS, TOTAL,');
+      sql.add('USER_INSERT,USER_UPDATE, DATE_INSERT, DATE_UPDATE)');
+      Sql.add(' VALUES (:MODELO, :SERIE, :NUMERO, :ID_FORNECEDOR, :DATA_EMISSAO, :DATA_CHEGADA, :ID_CONDICAO, :FRETE,');
+      sql.add(':PEDAGIO, :DESPESAS, :TOTAL,');
+      sql.add(':USER_INSERT, :USER_UPDATE, :DATE_INSERT, :DATE_UPDATE)');
+
+      ObjToField(oCompra, DmConexao.Qry);
+      ExecSql();
+      result := true;
+      Close;
+  end;
+end;
+
+procedure TComprasDao.ObjToField(var oCompra: TCompras; Qry: TFDQuery);
+begin
+  with oCompra, Qry do
+  begin
+    FieldByName('ID').AsInteger            := ID;
+    FieldByName('MODELO').AsString         := Modelo;
+    FieldByName('SERIE').AsString          := Serie;
+    FieldByName('NUMERO').AsString         := Numero;
+    FieldByName('DATA_EMISSAO').AsDateTime := DataEmissao;
+    FieldByName('DATA_CHEGADA').AsDateTime := DataChegada;
+    FieldByName('FRETE').AsCurrency        := Frete;
+    paramByName('PEDAGIO').AsCurrency := Pedagio;
+    paramByName('DESPESAS').AsCurrency := Despesas;
+    paramByName('TOTAL').AsCurrency := Total;
+    paramByName('date_insert').AsDatetime := DataCad;
+    paramByName('date_update').AsDatetime := DataUltAlt;
+    paramByName('User_Insert').AsString := user_insert;
+    paramByName('User_Update').AsString := user_update;
+  end;
+end;
+
+procedure TComprasDao.Pesquisar(Value: string; Var dset: TClientDataSet);
+begin
+  with DmConexao.Qry do
+  begin
+    dset.EmptyDataSet;
+    Sql.Clear;
+
+      if Value = '' then
+      begin
+        Sql.Add('SELECT C.ID, C.SERIE, C.NUMERO, CLI.CLIENTE, CC.DESCRICAO, C.DATE_INSERT FROM Compras C');
+        Sql.Add('LEFT JOIN CONDICAO_COMPRA CC ON C.ID_CONDICAO = CC.ID');
+        Sql.Add('LEFT JOIN CLIENTES CLI ON C.ID_CLIENTE = CLI.ID');
+      end
+      else
+      begin
+        sql.Add('SELECT C.ID, C.SERIE, C.NUMERO, CLI.CLIENTE, CC.DESCRICAO, C.DATE_INSERT FROM Compras C');
+        Sql.Add('LEFT JOIN CONDICAO_COMPRA CC ON C.ID_CONDICAO = CC.ID');
+        Sql.Add('LEFT JOIN CLIENTES CLI ON C.ID_CLIENTE = CLI.ID');
+        SQL.ADD('WHERE CLI.CLIENTE LIKE :NOME');
+        paramByName('NOME').AsString := '%' + Value + '%';
+      end;
+      open;
+      while not eof do
+      begin
+        dset.Append;
+        dset.FieldByName('id').AsInteger := FieldByName('id').AsInteger;
+        dset.FieldByName('SERIE').AsString := FieldByName('SERIE').AsString;
+        dset.FieldByName('NUMERO').AsString := FieldByName('NUMERO').AsString;
+        dset.FieldByName('CLIENTE').AsString := FieldByName('CLIENTE').AsString;
+        dset.FieldByName('DESCRICAO').AsString := FieldByName('DESCRICAO').AsString;
+        dset.FieldByName('DATA_INSERT').AsDateTime := FieldByName('DATE_INSERT').AsDateTime;
+        dset.Post;
+        next;
+      end;
+
+      close;
+  end;
+end;
+
+function TComprasDao.Recuperar(var oCompra: TCompras): boolean;
+begin
+    result := False;
+    with DmConexao.Qry do
+    begin
+      sql.clear;
+      Sql.Add('SELECT * FROM Compras WHERE ID = :ID');
+      paramByName('ID').AsInteger := oCompra.ID;
+      open;
+      FieldtoObj(oCompra, DmConexao.Qry);
+      result := true;
+      close;
+    end;
+end;
+
+function TComprasDao.VerificarExclusao(Value: TCompras): boolean;
+begin
+//   result := False;
+//   with DmConexao.Qry do
+//    begin
+//      sql.clear;
+//      Sql.Add('SELECT * FROM ESTADOS WHERE ID_Compra = :ID_Compra');
+//      paramByName('ID_Compra').AsInteger := Value.id;
+//      open;
+//      if not IsEmpty then
+//        result := true;
+//      close;
+//    end;
+end;
+
+function TComprasDao.VerificarExiste(Value: TCompras): boolean;
+begin
+   result := False;
+   with DmConexao.Qry do
+    begin
+      sql.clear;
+      Sql.Add('SELECT * FROM Compras C LEFT JOIN CLIENTES CLI WHERE C.NUMERO = :NUMERO AND C.SERIE = :SERIE');
+      Sql.Add('AND C.MODELO = :MODELO AND CLI.CLIENTE NOT C.ID = :ID');
+      paramByName('ID').AsInteger := Value.ID;
+      paramByName('Compra').AsString := Value.Nome;
+      open;
+      if not IsEmpty then
+        result := true;
+      close;
+    end;
+end;
+
+end.

@@ -1,0 +1,228 @@
+inherited Cad_Funcionarios: TCad_Funcionarios
+  Caption = 'Cadastro de Funcion'#225'rios'
+  ClientHeight = 455
+  ClientWidth = 541
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  ExplicitTop = -75
+  ExplicitWidth = 557
+  ExplicitHeight = 494
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited dxLayoutControl1: TdxLayoutControl
+    Width = 541
+    Height = 455
+    ExplicitWidth = 541
+    ExplicitHeight = 455
+    inherited btn_Salvar: TcxButton
+      Left = 375
+      Top = 413
+      TabOrder = 21
+      OnClick = btn_SalvarClick
+      ExplicitLeft = 375
+      ExplicitTop = 413
+    end
+    inherited btn_Cancelar: TcxButton
+      Left = 456
+      Top = 413
+      TabOrder = 22
+      ExplicitLeft = 456
+      ExplicitTop = 413
+    end
+    inherited Lbl_Alt: TcxLabel
+      Top = 432
+      ExplicitTop = 432
+    end
+    inherited lbl_Cad: TcxLabel
+      Top = 413
+      ExplicitTop = 413
+    end
+    inherited lbl_DataCad: TcxLabel
+      Top = 413
+      ExplicitTop = 413
+    end
+    inherited lbl_DataAlt: TcxLabel
+      Top = 432
+      ExplicitTop = 432
+    end
+    inherited edt_Nome: TcxTextEdit
+      ExplicitWidth = 259
+      Width = 259
+    end
+    inherited edt_Razao_Social: TcxTextEdit
+      Left = 275
+      ExplicitLeft = 275
+      ExplicitWidth = 129
+      Width = 129
+    end
+    inherited edt_Logradouro: TcxTextEdit
+      ExplicitWidth = 267
+      Width = 267
+    end
+    inherited edt_CPFCNPJ: TcxMaskEdit
+      ExplicitWidth = 267
+      Width = 267
+    end
+    inherited edt_RGIE: TcxMaskEdit
+      Left = 283
+      ExplicitLeft = 283
+    end
+    inherited edt_dataNasc: TcxDateEdit
+      Left = 410
+      ExplicitLeft = 410
+    end
+    inherited edt_numero: TcxTextEdit
+      Left = 283
+      ExplicitLeft = 283
+    end
+    inherited edt_Cep: TcxMaskEdit
+      Left = 410
+      ExplicitLeft = 410
+    end
+    inherited Rg_TipoPessoa: TcxRadioGroup
+      Left = 433
+      ExplicitLeft = 433
+    end
+    inherited rg_Sexo: TcxRadioGroup
+      Left = 410
+      ExplicitLeft = 410
+    end
+    inherited edt_Bairro: TcxTextEdit
+      ExplicitWidth = 369
+      Width = 369
+    end
+    inherited edt_Complemento: TcxTextEdit
+      Left = 385
+      ExplicitLeft = 385
+    end
+    inherited edt_Cidade: TcxTextEdit
+      ExplicitWidth = 369
+      Width = 369
+    end
+    inherited edt_UF: TcxTextEdit
+      Left = 385
+      ExplicitLeft = 385
+    end
+    inherited btn_Pesquisar: TcxButton
+      Left = 456
+      OnClick = btn_PesquisarClick
+      ExplicitLeft = 456
+    end
+    inherited edt_Tel_Fixo: TcxMaskEdit
+      Top = 376
+      TabOrder = 19
+      ExplicitTop = 376
+      ExplicitWidth = 258
+      Width = 258
+    end
+    inherited edt_Tel_Cel: TcxMaskEdit
+      Left = 274
+      Top = 376
+      TabOrder = 20
+      ExplicitLeft = 274
+      ExplicitTop = 376
+      ExplicitWidth = 257
+      Width = 257
+    end
+    object edt_empresa: TcxTextEdit [24]
+      Left = 10
+      Top = 330
+      Style.HotTrack = False
+      Style.TransparentBorder = False
+      TabOrder = 16
+      Width = 288
+    end
+    object btn_PesquisarEmpresa: TcxButton [25]
+      Left = 304
+      Top = 326
+      Width = 75
+      Height = 25
+      Caption = 'Pesquisar'
+      TabOrder = 17
+      OnClick = btn_PesquisarEmpresaClick
+    end
+    object edt_Salario: TcxCurrencyEdit [26]
+      Left = 385
+      Top = 330
+      Style.HotTrack = False
+      Style.TransparentBorder = False
+      TabOrder = 18
+      Width = 146
+    end
+    inherited dxLayoutGroup3: TdxLayoutGroup
+      ItemIndex = 1
+    end
+    inherited dxLayoutGroup4: TdxLayoutGroup
+      ItemIndex = 1
+    end
+    inherited dxLayoutGroup7: TdxLayoutGroup
+      ItemIndex = 1
+    end
+    inherited dxLayoutGroup8: TdxLayoutGroup
+      ItemIndex = 1
+    end
+    inherited dxLayoutGroup12: TdxLayoutGroup
+      Index = 6
+    end
+    inherited lbl_RazaoSocial: TdxLayoutItem
+      Visible = False
+    end
+    object dxLayoutGroup13: TdxLayoutGroup
+      Parent = dxLayoutAutoCreatedGroup1
+      AlignHorz = ahClient
+      ItemIndex = 1
+      LayoutDirection = ldHorizontal
+      ShowBorder = False
+      Index = 0
+    end
+    object dxLayoutItem9: TdxLayoutItem
+      Parent = dxLayoutGroup13
+      AlignHorz = ahClient
+      LayoutLookAndFeel = LayoutObrigatorio
+      CaptionOptions.Text = 'Empresa*'
+      CaptionOptions.Layout = clTop
+      Control = edt_empresa
+      ControlOptions.OriginalHeight = 21
+      ControlOptions.OriginalWidth = 121
+      ControlOptions.ShowBorder = False
+      Index = 0
+    end
+    object dxLayoutItem10: TdxLayoutItem
+      Parent = dxLayoutGroup13
+      AlignHorz = ahRight
+      Offsets.Top = 15
+      CaptionOptions.Text = 'cxButton1'
+      CaptionOptions.Visible = False
+      Control = btn_PesquisarEmpresa
+      ControlOptions.OriginalHeight = 25
+      ControlOptions.OriginalWidth = 75
+      ControlOptions.ShowBorder = False
+      Index = 1
+    end
+    object dxLayoutItem11: TdxLayoutItem
+      Parent = dxLayoutAutoCreatedGroup1
+      LayoutLookAndFeel = LayoutObrigatorio
+      CaptionOptions.Text = 'Sal'#225'rio*'
+      CaptionOptions.Layout = clTop
+      Control = edt_Salario
+      ControlOptions.OriginalHeight = 21
+      ControlOptions.OriginalWidth = 146
+      ControlOptions.ShowBorder = False
+      Index = 1
+    end
+    object dxLayoutAutoCreatedGroup1: TdxLayoutAutoCreatedGroup
+      Parent = dxLayoutGroup6
+      LayoutDirection = ldHorizontal
+      Index = 5
+    end
+  end
+  inherited dxLayoutLookAndFeelList1: TdxLayoutLookAndFeelList
+    inherited LayoutObrigatorio: TdxLayoutCxLookAndFeel
+      PixelsPerInch = 96
+    end
+    inherited LayoutPadrao: TdxLayoutStandardLookAndFeel
+      PixelsPerInch = 96
+    end
+  end
+end

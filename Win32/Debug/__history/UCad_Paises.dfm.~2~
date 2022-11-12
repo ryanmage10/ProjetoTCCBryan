@@ -1,0 +1,26 @@
+inherited Cad_Paises: TCad_Paises
+  Caption = 'Cadastro Paises'
+  ClientHeight = 197
+  ClientWidth = 429
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  ExplicitWidth = 445
+  ExplicitHeight = 236
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited dxLayoutControl1: TdxLayoutControl
+    Width = 429
+    Height = 197
+    ExplicitWidth = 429
+    ExplicitHeight = 197
+  end
+  inherited dxLayoutLookAndFeelList1: TdxLayoutLookAndFeelList
+    inherited LayoutObrigatorio: TdxLayoutCxLookAndFeel
+      PixelsPerInch = 96
+    end
+    inherited LayoutPadrao: TdxLayoutStandardLookAndFeel
+      PixelsPerInch = 96
+    end
+  end
+end

@@ -1,0 +1,8 @@
+unit uItensCompra;
+
+interface
+    uses uBase;
+   TItensCompra = class(TBase)
+implementation
+
+end.

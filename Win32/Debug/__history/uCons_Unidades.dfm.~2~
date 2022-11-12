@@ -1,0 +1,32 @@
+inherited Cons_Unidades: TCons_Unidades
+  Caption = 'Consulta de Unidades'
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  PixelsPerInch = 96
+  TextHeight = 13
+  object ds_Unidade: TDataSource
+    DataSet = dset_Unidade
+    Left = 328
+    Top = 200
+  end
+  object dset_Unidade: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 384
+    Top = 200
+    object dset_UnidadeID: TIntegerField
+      FieldName = 'ID'
+    end
+    object dset_UnidadeDESCRICAO: TStringField
+      FieldName = 'DESCRICAO'
+      Size = 50
+    end
+    object dset_UnidadeSIGLA: TStringField
+      FieldName = 'SIGLA'
+      Size = 3
+    end
+    object dset_UnidadeDATA_INSERT: TDateField
+      FieldName = 'DATA_INSERT'
+    end
+  end
+end
