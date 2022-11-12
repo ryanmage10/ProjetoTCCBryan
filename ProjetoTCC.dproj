@@ -102,14 +102,6 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="Win32\Debug\uBase.pas"/>
-        <DCCReference Include="Win32\Debug\uCad_Base1.pas">
-            <Form>Cad_Base1</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Win32\Debug\uCad_Cidades1.pas">
-            <Form>Cad_Cidades1</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="Win32\Debug\uCaixas.pas"/>
         <DCCReference Include="Win32\Debug\uCaixasController.pas"/>
         <DCCReference Include="Win32\Debug\uCaixasDao.pas"/>
@@ -131,36 +123,13 @@
         <DCCReference Include="Win32\Debug\uCondicaoPagamentoDao.pas"/>
         <DCCReference Include="Win32\Debug\uCondicaoPagamentoFactory.pas"/>
         <DCCReference Include="Win32\Debug\uCondicaoPagamentoService.pas"/>
-        <DCCReference Include="Win32\Debug\uCons_Base1.pas">
-            <Form>Cons_Base1</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Win32\Debug\uCons_Cidades1.pas">
-            <Form>Cons_Cidades1</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="Win32\Debug\uContratos.pas"/>
         <DCCReference Include="Win32\Debug\uContratosController.pas"/>
         <DCCReference Include="Win32\Debug\uContratosDao.pas"/>
         <DCCReference Include="Win32\Debug\uContratosFactory.pas"/>
         <DCCReference Include="Win32\Debug\uContratosService.pas"/>
-        <DCCReference Include="Win32\Debug\uDmCidades.pas">
-            <Form>DmCidades</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TDataModule</DesignClass>
-        </DCCReference>
         <DCCReference Include="Win32\Debug\uDmConexao.pas">
             <Form>dmConexao</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TDataModule</DesignClass>
-        </DCCReference>
-        <DCCReference Include="Win32\Debug\uDmEstados.pas">
-            <Form>dmEstados</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TDataModule</DesignClass>
-        </DCCReference>
-        <DCCReference Include="Win32\Debug\uDmPaises.pas">
-            <Form>DmPaises</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
@@ -213,6 +182,28 @@
         <DCCReference Include="Win32\Debug\uUnidadesDao.pas"/>
         <DCCReference Include="Win32\Debug\uUnidadesFactory.pas"/>
         <DCCReference Include="Win32\Debug\uUnidadesService.pas"/>
+        <DCCReference Include="Win32\Debug\uItensCompra.pas"/>
+        <DCCReference Include="Win32\Debug\uCad_Base.pas">
+            <Form>Cad_Base</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Win32\Debug\uCad_Cidades.pas">
+            <Form>Cad_Cidades</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Win32\Debug\uCons_Base.pas">
+            <Form>Cons_Base</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Win32\Debug\uCad_Compras.pas">
+            <Form>Cad_Compras</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Win32\Debug\uCad_Clientes.pas"/>
+        <DCCReference Include="Win32\Debug\uCad_Pessoa.pas">
+            <Form>Cad_Pessoa</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

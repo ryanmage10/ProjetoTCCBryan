@@ -3,6 +3,8 @@ program ProjetoTCC;
 uses
   Vcl.Forms,
   uBase in 'Win32\Debug\uBase.pas',
+  uCad_Base1 in 'Win32\Debug\uCad_Base1.pas' {Cad_Base1},
+  uCad_Cidades1 in 'Win32\Debug\uCad_Cidades1.pas' {Cad_Cidades1},
   uCaixas in 'Win32\Debug\uCaixas.pas',
   uCaixasController in 'Win32\Debug\uCaixasController.pas',
   uCaixasDao in 'Win32\Debug\uCaixasDao.pas',
@@ -24,12 +26,17 @@ uses
   uCondicaoPagamentoDao in 'Win32\Debug\uCondicaoPagamentoDao.pas',
   uCondicaoPagamentoFactory in 'Win32\Debug\uCondicaoPagamentoFactory.pas',
   uCondicaoPagamentoService in 'Win32\Debug\uCondicaoPagamentoService.pas',
+  uCons_Base1 in 'Win32\Debug\uCons_Base1.pas' {Cons_Base1},
+  uCons_Cidades1 in 'Win32\Debug\uCons_Cidades1.pas' {Cons_Cidades1},
   uContratos in 'Win32\Debug\uContratos.pas',
   uContratosController in 'Win32\Debug\uContratosController.pas',
   uContratosDao in 'Win32\Debug\uContratosDao.pas',
   uContratosFactory in 'Win32\Debug\uContratosFactory.pas',
   uContratosService in 'Win32\Debug\uContratosService.pas',
+  uDmCidades in 'Win32\Debug\uDmCidades.pas' {DmCidades: TDataModule},
   uDmConexao in 'Win32\Debug\uDmConexao.pas' {dmConexao: TDataModule},
+  uDmEstados in 'Win32\Debug\uDmEstados.pas' {dmEstados: TDataModule},
+  uDmPaises in 'Win32\Debug\uDmPaises.pas' {DmPaises: TDataModule},
   uEmpresas in 'Win32\Debug\uEmpresas.pas',
   uEmpresasController in 'Win32\Debug\uEmpresasController.pas',
   uEmpresasDao in 'Win32\Debug\uEmpresasDao.pas',
@@ -75,14 +82,7 @@ uses
   uUnidadesController in 'Win32\Debug\uUnidadesController.pas',
   uUnidadesDao in 'Win32\Debug\uUnidadesDao.pas',
   uUnidadesFactory in 'Win32\Debug\uUnidadesFactory.pas',
-  uUnidadesService in 'Win32\Debug\uUnidadesService.pas',
-  uItensCompra in 'Win32\Debug\uItensCompra.pas',
-  uCad_Base in 'Win32\Debug\uCad_Base.pas' {Cad_Base},
-  uCad_Cidades in 'Win32\Debug\uCad_Cidades.pas' {Cad_Cidades},
-  uCons_Base in 'Win32\Debug\uCons_Base.pas' {Cons_Base},
-  uCad_Compras in 'Win32\Debug\uCad_Compras.pas' {Cad_Compras},
-  uCad_Clientes in 'Win32\Debug\uCad_Clientes.pas',
-  uCad_Pessoa in 'Win32\Debug\uCad_Pessoa.pas' {Cad_Pessoa};
+  uUnidadesService in 'Win32\Debug\uUnidadesService.pas';
 
 {$R *.res}
 
@@ -91,10 +91,6 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TMenuPrincipal, MenuPrincipal);
   Application.CreateForm(TdmConexao, dmConexao);
-  Application.CreateForm(TCad_Base, Cad_Base);
-  Application.CreateForm(TCons_Base, Cons_Base);
-  Application.CreateForm(TCad_Compras, Cad_Compras);
-  Application.CreateForm(TCad_Pessoa, Cad_Pessoa);
   Application.Run;
 end.
 
