@@ -131,11 +131,13 @@ type
     procedure btn_PesquisarFornClick(Sender: TObject);
     procedure btn_PesquisarCondClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
     ItemCompra : TItensCompra;
     Alterar: boolean;
     NroParcela: Integer;
+    procedure popularInterface;
   public
     { Public declarations }
     Compra : TCompras;
@@ -202,6 +204,53 @@ begin
   Dset_Parcelas.Active := False;
   Dset_Parcelas.CreateDataSet;
   Dset_Parcelas.Open;
+end;
+
+procedure TCad_Compras.FormShow(Sender: TObject);
+begin
+  inherited;
+  if not inclusao then
+    popularInterface;
+end;
+
+procedure TCad_Compras.popularInterface;
+var i: Integer;
+    //Parcela : TParcelaModelo;
+begin
+  edt_id.text := inttostr(Compra.ID);
+  edt_modelo.text := Compra.Modelo;
+  edt_Serie.text := Compra.Serie;
+  edt_numero.text := Compra.Numero;
+  edt_codfornecedor.text := IntToStr(Compra.Fornecedor.ID);
+  edt_fornecedor.text := Compra.Fornecedor.nome;
+  edt_DataEmissao.EditValue := Compra.DataEmissao;
+  edt_DataChegada.EditValue := Compra.DataChegada;
+  edt_Frete.EditValue := Compra.Frete;
+  edt_Pedagio.EditValue := Compra.Pedagio;
+  edt_Despesas.EditValue := Compra.Despesas;
+
+//  for I := 0 to CondicaoPag.ParcelaModelos.Count - 1 do
+//  begin
+//     Parcela := CondicaoPag.ParcelaModelos.Items[I];
+//     with dset_parcelas do
+//     begin
+//       Append;
+//       dset_parcelasNumero.AsInteger := Parcela.Numero;
+//       dset_parcelasPercentual.AsCurrency := Parcela.Percentual;
+//       dset_parcelasDias.AsInteger := Parcela.Dias;
+//       dset_parcelasForma_Pagamento.AsString := Parcela.FormaPag.Descricao;
+//       dset_parcelasIdForma_Pagamento.AsInteger := Parcela.FormaPag.Id;
+//       post;
+//     end;
+//  end;
+
+  lbl_Cad.Visible := True;
+  lbl_DataCad.Visible := True;
+  lbl_DataCad.Caption := Compra.User_Insert + '-' + DatetoStr(Compra.DataCad);
+
+  lbl_DataAlt.Caption := Compra.User_Update + '-' + DatetoStr(Compra.DataUltAlt);
+  Lbl_Alt.Visible := True;
+  lbl_DataAlt.Visible := True;
 end;
 
 end.

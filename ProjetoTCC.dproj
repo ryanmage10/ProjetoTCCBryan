@@ -183,25 +183,116 @@
         <DCCReference Include="Win32\Debug\uUnidadesFactory.pas"/>
         <DCCReference Include="Win32\Debug\uUnidadesService.pas"/>
         <DCCReference Include="Win32\Debug\uItensCompra.pas"/>
+        <DCCReference Include="Win32\Debug\uCad_Pessoa.pas">
+            <Form>Cad_Pessoa</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <DCCReference Include="Win32\Debug\uCad_Base.pas">
             <Form>Cad_Base</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Win32\Debug\uCad_Caixas.pas">
+            <Form>Cad_Caixas</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Win32\Debug\uCad_Cidades.pas">
             <Form>Cad_Cidades</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Win32\Debug\uCons_Base.pas">
-            <Form>Cons_Base</Form>
+        <DCCReference Include="Win32\Debug\uCad_Clientes.pas">
+            <Form>Cad_Clientes</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Win32\Debug\uCad_Compras.pas">
             <Form>Cad_Compras</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Win32\Debug\uCad_Clientes.pas"/>
-        <DCCReference Include="Win32\Debug\uCad_Pessoa.pas">
-            <Form>Cad_Pessoa</Form>
+        <DCCReference Include="Win32\Debug\uCad_CondicaoPagamento.pas">
+            <Form>Cad_CondicaoPagamento</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Win32\Debug\uCad_Contratos.pas">
+            <Form>Cad_Contratos</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Win32\Debug\uCad_Empresas.pas">
+            <Form>Cad_Empresa</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Win32\Debug\uCad_Estados.pas">
+            <Form>Cad_Estados</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Win32\Debug\uCad_FormaPagamento.pas">
+            <Form>Cad_FormaPagamento</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Win32\Debug\uCad_Forncedores.pas">
+            <Form>Cad_Fornecedores</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Win32\Debug\uCons_Base.pas">
+            <Form>Cons_Base</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Win32\Debug\uCons_Caixas.pas">
+            <Form>Cons_Caixas</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Win32\Debug\uCons_Cidades.pas">
+            <Form>Cons_Cidades</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Win32\Debug\uCons_Clientes.pas">
+            <Form>Cons_Clientes</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Win32\Debug\uCons_CondicaoPagamento.pas">
+            <Form>Cons_CondicaoPagamento</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Win32\Debug\uCons_Contratos.pas">
+            <Form>Cons_Contratos</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Win32\Debug\uCons_Empresas.pas">
+            <Form>Cons_Empresas</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Win32\Debug\UCons_Estados.pas">
+            <Form>Cons_Estados</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Win32\Debug\uCons_FormaPagamento.pas">
+            <Form>Cons_FormaPagamento</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Win32\Debug\uCons_Fornecedores.pas">
+            <Form>Cons_Fornecedores</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Win32\Debug\uCons_Funcionarios.pas">
+            <Form>Cons_Funcionarios</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Win32\Debug\uCons_Paises.pas">
+            <Form>Cons_Paises</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Win32\Debug\uCons_Produtos.pas">
+            <Form>Cons_Produtos</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Win32\Debug\uCons_Unidades.pas">
+            <Form>Cons_Unidades</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Win32\Debug\uComprasController.pas"/>
+        <DCCReference Include="Win32\Debug\uComprasDao.pas"/>
+        <DCCReference Include="Win32\Debug\uComprasFactory.pas"/>
+        <DCCReference Include="Win32\Debug\uComprasService.pas"/>
+        <DCCReference Include="Win32\Debug\uCad_Funcionarios.pas">
+            <Form>Cad_Funcionarios</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Release">

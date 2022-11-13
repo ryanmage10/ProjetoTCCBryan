@@ -3,6 +3,7 @@ inherited Cad_Compras: TCad_Compras
   ClientHeight = 506
   ClientWidth = 774
   OnCreate = FormCreate
+  OnShow = FormShow
   ExplicitWidth = 790
   ExplicitHeight = 545
   PixelsPerInch = 96

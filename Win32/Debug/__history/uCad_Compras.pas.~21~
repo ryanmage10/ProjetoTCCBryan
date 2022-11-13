@@ -29,7 +29,8 @@ uses
   cxCustomData, cxFilter, cxData, cxDataStorage, cxNavigator, dxDateRanges,
   dxScrollbarAnnotations, Data.DB, cxDBData, cxGridLevel, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
-  uCompras, uComprasController, Datasnap.DBClient, uCons_Fornecedores;
+  uCompras, uComprasController, Datasnap.DBClient, uCons_Fornecedores,
+  uCons_CondicaoPagamento, uItensCompra;
 
 type
   TCad_Compras = class(TCad_Base)
@@ -75,9 +76,9 @@ type
     dxLayoutItem27: TdxLayoutItem;
     edt_TotalLiquido: TcxCurrencyEdit;
     dxLayoutItem28: TdxLayoutItem;
-    cxTextEdit9: TcxTextEdit;
+    edt_CodCondicaoPag: TcxTextEdit;
     dxLayoutItem29: TdxLayoutItem;
-    cxTextEdit10: TcxTextEdit;
+    edt_CondicaoPag: TcxTextEdit;
     dxLayoutItem30: TdxLayoutItem;
     btn_PesquisarCond: TButton;
     dxLayoutItem31: TdxLayoutItem;
@@ -128,8 +129,15 @@ type
     btn_Excluir: TcxButton;
     dxLayoutItem36: TdxLayoutItem;
     procedure btn_PesquisarFornClick(Sender: TObject);
+    procedure btn_PesquisarCondClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
+    ItemCompra : TItensCompra;
+    Alterar: boolean;
+    NroParcela: Integer;
+    procedure popularInterface;
   public
     { Public declarations }
     Compra : TCompras;
@@ -142,6 +150,21 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TCad_Compras.btn_PesquisarCondClick(Sender: TObject);
+var ConsCondicaoPagamentoForm: TCons_CondicaoPagamento;
+begin
+   ConsCondicaoPagamentoForm := TCons_CondicaoPagamento.Create(nil);
+   try
+      ConsCondicaoPagamentoForm.Selecao := True;
+      ConsCondicaoPagamentoForm.ShowModal;
+      Compra.CondicaoPagamento := (ConsCondicaoPagamentoForm.CondicaoPagamento.clone);
+      edt_CondicaoPag.text := Compra.CondicaoPagamento.Descricao;
+      edt_CodCondicaoPag.text := IntToStr(Compra.CondicaoPagamento.ID);
+   finally
+      FreeAndNil(ConsCondicaoPagamentoForm);
+   end;
+end;
 
 procedure TCad_Compras.btn_PesquisarFornClick(Sender: TObject);
 var ConsFornecedorForm: TCons_Fornecedores;
@@ -156,6 +179,51 @@ begin
    finally
       FreeAndNil(ConsFornecedorForm);
    end;
+end;
+
+procedure TCad_Compras.FormCreate(Sender: TObject);
+begin
+  inherited;
+  Compra := TCompras.Create;
+  CompraControl := TComprasController.Create;
+
+  ItemCompra := TItensCompra.Create;
+  //ItemCompraControl := TItemCompraController.Create;
+
+  Alterar := True;
+  NroParcela := 0;
+
+  if ( not Dset_ITENS.IsEmpty ) then
+    Dset_ITENS.EmptyDataSet;
+  Dset_ITENS.Active := False;
+  Dset_ITENS.CreateDataSet;
+  Dset_ITENS.Open;
+
+  if ( not Dset_Parcelas.IsEmpty ) then
+    Dset_Parcelas.EmptyDataSet;
+  Dset_Parcelas.Active := False;
+  Dset_Parcelas.CreateDataSet;
+  Dset_Parcelas.Open;
+end;
+
+procedure TCad_Compras.FormShow(Sender: TObject);
+begin
+  inherited;
+  if not inclusao then
+    popularInterface;
+end;
+
+procedure TCad_Compras.popularInterface;
+begin
+
+
+  lbl_Cad.Visible := True;
+  lbl_DataCad.Visible := True;
+  lbl_DataCad.Caption := Compra.User_Insert + '-' + DatetoStr(Compra.DataCad);
+
+  lbl_DataAlt.Caption := Compra.User_Update + '-' + DatetoStr(Compra.DataUltAlt);
+  Lbl_Alt.Visible := True;
+  lbl_DataAlt.Visible := True;
 end;
 
 end.

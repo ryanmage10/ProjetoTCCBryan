@@ -77,37 +77,12 @@ uses
   uUnidadesFactory in 'Win32\Debug\uUnidadesFactory.pas',
   uUnidadesService in 'Win32\Debug\uUnidadesService.pas',
   uItensCompra in 'Win32\Debug\uItensCompra.pas',
-  uCad_Pessoa in 'Win32\Debug\uCad_Pessoa.pas' {Cad_Pessoa},
   uCad_Base in 'Win32\Debug\uCad_Base.pas' {Cad_Base},
-  uCad_Caixas in 'Win32\Debug\uCad_Caixas.pas' {Cad_Caixas},
   uCad_Cidades in 'Win32\Debug\uCad_Cidades.pas' {Cad_Cidades},
-  uCad_Clientes in 'Win32\Debug\uCad_Clientes.pas' {Cad_Clientes},
-  uCad_Compras in 'Win32\Debug\uCad_Compras.pas' {Cad_Compras},
-  uCad_CondicaoPagamento in 'Win32\Debug\uCad_CondicaoPagamento.pas' {Cad_CondicaoPagamento},
-  uCad_Contratos in 'Win32\Debug\uCad_Contratos.pas' {Cad_Contratos},
-  uCad_Empresas in 'Win32\Debug\uCad_Empresas.pas' {Cad_Empresa},
-  uCad_Estados in 'Win32\Debug\uCad_Estados.pas' {Cad_Estados},
-  uCad_FormaPagamento in 'Win32\Debug\uCad_FormaPagamento.pas' {Cad_FormaPagamento},
-  uCad_Forncedores in 'Win32\Debug\uCad_Forncedores.pas' {Cad_Fornecedores},
   uCons_Base in 'Win32\Debug\uCons_Base.pas' {Cons_Base},
-  uCons_Caixas in 'Win32\Debug\uCons_Caixas.pas' {Cons_Caixas},
-  uCons_Cidades in 'Win32\Debug\uCons_Cidades.pas' {Cons_Cidades},
-  uCons_Clientes in 'Win32\Debug\uCons_Clientes.pas' {Cons_Clientes},
-  uCons_CondicaoPagamento in 'Win32\Debug\uCons_CondicaoPagamento.pas' {Cons_CondicaoPagamento},
-  uCons_Contratos in 'Win32\Debug\uCons_Contratos.pas' {Cons_Contratos},
-  uCons_Empresas in 'Win32\Debug\uCons_Empresas.pas' {Cons_Empresas},
-  UCons_Estados in 'Win32\Debug\UCons_Estados.pas' {Cons_Estados},
-  uCons_FormaPagamento in 'Win32\Debug\uCons_FormaPagamento.pas' {Cons_FormaPagamento},
-  uCons_Fornecedores in 'Win32\Debug\uCons_Fornecedores.pas' {Cons_Fornecedores},
-  uCons_Funcionarios in 'Win32\Debug\uCons_Funcionarios.pas' {Cons_Funcionarios},
-  uCons_Paises in 'Win32\Debug\uCons_Paises.pas' {Cons_Paises},
-  uCons_Produtos in 'Win32\Debug\uCons_Produtos.pas' {Cons_Produtos},
-  uCons_Unidades in 'Win32\Debug\uCons_Unidades.pas' {Cons_Unidades},
-  uComprasController in 'Win32\Debug\uComprasController.pas',
-  uComprasDao in 'Win32\Debug\uComprasDao.pas',
-  uComprasFactory in 'Win32\Debug\uComprasFactory.pas',
-  uComprasService in 'Win32\Debug\uComprasService.pas',
-  uCad_Funcionarios in 'Win32\Debug\uCad_Funcionarios.pas' {Cad_Funcionarios};
+  uCad_Compras in 'Win32\Debug\uCad_Compras.pas' {Cad_Compras},
+  uCad_Clientes in 'Win32\Debug\uCad_Clientes.pas',
+  uCad_Pessoa in 'Win32\Debug\uCad_Pessoa.pas' {Cad_Pessoa};
 
 {$R *.res}
 
@@ -120,32 +95,6 @@ begin
   Application.CreateForm(TCons_Base, Cons_Base);
   Application.CreateForm(TCad_Compras, Cad_Compras);
   Application.CreateForm(TCad_Pessoa, Cad_Pessoa);
-  Application.CreateForm(TCons_Cidades, Cons_Cidades);
-  Application.CreateForm(TCad_CondicaoPagamento, Cad_CondicaoPagamento);
-  Application.CreateForm(TCad_Base, Cad_Base);
-  Application.CreateForm(TCad_Caixas, Cad_Caixas);
-  Application.CreateForm(TCad_Clientes, Cad_Clientes);
-  Application.CreateForm(TCad_Compras, Cad_Compras);
-  Application.CreateForm(TCad_CondicaoPagamento, Cad_CondicaoPagamento);
-  Application.CreateForm(TCad_Contratos, Cad_Contratos);
-  Application.CreateForm(TCad_Empresa, Cad_Empresa);
-  Application.CreateForm(TCad_FormaPagamento, Cad_FormaPagamento);
-  Application.CreateForm(TCad_Fornecedores, Cad_Fornecedores);
-  Application.CreateForm(TCons_Base, Cons_Base);
-  Application.CreateForm(TCons_Caixas, Cons_Caixas);
-  Application.CreateForm(TCons_Cidades, Cons_Cidades);
-  Application.CreateForm(TCons_Clientes, Cons_Clientes);
-  Application.CreateForm(TCons_CondicaoPagamento, Cons_CondicaoPagamento);
-  Application.CreateForm(TCons_Contratos, Cons_Contratos);
-  Application.CreateForm(TCons_Empresas, Cons_Empresas);
-  Application.CreateForm(TCons_Estados, Cons_Estados);
-  Application.CreateForm(TCons_FormaPagamento, Cons_FormaPagamento);
-  Application.CreateForm(TCons_Fornecedores, Cons_Fornecedores);
-  Application.CreateForm(TCons_Funcionarios, Cons_Funcionarios);
-  Application.CreateForm(TCons_Paises, Cons_Paises);
-  Application.CreateForm(TCons_Produtos, Cons_Produtos);
-  Application.CreateForm(TCons_Unidades, Cons_Unidades);
-  Application.CreateForm(TCad_Funcionarios, Cad_Funcionarios);
   Application.Run;
 end.
 

@@ -2,6 +2,7 @@ inherited Cad_Compras: TCad_Compras
   Caption = 'Cadastro de Compras'
   ClientHeight = 506
   ClientWidth = 774
+  OnCreate = FormCreate
   ExplicitWidth = 790
   ExplicitHeight = 545
   PixelsPerInch = 96
@@ -9,45 +10,41 @@ inherited Cad_Compras: TCad_Compras
   inherited dxLayoutControl1: TdxLayoutControl
     Width = 774
     Height = 506
-    ExplicitWidth = 687
+    ExplicitWidth = 774
     ExplicitHeight = 506
-    inherited edt_Id: TcxTextEdit
-      Top = -91
-      ExplicitTop = -91
-    end
     inherited btn_Salvar: TcxButton
       Left = 591
-      Top = 619
-      TabOrder = 26
+      Top = 739
+      TabOrder = 29
       ExplicitLeft = 591
-      ExplicitTop = 619
+      ExplicitTop = 739
     end
     inherited btn_Cancelar: TcxButton
       Left = 672
-      Top = 619
-      TabOrder = 27
+      Top = 739
+      TabOrder = 30
       ExplicitLeft = 672
-      ExplicitTop = 619
+      ExplicitTop = 739
     end
     inherited Lbl_Alt: TcxLabel
-      Top = 638
-      ExplicitTop = 638
+      Top = 758
+      ExplicitTop = 758
     end
     inherited lbl_Cad: TcxLabel
-      Top = 619
-      ExplicitTop = 619
+      Top = 739
+      ExplicitTop = 739
     end
     inherited lbl_DataCad: TcxLabel
-      Top = 619
-      ExplicitTop = 619
+      Top = 739
+      ExplicitTop = 739
     end
     inherited lbl_DataAlt: TcxLabel
-      Top = 638
-      ExplicitTop = 638
+      Top = 758
+      ExplicitTop = 758
     end
     object edt_CodFornecedor: TcxTextEdit [7]
       Left = 237
-      Top = -45
+      Top = 75
       Properties.CharCase = ecUpperCase
       Properties.ReadOnly = True
       Style.HotTrack = False
@@ -57,7 +54,7 @@ inherited Cad_Compras: TCad_Compras
     end
     object edt_Fornecedor: TcxTextEdit [8]
       Left = 303
-      Top = -45
+      Top = 75
       Properties.CharCase = ecUpperCase
       Properties.ReadOnly = True
       Style.HotTrack = False
@@ -67,23 +64,23 @@ inherited Cad_Compras: TCad_Compras
     end
     object edt_DataChegada: TcxDateEdit [9]
       Left = 115
-      Top = 1
+      Top = 121
       Style.HotTrack = False
       Style.TransparentBorder = False
       TabOrder = 8
-      Width = 87
+      Width = 115
     end
     object edt_DataEmissao: TcxDateEdit [10]
       Left = 10
-      Top = 1
+      Top = 121
       Style.HotTrack = False
       Style.TransparentBorder = False
       TabOrder = 7
       Width = 99
     end
     object edt_Frete: TcxCurrencyEdit [11]
-      Left = 208
-      Top = 1
+      Left = 236
+      Top = 121
       Style.BorderColor = clSkyBlue
       Style.BorderStyle = ebs3D
       Style.HotTrack = False
@@ -92,8 +89,8 @@ inherited Cad_Compras: TCad_Compras
       Width = 82
     end
     object edt_Despesas: TcxCurrencyEdit [12]
-      Left = 385
-      Top = 1
+      Left = 413
+      Top = 121
       Style.BorderColor = clSkyBlue
       Style.BorderStyle = ebs3D
       Style.HotTrack = False
@@ -102,8 +99,8 @@ inherited Cad_Compras: TCad_Compras
       Width = 121
     end
     object edt_Pedagio: TcxCurrencyEdit [13]
-      Left = 296
-      Top = 1
+      Left = 324
+      Top = 121
       Style.BorderColor = clSkyBlue
       Style.BorderStyle = ebs3D
       Style.HotTrack = False
@@ -113,15 +110,16 @@ inherited Cad_Compras: TCad_Compras
     end
     object btn_PesquisarForn: TcxButton [14]
       Left = 535
-      Top = -49
+      Top = 71
       Width = 75
       Height = 25
       Caption = 'Pesquisar'
       TabOrder = 6
+      OnClick = btn_PesquisarFornClick
     end
     object edt_CodProduto: TcxTextEdit [15]
       Left = 22
-      Top = 65
+      Top = 185
       Properties.CharCase = ecUpperCase
       Properties.ReadOnly = True
       Style.HotTrack = False
@@ -131,17 +129,17 @@ inherited Cad_Compras: TCad_Compras
     end
     object edt_Produto: TcxTextEdit [16]
       Left = 79
-      Top = 65
+      Top = 185
       Properties.CharCase = ecUpperCase
       Properties.ReadOnly = True
       Style.HotTrack = False
       Style.TransparentBorder = False
       TabOrder = 13
-      Width = 121
+      Width = 98
     end
     object edt_UnidProduto: TcxTextEdit [17]
-      Left = 206
-      Top = 65
+      Left = 183
+      Top = 185
       Properties.CharCase = ecUpperCase
       Properties.ReadOnly = True
       Style.HotTrack = False
@@ -150,16 +148,16 @@ inherited Cad_Compras: TCad_Compras
       Width = 54
     end
     object btn_PesquisarProd: TcxButton [18]
-      Left = 266
-      Top = 61
+      Left = 243
+      Top = 181
       Width = 75
       Height = 25
       Caption = 'Pesquisar'
       TabOrder = 15
     end
     object edt_Qtd: TEdit [19]
-      Left = 349
-      Top = 67
+      Left = 325
+      Top = 186
       Width = 40
       Height = 17
       BevelInner = bvNone
@@ -169,39 +167,60 @@ inherited Cad_Compras: TCad_Compras
       TabOrder = 16
     end
     object Edt_Valor: TcxCurrencyEdit [20]
-      Left = 397
-      Top = 65
-      Style.BorderColor = clSkyBlue
-      Style.BorderStyle = ebs3D
+      Left = 372
+      Top = 185
       Style.HotTrack = False
       Style.TransparentBorder = False
       TabOrder = 17
-      Width = 80
+      Width = 68
     end
     object edt_Total: TcxCurrencyEdit [21]
-      Left = 483
-      Top = 65
+      Left = 446
+      Top = 185
       Properties.ReadOnly = True
-      Style.BorderColor = clSkyBlue
-      Style.BorderStyle = ebs3D
       Style.HotTrack = False
       Style.TransparentBorder = False
       TabOrder = 18
-      Width = 99
+      Width = 78
     end
     object Grid_ItensProduto: TcxGrid [22]
       Left = 22
-      Top = 92
+      Top = 212
       Width = 713
       Height = 200
-      TabOrder = 19
+      TabOrder = 22
       object Grid_ItensProdutoDBTableView1: TcxGridDBTableView
         Navigator.Buttons.CustomButtons = <>
         ScrollbarAnnotations.CustomAnnotations = <>
+        DataController.DataSource = DS_ITENS
         DataController.Summary.DefaultGroupSummaryItems = <>
         DataController.Summary.FooterSummaryItems = <>
         DataController.Summary.SummaryGroups = <>
         OptionsView.GroupByBox = False
+        object Grid_ItensProdutoDBTableView1CODPRODUTO: TcxGridDBColumn
+          DataBinding.FieldName = 'CODPRODUTO'
+        end
+        object Grid_ItensProdutoDBTableView1PRODUTO: TcxGridDBColumn
+          DataBinding.FieldName = 'PRODUTO'
+        end
+        object Grid_ItensProdutoDBTableView1UND: TcxGridDBColumn
+          DataBinding.FieldName = 'UND'
+        end
+        object Grid_ItensProdutoDBTableView1QTD: TcxGridDBColumn
+          DataBinding.FieldName = 'QTD'
+        end
+        object Grid_ItensProdutoDBTableView1PRECO: TcxGridDBColumn
+          DataBinding.FieldName = 'PRECO'
+        end
+        object Grid_ItensProdutoDBTableView1TOTAL: TcxGridDBColumn
+          DataBinding.FieldName = 'TOTAL'
+        end
+        object Grid_ItensProdutoDBTableView1DESC: TcxGridDBColumn
+          DataBinding.FieldName = 'DESC'
+        end
+        object Grid_ItensProdutoDBTableView1CUSTO: TcxGridDBColumn
+          DataBinding.FieldName = 'CUSTO'
+        end
       end
       object Grid_ItensProdutoLevel1: TcxGridLevel
         GridView = Grid_ItensProdutoDBTableView1
@@ -209,60 +228,79 @@ inherited Cad_Compras: TCad_Compras
     end
     object edt_TotalLiquido: TcxCurrencyEdit [23]
       Left = 620
-      Top = 298
+      Top = 418
       Properties.ReadOnly = True
       Style.BorderColor = clSkyBlue
       Style.BorderStyle = ebs3D
       Style.HotTrack = False
       Style.TransparentBorder = False
-      TabOrder = 20
+      TabOrder = 23
       Width = 115
     end
-    object cxTextEdit9: TcxTextEdit [24]
+    object edt_CodCondicaoPag: TcxTextEdit [24]
       Left = 22
-      Top = 374
+      Top = 494
+      Properties.ReadOnly = True
       Style.HotTrack = False
       Style.TransparentBorder = False
-      TabOrder = 21
+      TabOrder = 24
       Width = 66
     end
-    object cxTextEdit10: TcxTextEdit [25]
+    object edt_CondicaoPag: TcxTextEdit [25]
       Left = 94
-      Top = 374
+      Top = 494
+      Properties.ReadOnly = True
       Style.HotTrack = False
       Style.TransparentBorder = False
-      TabOrder = 22
-      Width = 144
+      TabOrder = 25
+      Width = 259
     end
     object btn_PesquisarCond: TButton [26]
-      Left = 244
-      Top = 370
+      Left = 359
+      Top = 490
       Width = 89
       Height = 25
       Caption = 'Pesquisar'
-      TabOrder = 23
+      TabOrder = 26
+      OnClick = btn_PesquisarCondClick
     end
     object btn_GerarParcelas: TcxButton [27]
-      Left = 339
-      Top = 370
+      Left = 454
+      Top = 490
       Width = 91
       Height = 25
       Caption = 'Gerar Parcelas'
-      TabOrder = 24
+      TabOrder = 27
     end
     object Grid_Parcelas: TcxGrid [28]
       Left = 22
-      Top = 401
+      Top = 521
       Width = 713
       Height = 200
-      TabOrder = 25
+      TabOrder = 28
       object Grid_ParcelasDBTableView1: TcxGridDBTableView
         Navigator.Buttons.CustomButtons = <>
         ScrollbarAnnotations.CustomAnnotations = <>
+        DataController.DataSource = DS_PARCELAS
         DataController.Summary.DefaultGroupSummaryItems = <>
         DataController.Summary.FooterSummaryItems = <>
         DataController.Summary.SummaryGroups = <>
         OptionsView.GroupByBox = False
+        object Grid_ParcelasDBTableView1NUMPARCELA: TcxGridDBColumn
+          DataBinding.FieldName = 'NUMPARCELA'
+          Width = 86
+        end
+        object Grid_ParcelasDBTableView1VENCIMENTO: TcxGridDBColumn
+          DataBinding.FieldName = 'VENCIMENTO'
+          Width = 84
+        end
+        object Grid_ParcelasDBTableView1VALOR: TcxGridDBColumn
+          DataBinding.FieldName = 'VALOR'
+          Width = 86
+        end
+        object Grid_ParcelasDBTableView1FORMAPGTO: TcxGridDBColumn
+          DataBinding.FieldName = 'FORMAPGTO'
+        end
       end
       object Grid_ParcelasLevel1: TcxGridLevel
         GridView = Grid_ParcelasDBTableView1
@@ -270,7 +308,7 @@ inherited Cad_Compras: TCad_Compras
     end
     object edt_Serie: TEdit [29]
       Left = 66
-      Top = -44
+      Top = 76
       Width = 42
       Height = 17
       BevelInner = bvNone
@@ -282,7 +320,7 @@ inherited Cad_Compras: TCad_Compras
     end
     object edt_Numero: TEdit [30]
       Left = 116
-      Top = -44
+      Top = 76
       Width = 114
       Height = 19
       BevelInner = bvNone
@@ -294,7 +332,7 @@ inherited Cad_Compras: TCad_Compras
     end
     object edt_Modelo: TEdit [31]
       Left = 11
-      Top = -44
+      Top = 76
       Width = 47
       Height = 19
       BevelInner = bvNone
@@ -303,6 +341,30 @@ inherited Cad_Compras: TCad_Compras
       BorderStyle = bsNone
       NumbersOnly = True
       TabOrder = 1
+    end
+    object btn_Inserir: TcxButton [32]
+      Left = 530
+      Top = 181
+      Width = 66
+      Height = 25
+      Caption = 'Inserir'
+      TabOrder = 19
+    end
+    object btn_Alterar: TcxButton [33]
+      Left = 602
+      Top = 181
+      Width = 62
+      Height = 25
+      Caption = 'Alterar'
+      TabOrder = 20
+    end
+    object btn_Excluir: TcxButton [34]
+      Left = 670
+      Top = 181
+      Width = 63
+      Height = 25
+      Caption = 'Excluir'
+      TabOrder = 21
     end
     inherited dxLayoutControl1Group_Root: TdxLayoutGroup
       ItemIndex = 4
@@ -356,7 +418,7 @@ inherited Cad_Compras: TCad_Compras
       CaptionOptions.Layout = clTop
       Control = edt_CodFornecedor
       ControlOptions.OriginalHeight = 21
-      ControlOptions.OriginalWidth = 48
+      ControlOptions.OriginalWidth = 60
       ControlOptions.ShowBorder = False
       Index = 3
     end
@@ -378,7 +440,7 @@ inherited Cad_Compras: TCad_Compras
       CaptionOptions.Layout = clTop
       Control = edt_DataChegada
       ControlOptions.OriginalHeight = 21
-      ControlOptions.OriginalWidth = 86
+      ControlOptions.OriginalWidth = 115
       ControlOptions.ShowBorder = False
       Index = 1
     end
@@ -453,7 +515,7 @@ inherited Cad_Compras: TCad_Compras
       CaptionOptions.Layout = clTop
       Control = edt_Produto
       ControlOptions.OriginalHeight = 21
-      ControlOptions.OriginalWidth = 121
+      ControlOptions.OriginalWidth = 98
       ControlOptions.ShowBorder = False
       Index = 1
     end
@@ -464,7 +526,7 @@ inherited Cad_Compras: TCad_Compras
       CaptionOptions.Layout = clTop
       Control = edt_UnidProduto
       ControlOptions.OriginalHeight = 21
-      ControlOptions.OriginalWidth = 47
+      ControlOptions.OriginalWidth = 54
       ControlOptions.ShowBorder = False
       Index = 2
     end
@@ -482,6 +544,7 @@ inherited Cad_Compras: TCad_Compras
     end
     object dxLayoutItem24: TdxLayoutItem
       Parent = dxLayoutGroup9
+      LayoutLookAndFeel = LayoutObrigatorio
       CaptionOptions.Text = 'Qtd*'
       CaptionOptions.Layout = clTop
       Control = edt_Qtd
@@ -491,21 +554,23 @@ inherited Cad_Compras: TCad_Compras
     end
     object dxLayoutItem25: TdxLayoutItem
       Parent = dxLayoutGroup9
+      LayoutLookAndFeel = LayoutObrigatorio
       CaptionOptions.Text = 'Valor*'
       CaptionOptions.Layout = clTop
       Control = Edt_Valor
       ControlOptions.OriginalHeight = 21
-      ControlOptions.OriginalWidth = 80
+      ControlOptions.OriginalWidth = 68
       ControlOptions.ShowBorder = False
       Index = 5
     end
     object dxLayoutItem26: TdxLayoutItem
       Parent = dxLayoutGroup9
+      LayoutLookAndFeel = LayoutObrigatorio
       CaptionOptions.Text = 'Total*'
       CaptionOptions.Layout = clTop
       Control = edt_Total
       ControlOptions.OriginalHeight = 21
-      ControlOptions.OriginalWidth = 99
+      ControlOptions.OriginalWidth = 78
       ControlOptions.ShowBorder = False
       Index = 6
     end
@@ -532,9 +597,9 @@ inherited Cad_Compras: TCad_Compras
       LayoutLookAndFeel = LayoutObrigatorio
       CaptionOptions.Text = 'C'#243'd. Cond.*'
       CaptionOptions.Layout = clTop
-      Control = cxTextEdit9
+      Control = edt_CodCondicaoPag
       ControlOptions.OriginalHeight = 21
-      ControlOptions.OriginalWidth = 65
+      ControlOptions.OriginalWidth = 66
       ControlOptions.ShowBorder = False
       Index = 0
     end
@@ -543,9 +608,9 @@ inherited Cad_Compras: TCad_Compras
       LayoutLookAndFeel = LayoutObrigatorio
       CaptionOptions.Text = 'Condi'#231#227'o de Pagamento*'
       CaptionOptions.Layout = clTop
-      Control = cxTextEdit10
+      Control = edt_CondicaoPag
       ControlOptions.OriginalHeight = 21
-      ControlOptions.OriginalWidth = 137
+      ControlOptions.OriginalWidth = 259
       ControlOptions.ShowBorder = False
       Index = 1
     end
@@ -610,8 +675,44 @@ inherited Cad_Compras: TCad_Compras
       CaptionOptions.Layout = clTop
       Control = edt_Modelo
       ControlOptions.OriginalHeight = 17
-      ControlOptions.OriginalWidth = 45
+      ControlOptions.OriginalWidth = 47
       Index = 0
+    end
+    object dxLayoutItem34: TdxLayoutItem
+      Parent = dxLayoutGroup9
+      Offsets.Top = 15
+      CaptionOptions.Text = 'cxButton1'
+      CaptionOptions.Visible = False
+      CaptionOptions.Layout = clTop
+      Control = btn_Inserir
+      ControlOptions.OriginalHeight = 25
+      ControlOptions.OriginalWidth = 66
+      ControlOptions.ShowBorder = False
+      Index = 7
+    end
+    object dxLayoutItem35: TdxLayoutItem
+      Parent = dxLayoutGroup9
+      Offsets.Top = 15
+      CaptionOptions.Text = 'cxButton2'
+      CaptionOptions.Visible = False
+      CaptionOptions.Layout = clTop
+      Control = btn_Alterar
+      ControlOptions.OriginalHeight = 25
+      ControlOptions.OriginalWidth = 62
+      ControlOptions.ShowBorder = False
+      Index = 8
+    end
+    object dxLayoutItem36: TdxLayoutItem
+      Parent = dxLayoutGroup9
+      Offsets.Top = 15
+      CaptionOptions.Text = 'cxButton3'
+      CaptionOptions.Visible = False
+      CaptionOptions.Layout = clTop
+      Control = btn_Excluir
+      ControlOptions.OriginalHeight = 25
+      ControlOptions.OriginalWidth = 63
+      ControlOptions.ShowBorder = False
+      Index = 9
     end
   end
   inherited dxLayoutLookAndFeelList1: TdxLayoutLookAndFeelList
@@ -621,5 +722,63 @@ inherited Cad_Compras: TCad_Compras
     inherited LayoutPadrao: TdxLayoutStandardLookAndFeel
       PixelsPerInch = 96
     end
+  end
+  object DSET_ITENS: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 408
+    object DSET_ITENSCODPRODUTO: TIntegerField
+      FieldName = 'CODPRODUTO'
+    end
+    object DSET_ITENSPRODUTO: TStringField
+      FieldName = 'PRODUTO'
+      Size = 40
+    end
+    object DSET_ITENSUND: TStringField
+      FieldName = 'UND'
+      Size = 5
+    end
+    object DSET_ITENSQTD: TCurrencyField
+      FieldName = 'QTD'
+    end
+    object DSET_ITENSPRECO: TCurrencyField
+      FieldName = 'PRECO'
+    end
+    object DSET_ITENSTOTAL: TCurrencyField
+      FieldName = 'TOTAL'
+    end
+    object DSET_ITENSDESC: TCurrencyField
+      FieldName = 'DESC'
+    end
+    object DSET_ITENSCUSTO: TCurrencyField
+      FieldName = 'CUSTO'
+    end
+  end
+  object DSET_PARCELAS: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 504
+    object DSET_PARCELASNUMPARCELA: TStringField
+      FieldName = 'NUMPARCELA'
+      Size = 0
+    end
+    object DSET_PARCELASVENCIMENTO: TDateField
+      FieldName = 'VENCIMENTO'
+    end
+    object DSET_PARCELASVALOR: TCurrencyField
+      FieldName = 'VALOR'
+    end
+    object DSET_PARCELASFORMAPGTO: TStringField
+      FieldName = 'FORMAPGTO'
+      Size = 30
+    end
+  end
+  object DS_PARCELAS: TDataSource
+    DataSet = DSET_PARCELAS
+    Left = 552
+  end
+  object DS_ITENS: TDataSource
+    DataSet = DSET_ITENS
+    Left = 448
   end
 end
