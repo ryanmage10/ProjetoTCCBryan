@@ -7,7 +7,8 @@ uses
   Datasnap.Provider, Datasnap.DBClient, uDmConexao, uCompras, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, uFornecedores, uFornecedoresDao,
+  uCondicaoPagamentoDao, uCondicaoPagamento;
 
 type
   TComprasDao = class(TObject)
@@ -42,7 +43,7 @@ begin
   begin
     Sql.Clear;
     sql.add('UPDATE COMPRAS SET MODELO = :MODELO, SERIE = :SERIE, NUMERO = :NUMERO, ID_FORNECEDOR = :ID_FORNECEDOR, ');
-    sql.add('DATA_EMISSAO = :DATA_EMISSAO, DATA_CHEGADA = :DATA_GHEGADA, ID_CONDICAO = :ID_CONDICAO, FRETE = :FRETE,');
+    sql.add('DATA_EMISSAO = :DATA_EMISSAO, DATA_CHEGADA = :DATA_CHEGADA, ID_CONDICAO = :ID_CONDICAO, FRETE = :FRETE,');
     sql.add('PEDAGIO = :PEDAGIO, DESPESAS = :DESPESAS, TOTAL = :TOTAL,');
     Sql.Add('USER_INSERT = :USER_INSERT, USER_UPDATE = :USER_UPDATE, DATE_INSERT = :DATE_INSERT, DATE_UPDATE = :DATE_UPDATE');
     Sql.Add(' WHERE ID = :ID');
@@ -125,13 +126,15 @@ procedure TComprasDao.ObjToField(var oCompra: TCompras; Qry: TFDQuery);
 begin
   with oCompra, Qry do
   begin
-    FieldByName('ID').AsInteger            := ID;
-    FieldByName('MODELO').AsString         := Modelo;
-    FieldByName('SERIE').AsString          := Serie;
-    FieldByName('NUMERO').AsString         := Numero;
-    FieldByName('DATA_EMISSAO').AsDateTime := DataEmissao;
-    FieldByName('DATA_CHEGADA').AsDateTime := DataChegada;
-    FieldByName('FRETE').AsCurrency        := Frete;
+    //FieldByName('ID').AsInteger            := ID;
+    paramByName('MODELO').AsString         := Modelo;
+    paramByName('SERIE').AsString          := Serie;
+    paramByName('NUMERO').AsString         := Numero;
+    paramByName('DATA_EMISSAO').AsDateTime := DataEmissao;
+    paramByName('DATA_CHEGADA').AsDateTime := DataChegada;
+    paramByName('FRETE').AsCurrency        := Frete;
+    paramByName('ID_FORNECEDOR').AsInteger       := Fornecedor.ID;
+    paramByName('ID_Condicao').AsInteger := CondicaoPagamento.ID;    //
     paramByName('PEDAGIO').AsCurrency := Pedagio;
     paramByName('DESPESAS').AsCurrency := Despesas;
     paramByName('TOTAL').AsCurrency := Total;
@@ -151,14 +154,14 @@ begin
 
       if Value = '' then
       begin
-        Sql.Add('SELECT C.ID, C.SERIE, C.NUMERO, CLI.FORNECEDOR, CC.DESCRICAO, C.DATE_INSERT FROM Compras C');
-        Sql.Add('LEFT JOIN CONDICAO_COMPRA CC ON C.ID_CONDICAO = CC.ID');
+        Sql.Add('SELECT C.ID, C.SERIE, C.NUMERO, C.MODELO, CLI.FORNECEDOR, CC.DESCRICAO, C.DATE_INSERT FROM Compras C');
+        Sql.Add('LEFT JOIN CONDICAO_PAGAMENTO CC ON C.ID_CONDICAO = CC.ID');
         Sql.Add('LEFT JOIN FORNECEDORES CLI ON C.ID_FORNECEDOR = CLI.ID');
       end
       else
       begin
-        sql.Add('SELECT C.ID, C.SERIE, C.NUMERO, CLI.FORNECEDOR, CC.DESCRICAO, C.DATE_INSERT FROM Compras C');
-        Sql.Add('LEFT JOIN CONDICAO_COMPRA CC ON C.ID_CONDICAO = CC.ID');
+        sql.Add('SELECT C.ID, C.SERIE, C.NUMERO, C.MODELO, CLI.FORNECEDOR, CC.DESCRICAO, C.DATE_INSERT FROM Compras C');
+        Sql.Add('LEFT JOIN CONDICAO_PAGAMENTO CC ON C.ID_CONDICAO = CC.ID');
         Sql.Add('LEFT JOIN FORNECEDORES CLI ON C.ID_FORNECEDOR = CLI.ID');
         SQL.ADD('WHERE CLI.FORNECEDOR LIKE :NOME');
         paramByName('NOME').AsString := '%' + Value + '%';
@@ -170,6 +173,7 @@ begin
         dset.FieldByName('id').AsInteger := FieldByName('id').AsInteger;
         dset.FieldByName('SERIE').AsString := FieldByName('SERIE').AsString;
         dset.FieldByName('NUMERO').AsString := FieldByName('NUMERO').AsString;
+        dset.FieldByName('MODELO').AsString := FieldByName('MODELO').AsString;
         dset.FieldByName('FORNECEDOR').AsString := FieldByName('FORNECEDOR').AsString;
         dset.FieldByName('DESCRICAO').AsString := FieldByName('DESCRICAO').AsString;
         dset.FieldByName('DATA_INSERT').AsDateTime := FieldByName('DATE_INSERT').AsDateTime;
@@ -182,8 +186,14 @@ begin
 end;
 
 function TComprasDao.Recuperar(var oCompra: TCompras): boolean;
+var FornecedorAux : TFornecedores;
+    FornecedorDao: TFornecedoresDao;
+    CondicaoAux : TCondicaoPagamento;
+    CondicaoDao: TCondicaoPagamentoDao;
 begin
     result := False;
+    FornecedorAux := TFornecedores.Create;
+    CondicaoAux := TCondicaoPagamento.Create;
     with DmConexao.Qry do
     begin
       sql.clear;
@@ -191,8 +201,28 @@ begin
       paramByName('ID').AsInteger := oCompra.ID;
       open;
       FieldtoObj(oCompra, DmConexao.Qry);
+      FornecedorAux.id := FieldbyName('Id_FORNECEDOR').AsInteger;
+      CondicaoAux.id := FieldbyName('Id_CONDICAO').AsInteger;
       result := true;
       close;
+
+      FornecedorDao := TFornecedoresDao.Create;
+      try
+        FornecedorDao.Recuperar(FornecedorAux);
+        oCompra.Fornecedor.CopiarDados(FornecedorAux);
+      finally
+        FornecedorDao.Free;
+        FornecedorAux.Free;
+      end;
+
+      CondicaoDao := TCondicaoPagamentoDao.Create;
+      try
+        CondicaoDao.Recuperar(CondicaoAux);
+        oCompra.CondicaoPagamento.CopiarDados(CondicaoAux);
+      finally
+        CondicaoDao.Free;
+        CondicaoAux.Free;
+      end;
     end;
 end;
 
@@ -217,13 +247,13 @@ begin
    with DmConexao.Qry do
     begin
       sql.clear;
-      Sql.Add('SELECT * FROM Compras C LEFT JOIN FORNECEDORES CLI WHERE C.NUMERO = :NUMERO AND C.SERIE = :SERIE');
-      Sql.Add('AND C.MODELO = :MODELO AND CLI.FORNECEDOR NOT C.ID = :ID');
+      Sql.Add('SELECT C.* FROM Compras C WHERE C.NUMERO = :NUMERO AND C.SERIE = :SERIE');
+      Sql.Add('AND C.MODELO = :MODELO AND C.ID_FORNECEDOR = :ID_FORNECEDOR AND NOT C.ID = :ID');
       paramByName('ID').AsInteger := Value.ID;
       paramByName('MODELO').AsString := Value.Modelo;
       paramByName('SERIE').AsString := Value.Serie;
       paramByName('NUMERO').AsString := Value.Numero;
-      paramByName('FORNECEDOR').AsString := Value.Fornecedor.Nome;
+      paramByName('ID_FORNECEDOR').AsInteger := Value.Fornecedor.id;
       open;
       if not IsEmpty then
         result := true;

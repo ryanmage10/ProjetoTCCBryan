@@ -88,14 +88,14 @@ begin
   Serie := Value.Serie;
   Numero := Value.Numero;
   Fornecedor.CopiarDados(Value.Fornecedor);
-  DataEmissao := now;
-  DataChegada := now;
-  ListaItens.Clear;
-  CondicaoPagamento.LimparDados;
-  Frete := 0;
-  Pedagio := 0;
-  Despesas := 0;
-  Total := 0;
+  DataEmissao := Value.DataEmissao;
+  DataChegada := Value.DataChegada;
+  ListaItens := Value.ListaItens;
+  CondicaoPagamento.CopiarDados(Value.CondicaoPagamento);
+  Frete := Value.Frete;
+  Pedagio := Value.Pedagio;
+  Despesas := Value.Despesas;
+  Total := Value.Total;
 end;
 
 constructor TCompras.Create;
@@ -253,3 +253,4 @@ begin
 end;
 
 end.
+

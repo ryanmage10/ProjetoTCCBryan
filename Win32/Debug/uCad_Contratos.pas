@@ -196,6 +196,9 @@ begin
   else
      Edt_Cliente_Fornecedor.Text := Contrato.Fornecedor.Nome;
 
+  Grupo_Cad.Visible := True;
+  Grupo_Alt.Visible := True;
+
   lbl_Cad.Visible := True;
   lbl_DataCad.Visible := True;
   lbl_DataCad.Caption := Contrato.User_Insert + '-' + DatetoStr(Contrato.DataCad);

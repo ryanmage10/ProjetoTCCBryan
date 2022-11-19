@@ -122,13 +122,16 @@ begin
   edt_sigla.text := estado.UF;
   edt_pais.text := Estado.Pais.Nome;
 
-    lbl_Cad.Visible := True;
-    lbl_DataCad.Visible := True;
-    lbl_DataCad.Caption := Estado.User_Insert + '-' + DatetoStr(Estado.DataCad);
+  Grupo_Cad.Visible := True;
+  Grupo_Alt.Visible := True;
 
-    lbl_DataAlt.Caption := Estado.User_Update + '-' + DatetoStr(Estado.DataUltAlt);
-    Lbl_Alt.Visible := True;
-    lbl_DataAlt.Visible := True;
+  lbl_Cad.Visible := True;
+  lbl_DataCad.Visible := True;
+  lbl_DataCad.Caption := Estado.User_Insert + '-' + DatetoStr(Estado.DataCad);
+
+  lbl_DataAlt.Caption := Estado.User_Update + '-' + DatetoStr(Estado.DataUltAlt);
+  Lbl_Alt.Visible := True;
+  lbl_DataAlt.Visible := True;
 end;
 
 procedure TCad_Estados.PopularObjeto;

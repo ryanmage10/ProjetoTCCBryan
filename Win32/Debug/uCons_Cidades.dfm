@@ -61,13 +61,11 @@ inherited Cons_Cidades: TCons_Cidades
       ExplicitTop = 314
     end
     inherited GridPesquisa: TcxGrid
-      Top = 73
       Width = 512
-      Height = 235
+      Height = 253
       TabOrder = 7
-      ExplicitTop = 73
       ExplicitWidth = 512
-      ExplicitHeight = 235
+      ExplicitHeight = 253
       inherited GridPesquisaDBTableView1: TcxGridDBTableView
         DataController.DataSource = ds_Cidades
         object GridPesquisaDBTableView1ID: TcxGridDBColumn
@@ -88,7 +86,6 @@ inherited Cons_Cidades: TCons_Cidades
       Index = 1
     end
     inherited dxLayoutItem1: TdxLayoutItem
-      CaptionOptions.Text = 'cxGrid1'
       Index = 2
     end
   end

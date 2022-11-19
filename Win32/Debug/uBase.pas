@@ -2,7 +2,7 @@ unit uBase;
 
 interface
 
-uses System.DateUtils;
+uses System.DateUtils, System.SysUtils, System.Variants, System.Classes;
 
 type
   TBase = class
@@ -39,6 +39,9 @@ type
     function Clone: TBase;
     procedure LimparDados;
     destructor Free;
+
+    class function ValidaCpf( Value: string ): Boolean;
+    class function ValidaCnpj( Value: string ): Boolean;
   end;
 
 implementation
@@ -110,6 +113,132 @@ end;
 procedure TBase.setUser_Update(Value: string);
 begin
   FUser_Update := Value;
+end;
+
+class function TBase.ValidaCnpj(Value: string): Boolean;
+var
+  N1, N2, N3, N4, N5, N6, N7, N8, N9, N10, N11, N12: Integer;
+  D1, D2:                                            Integer;
+  Digitado, Calculado:                               string;
+  Aux : string;
+begin
+  Calculado := '***202';
+  Aux := StringReplace(Value, '.', '', [rfReplaceAll, rfIgnoreCase]);
+  Aux := StringReplace(Aux, '/', '', [rfReplaceAll, rfIgnoreCase]);
+  Aux := StringReplace(Aux, '-', '', [rfReplaceAll, rfIgnoreCase]);
+
+  if Length( Aux ) < 14 then
+  begin
+    Result := False;
+    Exit;
+  end
+  else
+    try
+      if StrToFloat( Aux ) = 0 then
+      begin
+        Result := False;
+        Exit;
+      end;
+    except
+    end;
+  try
+    N1  := StrToInt( Aux[ 1 ] );
+    N2  := StrToInt( Aux[ 2 ] );
+    N3  := StrToInt( Aux[ 3 ] );
+    N4  := StrToInt( Aux[ 4 ] );
+    N5  := StrToInt( Aux[ 5 ] );
+    N6  := StrToInt( Aux[ 6 ] );
+    N7  := StrToInt( Aux[ 7 ] );
+    N8  := StrToInt( Aux[ 8 ] );
+    N9  := StrToInt( Aux[ 9 ] );
+    N10 := StrToInt( Aux[ 10 ] );
+    N11 := StrToInt( Aux[ 11 ] );
+    N12 := StrToInt( Aux[ 12 ] );
+    D1  := N12 * 2 + N11 * 3 + N10 * 4 + N9 * 5 + N8 * 6 + N7 * 7 + N6 * 8 + N5 * 9 + N4 * 2 + N3 * 3 + N2 * 4 + N1 * 5;
+    D1  := 11 - ( D1 mod 11 );
+    if D1 >= 10 then
+      D1 := 0;
+    D2   := D1 * 2 + N12 * 3 + N11 * 4 + N10 * 5 + N9 * 6 + N8 * 7 + N7 * 8 + N6 * 9 + N5 * 2 + N4 * 3 + N3 * 4 + N2 * 5 + N1 * 6;
+    D2   := 11 - ( D2 mod 11 );
+    if D2 >= 10 then
+      D2      := 0;
+    Calculado := IntToStr( D1 ) + IntToStr( D2 );
+    Digitado  := Aux[ 13 ] + Aux[ 14 ];
+  except
+    // n1 := n1;
+    { result := false;
+      exit;
+      end; }
+  end;
+  if Calculado = Digitado then
+    Result := True
+  else
+    Result := False;
+end;
+
+class function TBase.ValidaCpf(Value: string): Boolean;
+var
+  N1, N2, N3, N4, N5, N6, N7, N8, N9: Integer;
+  D1, D2, Contador:                   Integer;
+  NroIguais:                          Boolean;
+  Digitado, Calculado, Aux:                string;
+begin
+  Aux := StringReplace(Value, '.', '', [rfReplaceAll, rfIgnoreCase]);
+  Aux := StringReplace(Aux, '/', '', [rfReplaceAll, rfIgnoreCase]);
+  Aux := StringReplace(Aux, '-', '', [rfReplaceAll, rfIgnoreCase]);
+
+  if ( Length( Aux ) < 11 ) then
+  begin
+    Result := False;
+    Exit;
+  end;
+
+  NroIguais := True;
+  Contador  := 1;
+  while ( Contador < 10 ) do
+  begin
+    if ( Aux[ Contador ] <> Aux[ Contador + 1 ] ) then
+      NroIguais := False;
+    Inc( Contador );
+  end;
+
+  if ( NroIguais ) then
+  begin
+    Result := False;
+    Exit;
+  end;
+
+  try
+    N1 := StrToInt( Aux[ 1 ] );
+    N2 := StrToInt( Aux[ 2 ] );
+    N3 := StrToInt( Aux[ 3 ] );
+    N4 := StrToInt( Aux[ 4 ] );
+    N5 := StrToInt( Aux[ 5 ] );
+    N6 := StrToInt( Aux[ 6 ] );
+    N7 := StrToInt( Aux[ 7 ] );
+    N8 := StrToInt( Aux[ 8 ] );
+    N9 := StrToInt( Aux[ 9 ] );
+    D1 := N9 * 2 + N8 * 3 + N7 * 4 + N6 * 5 + N5 * 6 + N4 * 7 + N3 * 8 + N2 * 9 + N1 * 10;
+    D1 := 11 - ( D1 mod 11 );
+    if D1 >= 10 then
+      D1 := 0;
+    D2   := D1 * 2 + N9 * 3 + N8 * 4 + N7 * 5 + N6 * 6 + N5 * 7 + N4 * 8 + N3 * 9 + N2 * 10 + N1 * 11;
+    D2   := 11 - ( D2 mod 11 );
+    if D2 >= 10 then
+      D2      := 0;
+    Calculado := IntToStr( D1 ) + IntToStr( D2 );
+    Digitado  := Aux[ 10 ] + Aux[ 11 ];
+  except
+    begin
+      Result := False;
+      Exit;
+    end;
+  end;
+
+  if Calculado = Digitado then
+    Result := True
+  else
+    Result := False;
 end;
 
 procedure TBase.SetDataCad(value: TDateTime);

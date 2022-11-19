@@ -7,7 +7,8 @@ uses
   Datasnap.Provider, Datasnap.DBClient, uDmConexao, uClientes, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client, uPessoas, uCidades, uCidadesDao;
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, uPessoas, uCidades, uCidadesDao,
+  uCondicaoPagamento, uCondicaoPagamentoDao;
 
 type
   TClientesDao = class(TObject)
@@ -42,7 +43,7 @@ begin
   begin
     Sql.Clear;
     sql.add('UPDATE Clientes SET Cliente = :Cliente, ENDERECO = :ENDERECO, BAIRRO = :BAIRRO, CPFCNPJ = :CPFCNPJ, RGIE = :RGIE, RAZAO_SOCIAL = :RAZAO_SOCIAL, TIPO = :TIPO, ');
-    sql.add('NUMERO = :NUMERO, COMPLEMENTO = :COMPLEMENTO, SEXO = :SEXO, ID_CIDADE = :ID_CIDADE, CEP = :CEP, TEL_FIXO = :TEL_FIXO, TEL_CEL = :TEL_CEL, DATA_NASC = :DATA_NASC, ');
+    sql.add('NUMERO = :NUMERO, COMPLEMENTO = :COMPLEMENTO, SEXO = :SEXO, ID_CIDADE = :ID_CIDADE, CEP = :CEP, TEL_FIXO = :TEL_FIXO, TEL_CEL = :TEL_CEL, DATA_NASC = :DATA_NASC, ID_CONDICAO = :ID_CONDICAO,');
     Sql.Add('USER_INSERT = :USER_INSERT, USER_UPDATE = :USER_UPDATE, DATE_INSERT = :DATE_INSERT, DATE_UPDATE = :DATE_UPDATE');
     Sql.Add(' WHERE ID = :ID');
 
@@ -110,9 +111,9 @@ begin
   with DmConexao.Qry, oCliente do
   begin
       Sql.Clear;
-      sql.add('INSERT INTO Clientes (Cliente, ENDERECO, BAIRRO, NUMERO, COMPLEMENTO, CEP, TEL_FIXO, TEL_CEL, DATA_NASC, ');
+      sql.add('INSERT INTO Clientes (Cliente, ENDERECO, BAIRRO, NUMERO, COMPLEMENTO, CEP, TEL_FIXO, TEL_CEL, DATA_NASC, ID_CONDICAO, ');
       sql.add('SEXO, CPFCNPJ, RGIE, RAZAO_SOCIAL, TIPO, ID_CIDADE, USER_INSERT,USER_UPDATE, DATE_INSERT, DATE_UPDATE)');
-      Sql.add(' VALUES (:Cliente, :ENDERECO, :BAIRRO, :NUMERO, :COMPLEMENTO, :CEP, :TEL_FIXO, :TEL_CEL, :DATA_NASC, ');
+      Sql.add(' VALUES (:Cliente, :ENDERECO, :BAIRRO, :NUMERO, :COMPLEMENTO, :CEP, :TEL_FIXO, :TEL_CEL, :DATA_NASC, :ID_CONDICAO,');
       sql.add(':SEXO, :CPFCNPJ, :RGIE, :RAZAO_SOCIAL, :TIPO, :ID_CIDADE, :USER_INSERT, :USER_UPDATE, :DATE_INSERT, :DATE_UPDATE)');
       ObjToField(oCliente, DmConexao.Qry);
       ExecSql();
@@ -140,6 +141,7 @@ begin
     paramByName('RAZAO_SOCIAL').AsString := RazaoSocial;
     paramByName('TIPO').AsInteger := Integer(Tipo);
     paramByName('ID_CIDADE').AsInteger := cidade.id;
+    paramByName('ID_CONDICAO').AsInteger := condicaopagamento.id;
     paramByName('date_insert').AsDatetime := DataCad;
     paramByName('date_update').AsDatetime := DataUltAlt;
     paramByName('User_Insert').AsString := user_insert;
@@ -182,17 +184,21 @@ end;
 function TClientesDao.Recuperar(var oCliente: TClientes): boolean;
 var CidadeAux : TCidades;
     CidadesDao: TCidadesDao;
+    CondicaoAux : TCondicaoPagamento;
+    CondicaoDao: TCondicaoPagamentoDao;
 begin
     result := False;
     with DmConexao.Qry do
     begin
       sql.clear;
       CidadeAux := TCidades.Create;
+      CondicaoAux := TCondicaoPagamento.Create;
       Sql.Add('SELECT * FROM Clientes WHERE ID = :ID');
       paramByName('ID').AsInteger := oCliente.ID;
       open;
       FieldtoObj(oCliente, DmConexao.Qry);
       CidadeAux.id := FieldbyName('Id_CIDADE').AsInteger;
+      CondicaoAux.id := FieldbyName('Id_CONDICAO').AsInteger;
       result := true;
       close;
 
@@ -203,6 +209,15 @@ begin
       finally
         CidadesDao.Free;
         CidadeAux.Free;
+      end;
+
+      CondicaoDao := TCondicaoPagamentoDao.Create;
+      try
+        CondicaoDao.Recuperar(CondicaoAux);
+        oCliente.CondicaoPagamento.CopiarDados(CondicaoAux);
+      finally
+        CondicaoDao.Free;
+        CondicaoAux.Free;
       end;
     end;
 end;

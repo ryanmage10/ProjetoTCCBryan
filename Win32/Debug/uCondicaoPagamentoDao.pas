@@ -7,7 +7,7 @@ uses
   Datasnap.Provider, Datasnap.DBClient, uDmConexao, uCondicaoPagamento, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, uParcelaModeloDao;
 
 type
   TCondicaoPagamentoDao = class(TObject)
@@ -156,6 +156,7 @@ begin
 end;
 
 function TCondicaoPagamentoDao.Recuperar(var oCondicaoPagamento: TCondicaoPagamento): boolean;
+var ParcelasDao: TParcelaModeloDao;
 begin
     result := False;
     with DmConexao.Qry do
@@ -165,8 +166,16 @@ begin
       paramByName('ID').AsInteger := oCondicaoPagamento.ID;
       open;
       FieldtoObj(oCondicaoPagamento, DmConexao.Qry);
-      result := true;
+
       close;
+
+      ParcelasDao := TParcelaModeloDao.Create;
+      try
+        ParcelasDao.RecuperarPorCondicaoPagamento(oCondicaoPagamento);
+      finally
+        ParcelasDao.Free;
+        result := true;
+      end;
     end;
 end;
 

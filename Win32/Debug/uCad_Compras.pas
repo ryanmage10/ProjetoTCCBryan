@@ -30,7 +30,7 @@ uses
   dxScrollbarAnnotations, Data.DB, cxDBData, cxGridLevel, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
   uCompras, uComprasController, Datasnap.DBClient, uCons_Fornecedores,
-  uCons_CondicaoPagamento, uItensCompra;
+  uCons_CondicaoPagamento, uItensCompra, uProdutos, uCons_Produtos, uProdutosController;
 
 type
   TCad_Compras = class(TCad_Base)
@@ -64,8 +64,6 @@ type
     dxLayoutItem22: TdxLayoutItem;
     btn_PesquisarProd: TcxButton;
     dxLayoutItem23: TdxLayoutItem;
-    edt_Qtd: TEdit;
-    dxLayoutItem24: TdxLayoutItem;
     Edt_Valor: TcxCurrencyEdit;
     dxLayoutItem25: TdxLayoutItem;
     edt_Total: TcxCurrencyEdit;
@@ -112,9 +110,7 @@ type
     Grid_ItensProdutoDBTableView1QTD: TcxGridDBColumn;
     Grid_ItensProdutoDBTableView1PRECO: TcxGridDBColumn;
     Grid_ItensProdutoDBTableView1TOTAL: TcxGridDBColumn;
-    Grid_ItensProdutoDBTableView1DESC: TcxGridDBColumn;
     Grid_ItensProdutoDBTableView1CUSTO: TcxGridDBColumn;
-    DSET_PARCELASNUMPARCELA: TStringField;
     DSET_PARCELASVENCIMENTO: TDateField;
     DSET_PARCELASVALOR: TCurrencyField;
     DSET_PARCELASFORMAPGTO: TStringField;
@@ -128,16 +124,50 @@ type
     dxLayoutItem35: TdxLayoutItem;
     btn_Excluir: TcxButton;
     dxLayoutItem36: TdxLayoutItem;
+    DSET_ITENSNUMITEM: TIntegerField;
+    edt_Qtd: TcxCurrencyEdit;
+    dxLayoutItem24: TdxLayoutItem;
+    Edt_Desconto: TcxCurrencyEdit;
+    dxLayoutItem37: TdxLayoutItem;
+    dxLayoutGroup12: TdxLayoutGroup;
+    DSET_ITENSDESCONTO: TCurrencyField;
+    Grid_ItensProdutoDBTableView1NUMITEM: TcxGridDBColumn;
+    Grid_ItensProdutoDBTableView1DESCONTO: TcxGridDBColumn;
+    DSET_PARCELASNUMPARCELA: TIntegerField;
+    edt_TotalItens: TcxCurrencyEdit;
+    dxLayoutItem38: TdxLayoutItem;
+    dxLayoutGroup4: TdxLayoutGroup;
     procedure btn_PesquisarFornClick(Sender: TObject);
     procedure btn_PesquisarCondClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure btn_InserirClick(Sender: TObject);
+    procedure btn_AlterarClick(Sender: TObject);
+    procedure btn_ExcluirClick(Sender: TObject);
+    procedure btn_PesquisarProdClick(Sender: TObject);
+    procedure btn_SalvarClick(Sender: TObject);
+    procedure Edt_ValorExit(Sender: TObject);
+    procedure edt_QtdExit(Sender: TObject);
+    procedure Edt_DescontoExit(Sender: TObject);
   private
     { Private declarations }
     ItemCompra : TItensCompra;
+    Produto: TProdutos;
+    ProdutoControl: TProdutosController;
     Alterar: boolean;
     NroParcela: Integer;
     procedure popularInterface;
+    procedure Act_AdicionarItem;
+    procedure Act_AlterarItem;
+    procedure Act_ExcluirItem;
+    function ValidarItem: boolean;
+    procedure Act_LimparCamposParcela;
+    procedure Act_PopulaCamposAlterar;
+    procedure Act_ExecutarAlteracao;
+    function validarDados: boolean;
+    procedure popularObjeto;
+    procedure CalcularTotalItem;
+    procedure RecalcularTotalItens;
   public
     { Public declarations }
     Compra : TCompras;
@@ -150,6 +180,133 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TCad_Compras.Act_AdicionarItem;
+begin
+  if ValidarItem then
+  begin
+    dset_Itens.Append;
+    dset_ItensNUMITEM.AsInteger := dset_Itens.RecordCount + 1;
+    dset_ItensCODPRODUTO.AsInteger := StrToInt(edt_CodProduto.Text);
+    dset_ItensPRODUTO.AsString := edt_Produto.Text;
+    dset_ItensUND.AsString := edt_unidProduto.text;
+    dset_ItensQTD.AsCurrency := edt_Qtd.EditValue;
+    dset_ItensPreco.AsCurrency := Edt_Valor.EditValue;
+    dset_ItensDesconto.AsCurrency := Edt_Desconto.EditValue;
+    dset_ItensTotal.AsCurrency := Edt_Total.EditValue;
+    dset_Itens.Post;
+
+    Act_LimparCamposParcela;
+    RecalcularTotalItens;
+  end;
+end;
+
+procedure TCad_Compras.Act_AlterarItem;
+begin
+  if Dset_Itens.RecordCount = 0 then
+  begin
+     ShowMessage('Erro ao alterar: Lista de Itens Vazia');
+     exit;
+  end;
+
+  if Alterar then
+    Act_PopulaCamposAlterar
+  Else
+    Act_ExecutarAlteracao;
+
+  RecalcularTotalItens;
+end;
+
+procedure TCad_Compras.Act_ExcluirItem;
+  var i: integer;
+begin
+  if Dset_Itens.RecordCount = 0 then
+  begin
+     ShowMessage('Erro ao Excluir: Lista de Itens Vazia');
+     exit;
+  end;
+
+  dset_ITENS.Delete;
+
+  dset_ITENS.First;
+  for I := 0 to dset_ITENS.RecordCount - 1 do
+  begin
+    dset_ITENS.Edit;
+    dset_ITENSNumitem.AsInteger := I+1;
+    dset_ITENS.Post;
+  end;
+
+  RecalcularTotalItens;
+end;
+
+procedure TCad_Compras.Act_ExecutarAlteracao;
+begin
+  if ValidarItem then
+  begin
+    dset_Itens.Edit;
+    dset_ItensCODPRODUTO.AsInteger := StrToInt(edt_CodProduto.Text);
+    dset_ItensPRODUTO.AsString := edt_Produto.Text;
+    dset_ItensUND.AsString := edt_unidProduto.text;
+    dset_ItensQTD.AsCurrency := edt_Qtd.EditValue;
+    dset_ItensPreco.AsCurrency := Edt_Valor.EditValue;
+    dset_ItensDesconto.AsCurrency := Edt_Desconto.EditValue;
+    dset_ItensTotal.AsCurrency := Edt_Total.EditValue;
+    dset_Itens.Post;
+
+    Alterar := True;
+    btn_Inserir.Enabled := True;
+    btn_Excluir.Enabled := True;
+    btn_salvar.Enabled := True;
+    Grid_ItensProduto.Enabled := True;
+    Act_LimparCamposParcela;
+  end;
+end;
+
+procedure TCad_Compras.Act_LimparCamposParcela;
+begin
+  ItemCompra.LimparDados;
+  edt_CodProduto.Clear;
+  edt_Produto.Clear;
+  edt_UnidProduto.Clear;
+  edt_Qtd.EditValue := 0;
+  Edt_Valor.EditValue := 0;
+  edt_Desconto.EditValue := 0;
+  edt_Total.EditValue := 0;
+end;
+
+procedure TCad_Compras.Act_PopulaCamposAlterar;
+begin
+  Grid_ItensProduto.Enabled := False;
+  //NroParcela := Dset_ParcelasNumero.AsInteger;
+  edt_CodProduto.Text := IntToStr(dset_ItensCODPRODUTO.AsInteger);
+  edt_Produto.Text := dset_ItensPRODUTO.AsString;
+  edt_unidProduto.text := dset_ItensUND.AsString;
+  edt_Qtd.EditValue := dset_ItensQTD.AsCurrency;
+  Edt_Valor.EditValue := dset_ItensPreco.AsCurrency;
+  Edt_Desconto.EditValue := dset_ItensDesconto.AsCurrency;
+  Edt_Total.EditValue := dset_ItensTotal.AsCurrency;
+  ProdutoControl.Recuperar(Produto);
+
+  Alterar := False;
+  btn_Inserir.Enabled := False;
+  btn_Excluir.Enabled := False;
+  btn_salvar.Enabled := False;
+end;
+
+procedure TCad_Compras.btn_AlterarClick(Sender: TObject);
+begin
+  Act_AlterarItem;
+end;
+
+procedure TCad_Compras.btn_ExcluirClick(Sender: TObject);
+begin
+  Act_ExcluirItem;
+end;
+
+procedure TCad_Compras.btn_InserirClick(Sender: TObject);
+begin
+  Act_AdicionarItem;
+end;
 
 procedure TCad_Compras.btn_PesquisarCondClick(Sender: TObject);
 var ConsCondicaoPagamentoForm: TCons_CondicaoPagamento;
@@ -181,6 +338,66 @@ begin
    end;
 end;
 
+procedure TCad_Compras.btn_PesquisarProdClick(Sender: TObject);
+  var ConsProdutoForm: TCons_Produtos;
+begin
+   ConsProdutoForm := TCons_Produtos.Create(nil);
+   try
+      ConsProdutoForm.Selecao := True;
+      ConsProdutoForm.ShowModal;
+      Produto := (ConsProdutoForm.Produto.clone);
+      edt_Produto.text := Produto.Descricao;
+      edt_CodProduto.text := IntToStr(Produto.ID);
+      edt_UnidProduto.Text := Produto.Unidade.sigla;
+   finally
+      FreeAndNil(ConsProdutoForm);
+   end;
+end;
+
+procedure TCad_Compras.btn_SalvarClick(Sender: TObject);
+begin
+  inherited;
+  if validarDados then
+  begin
+     popularObjeto;
+
+     if not CompraControl.VerificarExiste(Compra) then
+     begin
+       if Inclusao then
+          CompraControl.Inserir(Compra)
+       else
+          CompraControl.Alterar(Compra);
+
+       Self.Close;
+     end
+     else
+      raise Exception.Create('Já Existe uma Compra cadastrada com essa Série, modelo e número');
+  end;
+end;
+
+procedure TCad_Compras.CalcularTotalItem;
+begin
+  Edt_Total.EditValue := edt_Qtd.EditValue * Edt_Valor.EditValue - Edt_Desconto.EditValue;
+end;
+
+procedure TCad_Compras.Edt_DescontoExit(Sender: TObject);
+begin
+  inherited;
+  CalcularTotalItem;
+end;
+
+procedure TCad_Compras.edt_QtdExit(Sender: TObject);
+begin
+  inherited;
+  CalcularTotalItem;
+end;
+
+procedure TCad_Compras.Edt_ValorExit(Sender: TObject);
+begin
+  inherited;
+  CalcularTotalItem;
+end;
+
 procedure TCad_Compras.FormCreate(Sender: TObject);
 begin
   inherited;
@@ -189,6 +406,16 @@ begin
 
   ItemCompra := TItensCompra.Create;
   //ItemCompraControl := TItemCompraController.Create;
+
+  Produto := TProdutos.Create;
+  ProdutoControl := TProdutosController.Create;
+
+  edt_DataEmissao.EditValue := TDate(Now);
+  Edt_DataChegada.EditValue := TDate(Now);
+
+  edt_Frete.EditValue := 0;
+  edt_Pedagio.EditValue := 0;
+  edt_Despesas.EditValue := 0;
 
   Alterar := True;
   NroParcela := 0;
@@ -209,13 +436,16 @@ end;
 procedure TCad_Compras.FormShow(Sender: TObject);
 begin
   inherited;
+  edt_DataEmissao.EditValue := TDate(Now);
+  edt_DataChegada.EditValue := TDate(Now);
+
   if not inclusao then
     popularInterface;
 end;
 
 procedure TCad_Compras.popularInterface;
 var i: Integer;
-    //Parcela : TParcelaModelo;
+    //ItemCompra : TItensCompra;
 begin
   edt_id.text := inttostr(Compra.ID);
   edt_modelo.text := Compra.Modelo;
@@ -223,26 +453,36 @@ begin
   edt_numero.text := Compra.Numero;
   edt_codfornecedor.text := IntToStr(Compra.Fornecedor.ID);
   edt_fornecedor.text := Compra.Fornecedor.nome;
-  edt_DataEmissao.EditValue := Compra.DataEmissao;
-  edt_DataChegada.EditValue := Compra.DataChegada;
+  edt_DataEmissao.EditValue := TDate(Compra.DataEmissao);
+  edt_DataChegada.EditValue := TDate(Compra.DataChegada);
   edt_Frete.EditValue := Compra.Frete;
   edt_Pedagio.EditValue := Compra.Pedagio;
   edt_Despesas.EditValue := Compra.Despesas;
+  edt_codCondicaoPag.text := IntToStr(Compra.CondicaoPagamento.ID);
+  edt_CondicaoPag.text := Compra.CondicaoPagamento.Descricao;
 
-//  for I := 0 to CondicaoPag.ParcelaModelos.Count - 1 do
-//  begin
-//     Parcela := CondicaoPag.ParcelaModelos.Items[I];
-//     with dset_parcelas do
-//     begin
-//       Append;
-//       dset_parcelasNumero.AsInteger := Parcela.Numero;
-//       dset_parcelasPercentual.AsCurrency := Parcela.Percentual;
-//       dset_parcelasDias.AsInteger := Parcela.Dias;
-//       dset_parcelasForma_Pagamento.AsString := Parcela.FormaPag.Descricao;
-//       dset_parcelasIdForma_Pagamento.AsInteger := Parcela.FormaPag.Id;
-//       post;
-//     end;
-//  end;
+  for I := 0 to Compra.ListaItens.Count - 1 do
+  begin
+     ItemCompra := Compra.ListaItens.Items[I];
+     with DSET_ITENS do
+     begin
+       Append;
+       dset_ItensNUMITEM.AsInteger := I + 1;
+       dset_ItensCODPRODUTO.AsInteger := ItemCompra.Produto.Id;
+       dset_ItensPRODUTO.AsString := ItemCompra.Produto.Descricao;
+       dset_ItensUND.AsString := ItemCompra.Produto.Unidade.Descricao;
+       dset_ItensQTD.AsCurrency := ItemCompra.Qtd;
+       dset_ItensPreco.AsCurrency := ItemCompra.Preco;
+       dset_ItensDesconto.AsCurrency := ItemCompra.Desconto;
+       dset_ItensTotal.AsCurrency := ItemCompra.Total;
+       dset_ItensCusto.AsCurrency := ItemCompra.Custo;
+       post;
+     end;
+  end;
+  RecalcularTotalItens;
+
+  Grupo_Cad.Visible := True;
+  Grupo_Alt.Visible := True;
 
   lbl_Cad.Visible := True;
   lbl_DataCad.Visible := True;
@@ -253,4 +493,160 @@ begin
   lbl_DataAlt.Visible := True;
 end;
 
+procedure TCad_Compras.popularObjeto;
+var i : integer;
+    ItemCompra : TItensCompra;
+begin
+  Compra.Modelo := edt_modelo.Text;
+  Compra.Serie := edt_Serie.Text;
+  Compra.Numero := edt_Numero.Text;
+  Compra.DataEmissao := edt_DataEmissao.EditValue;
+  Compra.DataChegada := edt_DataChegada.EditValue;
+  Compra.Frete := edt_Frete.EditValue;
+  Compra.Pedagio := edt_Pedagio.EditValue;
+  Compra.Despesas := edt_Despesas.EditValue;
+  Compra.Total := edt_TotalLiquido.EditValue;
+
+  Compra.ListaItens.Clear;
+  dset_Itens.First;
+  for I := 0 to Dset_Itens.RecordCount - 1 do
+  begin
+     ItemCompra := TItensCompra.Create;
+     ItemCompra.Qtd := dset_ItensQTD.AsCurrency;
+     ItemCompra.Preco := dset_ItensPRECO.AsCurrency;
+     ItemCompra.Total := dset_ItensTOTAL.AsCurrency;
+     ItemCompra.Desconto := dset_ItensDESCONTO.AsCurrency;
+     ItemCompra.Custo := dset_ItensCUSTO.AsCurrency;
+     ItemCompra.Produto.ID := dset_ItensCODPRODUTO.AsInteger;
+     dset_Itens.Next;
+     Compra.ListaItens.Add(ItemCompra);
+  end;
+end;
+
+procedure TCad_Compras.RecalcularTotalItens;
+var Total : Currency;
+    I: Integer;
+begin
+  Total := 0;
+  Dset_Itens.First;
+  for I := 0 to Dset_Itens.RecordCount - 1 do
+  begin
+     Total := Total + Dset_ItensTotal.AsCurrency;
+     Dset_Itens.Next;
+  end;
+
+  edt_TotalItens.EditValue := Total;
+  edt_TotalLiquido.EditValue := Total + edt_Frete.EditValue
+  + edt_Pedagio.EditValue + edt_Despesas.EditValue;
+end;
+
+function TCad_Compras.validarDados: boolean;
+var I: Integer;
+begin
+  result := false;
+  if not (length(edt_Modelo.Text) > 0) then
+  begin
+    ShowMessage('Insira o modelo da compra');
+    edt_Modelo.setFocus;
+    exit;
+  end;
+
+  if not (length(edt_Serie.Text) > 0) then
+  begin
+    ShowMessage('Insira a serie da compra');
+    edt_Serie.setFocus;
+    exit;
+  end;
+
+  if not (length(edt_Numero.Text) > 0) then
+  begin
+    ShowMessage('Insira o numero da compra');
+    edt_Numero.setFocus;
+    exit;
+  end;
+
+  if not (length(edt_Fornecedor.Text) > 0) then
+  begin
+    ShowMessage('Insira o fornecedor da compra');
+    edt_Fornecedor.setFocus;
+    exit;
+  end;
+
+  if (edt_dataEmissao.Date < StrToDate('01/01/1922')) then
+  begin
+    ShowMessage('Insira Corretamente a data de emissão da compra');
+    edt_dataEmissao.setFocus;
+    exit;
+  end;
+
+  if (edt_dataChegada.Date < StrToDate('01/01/1922')) then
+  begin
+    ShowMessage('Insira Corretamente a data de chegada da compra');
+    edt_dataChegada.setFocus;
+    exit;
+  end;
+
+  if not (edt_Frete.EditValue >= 0) then
+  begin
+    ShowMessage('Insira um valor de Frete valído');
+    edt_Frete.setFocus;
+    exit;
+  end;
+
+  if not (edt_Pedagio.EditValue >= 0) then
+  begin
+    ShowMessage('Insira um valor de Pedagio valído');
+    edt_Pedagio.setFocus;
+    exit;
+  end;
+
+  if not (edt_Despesas.EditValue >= 0) then
+  begin
+    ShowMessage('Insira um valor de Despesas valído');
+    edt_Despesas.setFocus;
+    exit;
+  end;
+
+  if not (Dset_ITENS.RecordCount > 0) then
+  begin
+    ShowMessage('É necessario Inserir produtos na compra');
+    exit;
+  end;
+
+//  if not (Dset_Parcelas.RecordCount > 0) then
+//  begin
+//    ShowMessage('É necessario gerar as parcelas do contas a pagar');
+//    exit;
+//  end;
+
+  result := true;
+end;
+
+function TCad_Compras.ValidarItem: boolean;
+begin
+  result := False;
+
+  if not (Length(edt_CodProduto.Text) > 0)  then
+  begin
+    ShowMessage('Selecione o produto do item da compra.');
+    btn_PesquisarProd.SetFocus;
+    exit;
+  end;
+
+  if not (edt_Qtd.EditValue > 0) then
+  begin
+    ShowMessage('Informe a quantidade do item.');
+    edt_Qtd.SetFocus;
+    exit;
+  end;
+
+  if not (Edt_Valor.EditValue > 0) then
+  begin
+    ShowMessage('Informe o valor do item.');
+    Edt_Valor.SetFocus;
+    exit;
+  end;
+
+  result := True;
+end;
 end.

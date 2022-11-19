@@ -89,6 +89,9 @@ inherited Cad_Produtos: TCad_Produtos
       Left = 296
       Top = 128
       Properties.EditMask = '0000.00.00;1;_'
+      Properties.ValidationOptions = [evoAllowLoseFocus]
+      Style.BorderColor = clSkyBlue
+      Style.BorderStyle = ebs3D
       Style.HotTrack = False
       Style.TransparentBorder = False
       TabOrder = 5
@@ -171,8 +174,8 @@ inherited Cad_Produtos: TCad_Produtos
     object dxLayoutItem9: TdxLayoutItem
       Parent = dxLayoutGroup6
       AlignHorz = ahRight
-      LayoutLookAndFeel = LayoutObrigatorio
-      CaptionOptions.Text = 'NCM*'
+      LayoutLookAndFeel = LayoutPadrao
+      CaptionOptions.Text = 'NCM'
       CaptionOptions.Layout = clTop
       Control = edt_NCM
       ControlOptions.OriginalHeight = 21

@@ -144,7 +144,7 @@ begin
       end
       else
       begin
-        Sql.Add('SELECT ID, CODIGODOC, DESCRICAO, MOEDA, VALOR, TIPO, DATE_INSERT FROM Contratos WHERE Contrato LIKE :NOME');
+        Sql.Add('SELECT ID, CODIGODOC, DESCRICAO, MOEDA, VALOR, TIPO, DATE_INSERT FROM Contratos WHERE DESCRICAO LIKE :NOME');
         paramByName('NOME').AsString := '%' + Value + '%';
       end;
       open;

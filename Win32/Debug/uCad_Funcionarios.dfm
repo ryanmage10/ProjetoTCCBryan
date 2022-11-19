@@ -145,15 +145,13 @@ inherited Cad_Funcionarios: TCad_Funcionarios
     object edt_Salario: TcxCurrencyEdit [26]
       Left = 385
       Top = 330
+      EditValue = 0c
       Style.HotTrack = False
       Style.TransparentBorder = False
       TabOrder = 18
       Width = 146
     end
     inherited dxLayoutGroup3: TdxLayoutGroup
-      ItemIndex = 1
-    end
-    inherited dxLayoutGroup4: TdxLayoutGroup
       ItemIndex = 1
     end
     inherited dxLayoutGroup7: TdxLayoutGroup
@@ -170,6 +168,9 @@ inherited Cad_Funcionarios: TCad_Funcionarios
     end
     inherited dxLayoutItem17: TdxLayoutItem
       Visible = False
+    end
+    object dxLayoutGroup4: TdxLayoutGroup
+      Index = -1
     end
     object dxLayoutGroup13: TdxLayoutGroup
       Parent = dxLayoutAutoCreatedGroup1

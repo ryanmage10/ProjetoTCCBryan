@@ -176,6 +176,7 @@ begin
   with DmConexao.Qry do
   begin
     Sql.Clear;
+    CondicaoPagamento.ParcelaModelos.Clear;
     FormaPagamento := TFormaPagamento.Create;
     FormaPagamentoDao := TFormaPagamentoDao.Create;
     Sql.Add('SELECT * FROM PARCELA_MODELO WHERE ID_CONDICAO_PAGAMENTO = :ID');

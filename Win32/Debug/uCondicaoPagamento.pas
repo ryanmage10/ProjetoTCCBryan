@@ -72,7 +72,7 @@ end;
 
 destructor TCondicaoPagamento.Free;
 begin
-  FParcelaModelos.Free;
+  //FParcelaModelos.Free;
   inherited;
 end;
 
@@ -137,3 +137,4 @@ begin
 end;
 
 end.
+

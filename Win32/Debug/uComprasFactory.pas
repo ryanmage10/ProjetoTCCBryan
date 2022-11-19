@@ -1,11 +1,12 @@
 unit uComprasFactory;
 
 interface
-uses uCompras, system.SysUtils, DBClient, uComprasDao, uDmConexao;
+uses uCompras, system.SysUtils, DBClient, uComprasDao, uDmConexao, uItensCompraDao;
   type
   TComprasFactory = class(TObject)
     private
       CompraDao : TComprasDao;
+      ItensCompraDao: TItensCompraDao;
     protected
     public
       constructor create;
@@ -29,22 +30,27 @@ function TComprasFactory.Alterar(oCompra: TCompras): Boolean;
 begin
    oCompra.User_Update := 'Bryan Silva';
    oCompra.DataUltAlt := now;
-   result := CompraDao.Alterar(oCompra);
+   if ItensCompraDao.ExcluirPorCompra(oCompra.Id) then
+      if CompraDao.Alterar(oCompra) then
+        result := ItensCompraDao.InserirItens(oCompra.ListaItens);
 end;
 
 constructor TComprasFactory.create;
 begin
    CompraDao := TComprasDao.Create;
+   ItensCompraDao := TItensCompraDao.Create;
 end;
 
 function TComprasFactory.Excluir(oCompra: TCompras): Boolean;
 begin
-   result := CompraDao.Excluir(oCompra);
+  if ItensCompraDao.ExcluirPorCompra(oCompra.Id) then
+    result := CompraDao.Excluir(oCompra);
 end;
 
 destructor TComprasFactory.free;
 begin
    freeandnil(CompraDao);
+   freeandnil(ItensCompraDao);
 end;
 
 function TComprasFactory.Inserir(oCompra: TCompras): Boolean;
@@ -53,7 +59,8 @@ begin
    oCompra.User_Update := 'Bryan';
    oCompra.DataCad := now;
    oCompra.DataUltAlt := now;
-   result := CompraDao.Inserir(oCompra);
+   if CompraDao.Inserir(oCompra) then
+    result := ItensCompraDao.InserirItens(oCompra.ListaItens);
 end;
 
 procedure TComprasFactory.Pesquisar(sNome: string; var Dset: TClientDataSet);
@@ -63,7 +70,9 @@ end;
 
 function TComprasFactory.Recuperar(var oCompra: TCompras): Boolean;
 begin
-   result := CompraDao.Recuperar(oCompra);
+   //result := CompraDao.Recuperar(oCompra);
+   if CompraDao.Recuperar(oCompra) then
+      result := ItensCompraDao.RecuperarPorCompra(oCompra);
 end;
 
 function TComprasFactory.VerificarExclusao(Value: TCompras): boolean;

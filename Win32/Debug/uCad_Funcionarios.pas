@@ -27,7 +27,7 @@ uses
   cxDateUtils, dxLayoutcxEditAdapters, dxLayoutControlAdapters, cxClasses,
   dxLayoutLookAndFeels, dxLayoutContainer, cxGroupBox, cxRadioGroup,
   cxDropDownEdit, cxCalendar, cxMaskEdit, cxLabel, cxButtons, cxTextEdit,
-  dxLayoutControl, cxCurrencyEdit;
+  dxLayoutControl, cxCurrencyEdit, uBase;
 
 type
   TCad_Funcionarios = class(TCad_Pessoa)
@@ -129,6 +129,7 @@ end;
 procedure TCad_Funcionarios.FormShow(Sender: TObject);
 begin
   inherited;
+  edt_dataNasc.EditValue := TDate(Now);
   if not inclusao then
     popularInterface;
 end;
@@ -153,6 +154,9 @@ begin
   edt_Salario.EditValue := Funcionario.Salario;
   rg_sexo.ItemIndex := Integer(Funcionario.Sexo);
   Edt_DataNasc.Date := Funcionario.DtNasc;
+
+  Grupo_Cad.Visible := True;
+  Grupo_Alt.Visible := True;
 
   lbl_Cad.Visible := True;
   lbl_DataCad.Visible := True;
@@ -199,54 +203,54 @@ begin
     exit;
   end;
 
-  if (edt_CPFCNPJ.Text = '   .   .   -  ') then
+  if ((edt_CPFCNPJ.Text = '   .   .   -  ') or (not TBase.ValidaCpf(edt_CPFCNPJ.EditValue))) then
     begin
       ShowMessage('Insira o CPF do funcionário');
       edt_CPFCNPJ.setFocus;
       exit;
     end;
 
-    if (edt_RGIE.Text = '  .   .   - ') then
-    begin
-      ShowMessage('Insira o RG do funcionário');
-      edt_RGIE.setFocus;
-      exit;
-    end;
+//    if (edt_RGIE.Text = '  .   .   - ') then
+//    begin
+//      ShowMessage('Insira o RG do funcionário');
+//      edt_RGIE.setFocus;
+//      exit;
+//    end;
 
-  if not (length(edt_Logradouro.Text) > 0) then
-  begin
-    ShowMessage('Insira o Logradouro do funcionário');
-    edt_Logradouro.setFocus;
-    exit;
-  end;
-
-  if not (length(edt_numero.Text) > 0) then
-  begin
-    ShowMessage('Insira o Numero do funcionário');
-    edt_numero.setFocus;
-    exit;
-  end;
-
-  if not (length(edt_CEP.Text) > 0) then
-  begin
-    ShowMessage('Insira o CEP do funcionário');
-    edt_CEP.setFocus;
-    exit;
-  end;
-
-  if not (length(edt_Bairro.Text) > 0) then
-  begin
-    ShowMessage('Insira o Bairro do funcionário');
-     edt_Bairro.setFocus;
-    exit;
-  end;
-
-  if not (length(edt_Tel_Fixo.Text) > 0) then
-  begin
-    ShowMessage('Insira o Telefone Fixo do funcionário');
-    edt_Tel_Fixo.setFocus;
-    exit;
-  end;
+//  if not (length(edt_Logradouro.Text) > 0) then
+//  begin
+//    ShowMessage('Insira o Logradouro do funcionário');
+//    edt_Logradouro.setFocus;
+//    exit;
+//  end;
+//
+//  if not (length(edt_numero.Text) > 0) then
+//  begin
+//    ShowMessage('Insira o Numero do funcionário');
+//    edt_numero.setFocus;
+//    exit;
+//  end;
+//
+//  if not (length(edt_CEP.Text) > 0) then
+//  begin
+//    ShowMessage('Insira o CEP do funcionário');
+//    edt_CEP.setFocus;
+//    exit;
+//  end;
+//
+//  if not (length(edt_Bairro.Text) > 0) then
+//  begin
+//    ShowMessage('Insira o Bairro do funcionário');
+//     edt_Bairro.setFocus;
+//    exit;
+//  end;
+//
+//  if not (length(edt_Tel_Fixo.Text) > 0) then
+//  begin
+//    ShowMessage('Insira o Telefone Fixo do funcionário');
+//    edt_Tel_Fixo.setFocus;
+//    exit;
+//  end;
 
   if not (length(edt_Tel_Cel.Text) > 0) then
   begin
@@ -258,6 +262,13 @@ begin
   if not (length(edt_Cidade.Text) > 0) then
   begin
     ShowMessage('Insira a Cidade do funcionário');
+    btn_Pesquisar.setFocus;
+    exit;
+  end;
+
+  if not (length(edt_Empresa.Text) > 0) then
+  begin
+    ShowMessage('Insira a Empresa do funcionário');
     btn_Pesquisar.setFocus;
     exit;
   end;

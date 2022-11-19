@@ -39,6 +39,9 @@ inherited Cad_Empresa: TCad_Empresa
     inherited dxLayoutItem17: TdxLayoutItem
       Visible = False
     end
+    inherited LayoutSexo: TdxLayoutItem
+      Visible = False
+    end
     object dxLayoutItem18: TdxLayoutItem
       Visible = False
       Index = -1

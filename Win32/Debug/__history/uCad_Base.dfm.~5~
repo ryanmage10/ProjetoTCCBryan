@@ -1,0 +1,247 @@
+object Cad_Base: TCad_Base
+  Left = 0
+  Top = 0
+  Caption = 'Cad_Base'
+  ClientHeight = 277
+  ClientWidth = 447
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object dxLayoutControl1: TdxLayoutControl
+    Left = 0
+    Top = 0
+    Width = 447
+    Height = 277
+    Align = alClient
+    TabOrder = 0
+    object edt_Id: TcxTextEdit
+      Left = 10
+      Top = 29
+      Enabled = False
+      Properties.AutoSelect = False
+      Properties.HideSelection = False
+      Properties.ReadOnly = True
+      Style.HotTrack = False
+      Style.TransparentBorder = False
+      StyleDisabled.BorderColor = clMenuText
+      StyleDisabled.Color = clWindow
+      StyleDisabled.TextColor = clWindowText
+      StyleDisabled.TextStyle = []
+      StyleHot.BorderColor = clWindowFrame
+      TabOrder = 0
+      Text = '0'
+      Width = 55
+    end
+    object btn_Salvar: TcxButton
+      Left = 281
+      Top = 235
+      Width = 75
+      Height = 25
+      Caption = 'Salvar'
+      TabOrder = 1
+    end
+    object btn_Cancelar: TcxButton
+      Left = 362
+      Top = 235
+      Width = 75
+      Height = 25
+      Caption = 'Cancelar'
+      TabOrder = 2
+      OnClick = btn_CancelarClick
+    end
+    object Lbl_Alt: TcxLabel
+      Left = 10
+      Top = 254
+      Caption = 'Ultima Alteracao em:'
+      ParentColor = False
+      Style.Color = clGradientInactiveCaption
+      Style.HotTrack = False
+      Style.TransparentBorder = False
+    end
+    object lbl_Cad: TcxLabel
+      Left = 10
+      Top = 235
+      Caption = 'Cadastrado em:'
+      ParentColor = False
+      Style.Color = clGradientInactiveCaption
+      Style.HotTrack = False
+      Style.TransparentBorder = False
+      StyleDisabled.Color = clSkyBlue
+    end
+    object lbl_DataCad: TcxLabel
+      Left = 93
+      Top = 235
+      Caption = '0'
+      ParentColor = False
+      Style.Color = clGradientInactiveCaption
+      Style.HotTrack = False
+      Style.TransparentBorder = False
+    end
+    object lbl_DataAlt: TcxLabel
+      Left = 115
+      Top = 254
+      Caption = '0'
+      ParentColor = False
+      Style.Color = clGradientInactiveCaption
+      Style.HotTrack = False
+      Style.TransparentBorder = False
+    end
+    object dxLayoutControl1Group_Root: TdxLayoutGroup
+      AlignHorz = ahClient
+      AlignVert = avClient
+      LayoutLookAndFeel = LayoutPadrao
+      Hidden = True
+      ItemIndex = 1
+      ShowBorder = False
+      Index = -1
+    end
+    object dxLayoutGroup1: TdxLayoutGroup
+      Parent = dxLayoutControl1Group_Root
+      AlignHorz = ahClient
+      AlignVert = avTop
+      CaptionOptions.Text = 'New Group'
+      LayoutDirection = ldHorizontal
+      ShowBorder = False
+      Index = 0
+    end
+    object dxLayoutItem1: TdxLayoutItem
+      CaptionOptions.Text = 'New Item'
+      Index = -1
+    end
+    object dxLayoutGroup2: TdxLayoutGroup
+      Parent = dxLayoutControl1Group_Root
+      AlignHorz = ahClient
+      AlignVert = avBottom
+      CaptionOptions.Text = 'New Group'
+      ItemIndex = 2
+      LayoutDirection = ldHorizontal
+      ShowBorder = False
+      Index = 1
+    end
+    object dxLayoutItem2: TdxLayoutItem
+      Parent = dxLayoutGroup1
+      LayoutLookAndFeel = LayoutObrigatorio
+      CaptionOptions.Text = 'ID*'
+      CaptionOptions.Layout = clTop
+      Control = edt_Id
+      ControlOptions.OriginalHeight = 21
+      ControlOptions.OriginalWidth = 55
+      ControlOptions.ShowBorder = False
+      Enabled = False
+      Index = 0
+    end
+    object dxLayoutItem3: TdxLayoutItem
+      Parent = dxLayoutGroup2
+      AlignHorz = ahRight
+      CaptionOptions.Text = 'cxButton1'
+      CaptionOptions.Visible = False
+      Control = btn_Salvar
+      ControlOptions.OriginalHeight = 25
+      ControlOptions.OriginalWidth = 75
+      ControlOptions.ShowBorder = False
+      Index = 0
+    end
+    object dxLayoutItem4: TdxLayoutItem
+      Parent = dxLayoutGroup2
+      AlignHorz = ahRight
+      CaptionOptions.Text = 'cxButton2'
+      CaptionOptions.Visible = False
+      Control = btn_Cancelar
+      ControlOptions.OriginalHeight = 25
+      ControlOptions.OriginalWidth = 75
+      ControlOptions.ShowBorder = False
+      Index = 1
+    end
+    object dxLayoutItem5: TdxLayoutItem
+      Parent = dxLayoutGroup5
+      CaptionOptions.Text = 'cxLabel1'
+      CaptionOptions.Visible = False
+      Control = Lbl_Alt
+      ControlOptions.OriginalHeight = 13
+      ControlOptions.OriginalWidth = 99
+      ControlOptions.ShowBorder = False
+      Index = 0
+    end
+    object dxLayoutItem6: TdxLayoutItem
+      Parent = dxLayoutGroup4
+      CaptionOptions.Text = 'cxLabel2'
+      CaptionOptions.Visible = False
+      Control = lbl_Cad
+      ControlOptions.OriginalHeight = 13
+      ControlOptions.OriginalWidth = 77
+      ControlOptions.ShowBorder = False
+      Index = 0
+    end
+    object dxLayoutGroup3: TdxLayoutGroup
+      Parent = dxLayoutGroup2
+      CaptionOptions.Text = 'New Group'
+      ShowBorder = False
+      Index = 2
+    end
+    object dxLayoutGroup4: TdxLayoutGroup
+      Parent = dxLayoutGroup3
+      CaptionOptions.Text = 'New Group'
+      LayoutDirection = ldHorizontal
+      ShowBorder = False
+      Index = 0
+    end
+    object dxLayoutGroup5: TdxLayoutGroup
+      Parent = dxLayoutGroup3
+      CaptionOptions.Text = 'New Group'
+      ItemIndex = 1
+      LayoutDirection = ldHorizontal
+      ShowBorder = False
+      Index = 1
+    end
+    object dxLayoutItem7: TdxLayoutItem
+      Parent = dxLayoutGroup4
+      CaptionOptions.Text = 'cxLabel3'
+      CaptionOptions.Visible = False
+      Control = lbl_DataCad
+      ControlOptions.OriginalHeight = 13
+      ControlOptions.OriginalWidth = 6
+      ControlOptions.ShowBorder = False
+      Index = 1
+    end
+    object dxLayoutItem8: TdxLayoutItem
+      Parent = dxLayoutGroup5
+      CaptionOptions.Text = 'cxLabel4'
+      CaptionOptions.Visible = False
+      Control = lbl_DataAlt
+      ControlOptions.OriginalHeight = 13
+      ControlOptions.OriginalWidth = 6
+      ControlOptions.ShowBorder = False
+      Index = 1
+    end
+  end
+  object dxLayoutLookAndFeelList1: TdxLayoutLookAndFeelList
+    Left = 344
+    object LayoutObrigatorio: TdxLayoutCxLookAndFeel
+      ItemOptions.CaptionOptions.Font.Charset = DEFAULT_CHARSET
+      ItemOptions.CaptionOptions.Font.Color = clDefault
+      ItemOptions.CaptionOptions.Font.Height = -11
+      ItemOptions.CaptionOptions.Font.Name = 'Tahoma'
+      ItemOptions.CaptionOptions.Font.Style = [fsBold]
+      ItemOptions.CaptionOptions.TextColor = clRed
+      ItemOptions.CaptionOptions.UseDefaultFont = False
+      PixelsPerInch = 96
+    end
+    object LayoutPadrao: TdxLayoutStandardLookAndFeel
+      GroupOptions.Color = clSkyBlue
+      ItemOptions.CaptionOptions.Font.Charset = DEFAULT_CHARSET
+      ItemOptions.CaptionOptions.Font.Color = clWindowText
+      ItemOptions.CaptionOptions.Font.Height = -11
+      ItemOptions.CaptionOptions.Font.Name = 'Tahoma'
+      ItemOptions.CaptionOptions.Font.Style = [fsBold]
+      ItemOptions.CaptionOptions.UseDefaultFont = False
+      ItemOptions.ControlBorderColor = clSkyBlue
+      PixelsPerInch = 96
+    end
+  end
+end

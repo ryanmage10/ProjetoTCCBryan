@@ -159,7 +159,7 @@ object Cad_Base: TCad_Base
       Index = 1
     end
     object dxLayoutItem5: TdxLayoutItem
-      Parent = dxLayoutGroup5
+      Parent = Grupo_Alt
       CaptionOptions.Text = 'cxLabel1'
       CaptionOptions.Visible = False
       Control = Lbl_Alt
@@ -169,7 +169,7 @@ object Cad_Base: TCad_Base
       Index = 0
     end
     object dxLayoutItem6: TdxLayoutItem
-      Parent = dxLayoutGroup4
+      Parent = Grupo_Cad
       CaptionOptions.Text = 'cxLabel2'
       CaptionOptions.Visible = False
       Control = lbl_Cad
@@ -184,23 +184,25 @@ object Cad_Base: TCad_Base
       ShowBorder = False
       Index = 2
     end
-    object dxLayoutGroup4: TdxLayoutGroup
+    object Grupo_Cad: TdxLayoutGroup
       Parent = dxLayoutGroup3
       CaptionOptions.Text = 'New Group'
+      Visible = False
       LayoutDirection = ldHorizontal
       ShowBorder = False
       Index = 0
     end
-    object dxLayoutGroup5: TdxLayoutGroup
+    object Grupo_Alt: TdxLayoutGroup
       Parent = dxLayoutGroup3
       CaptionOptions.Text = 'New Group'
+      Visible = False
       ItemIndex = 1
       LayoutDirection = ldHorizontal
       ShowBorder = False
       Index = 1
     end
     object dxLayoutItem7: TdxLayoutItem
-      Parent = dxLayoutGroup4
+      Parent = Grupo_Cad
       CaptionOptions.Text = 'cxLabel3'
       CaptionOptions.Visible = False
       Control = lbl_DataCad
@@ -210,7 +212,7 @@ object Cad_Base: TCad_Base
       Index = 1
     end
     object dxLayoutItem8: TdxLayoutItem
-      Parent = dxLayoutGroup5
+      Parent = Grupo_Alt
       CaptionOptions.Text = 'cxLabel4'
       CaptionOptions.Visible = False
       Control = lbl_DataAlt

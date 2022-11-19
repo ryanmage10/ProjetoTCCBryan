@@ -126,6 +126,9 @@ begin
   edt_moeda.text := Caixa.Moeda;
   edt_Empresa.text := Caixa.Empresa.Nome;
 
+  Grupo_Cad.Visible := True;
+  Grupo_Alt.Visible := True;
+
   lbl_Cad.Visible := True;
   lbl_DataCad.Visible := True;
   lbl_DataCad.Caption := Caixa.User_Insert + '-' + DatetoStr(Caixa.DataCad);

@@ -70,6 +70,8 @@ inherited Cad_Paises: TCad_Paises
       Top = 75
       Properties.CharCase = ecUpperCase
       Properties.MaxLength = 3
+      Style.BorderColor = clSkyBlue
+      Style.BorderStyle = ebs3D
       Style.HotTrack = False
       Style.TransparentBorder = False
       TabOrder = 3
@@ -115,8 +117,8 @@ inherited Cad_Paises: TCad_Paises
     object dxLayoutItem11: TdxLayoutItem
       Parent = dxLayoutGroup6
       AlignHorz = ahRight
-      LayoutLookAndFeel = LayoutObrigatorio
-      CaptionOptions.Text = 'DDI*'
+      LayoutLookAndFeel = LayoutPadrao
+      CaptionOptions.Text = 'DDI'
       CaptionOptions.Layout = clTop
       Control = edt_DDI
       ControlOptions.OriginalHeight = 21

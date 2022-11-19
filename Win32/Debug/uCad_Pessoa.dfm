@@ -45,6 +45,7 @@ inherited Cad_Pessoa: TCad_Pessoa
       Left = 10
       Top = 90
       Properties.CharCase = ecUpperCase
+      Properties.MaxLength = 50
       Style.HotTrack = False
       Style.TransparentBorder = False
       TabOrder = 2
@@ -54,6 +55,9 @@ inherited Cad_Pessoa: TCad_Pessoa
       Left = 258
       Top = 90
       Properties.CharCase = ecUpperCase
+      Properties.MaxLength = 30
+      Style.BorderColor = clSkyBlue
+      Style.BorderStyle = ebs3D
       Style.HotTrack = False
       Style.TransparentBorder = False
       TabOrder = 3
@@ -63,6 +67,9 @@ inherited Cad_Pessoa: TCad_Pessoa
       Left = 10
       Top = 192
       Properties.CharCase = ecUpperCase
+      Properties.MaxLength = 50
+      Style.BorderColor = clSkyBlue
+      Style.BorderStyle = ebs3D
       Style.HotTrack = False
       Style.TransparentBorder = False
       TabOrder = 8
@@ -71,7 +78,11 @@ inherited Cad_Pessoa: TCad_Pessoa
     object edt_CPFCNPJ: TcxMaskEdit [10]
       Left = 10
       Top = 146
+      Properties.AlwaysShowBlanksAndLiterals = True
+      Properties.IgnoreMaskBlank = True
       Properties.EditMask = '000\.000\.000-00;1;_'
+      Properties.ValidateOnEnter = False
+      Properties.ValidationOptions = [evoAllowLoseFocus]
       Style.HotTrack = False
       Style.TransparentBorder = False
       TabOrder = 5
@@ -81,7 +92,12 @@ inherited Cad_Pessoa: TCad_Pessoa
     object edt_RGIE: TcxMaskEdit [11]
       Left = 258
       Top = 146
+      Properties.AlwaysShowBlanksAndLiterals = True
       Properties.EditMask = '00\.000\.000-0;1;_'
+      Properties.ValidateOnEnter = False
+      Properties.ValidationOptions = [evoAllowLoseFocus]
+      Style.BorderColor = clSkyBlue
+      Style.BorderStyle = ebs3D
       Style.HotTrack = False
       Style.TransparentBorder = False
       TabOrder = 6
@@ -102,6 +118,9 @@ inherited Cad_Pessoa: TCad_Pessoa
       Left = 258
       Top = 192
       Properties.CharCase = ecUpperCase
+      Properties.MaxLength = 6
+      Style.BorderColor = clSkyBlue
+      Style.BorderStyle = ebs3D
       Style.HotTrack = False
       Style.TransparentBorder = False
       TabOrder = 9
@@ -110,7 +129,12 @@ inherited Cad_Pessoa: TCad_Pessoa
     object edt_Cep: TcxMaskEdit [14]
       Left = 385
       Top = 192
+      Properties.AlwaysShowBlanksAndLiterals = True
       Properties.EditMask = '00000\-000;1;_'
+      Properties.ValidateOnEnter = False
+      Properties.ValidationOptions = [evoAllowLoseFocus]
+      Style.BorderColor = clSkyBlue
+      Style.BorderStyle = ebs3D
       Style.HotTrack = False
       Style.TransparentBorder = False
       TabOrder = 10
@@ -171,6 +195,9 @@ inherited Cad_Pessoa: TCad_Pessoa
       Left = 10
       Top = 238
       Properties.CharCase = ecUpperCase
+      Properties.MaxLength = 30
+      Style.BorderColor = clSkyBlue
+      Style.BorderStyle = ebs3D
       Style.HotTrack = False
       Style.TransparentBorder = False
       TabOrder = 11
@@ -180,6 +207,7 @@ inherited Cad_Pessoa: TCad_Pessoa
       Left = 360
       Top = 238
       Properties.CharCase = ecUpperCase
+      Properties.MaxLength = 30
       Style.BorderColor = clSkyBlue
       Style.BorderStyle = ebs3D
       Style.HotTrack = False
@@ -219,6 +247,10 @@ inherited Cad_Pessoa: TCad_Pessoa
       Left = 10
       Top = 330
       Properties.EditMask = '!\(99\)00000-0000;1;_'
+      Properties.ValidateOnEnter = False
+      Properties.ValidationOptions = [evoAllowLoseFocus]
+      Style.BorderColor = clSkyBlue
+      Style.BorderStyle = ebs3D
       Style.HotTrack = False
       Style.TransparentBorder = False
       TabOrder = 16
@@ -229,6 +261,8 @@ inherited Cad_Pessoa: TCad_Pessoa
       Left = 261
       Top = 330
       Properties.EditMask = '!\(99\)00000-0000;1;_'
+      Properties.ValidateOnEnter = False
+      Properties.ValidationOptions = [evoAllowLoseFocus]
       Style.HotTrack = False
       Style.TransparentBorder = False
       TabOrder = 17
@@ -303,8 +337,8 @@ inherited Cad_Pessoa: TCad_Pessoa
     object lbl_RazaoSocial: TdxLayoutItem
       Parent = dxLayoutGroup7
       AlignHorz = ahClient
-      LayoutLookAndFeel = LayoutObrigatorio
-      CaptionOptions.Text = 'Raz'#227'o Social*'
+      LayoutLookAndFeel = LayoutPadrao
+      CaptionOptions.Text = 'Raz'#227'o Social'
       CaptionOptions.Layout = clTop
       Control = edt_Razao_Social
       ControlOptions.OriginalHeight = 21
@@ -315,8 +349,8 @@ inherited Cad_Pessoa: TCad_Pessoa
     object lbl_logradouro: TdxLayoutItem
       Parent = dxLayoutGroup9
       AlignHorz = ahClient
-      LayoutLookAndFeel = LayoutObrigatorio
-      CaptionOptions.Text = 'Logradouro*'
+      LayoutLookAndFeel = LayoutPadrao
+      CaptionOptions.Text = 'Logradouro'
       CaptionOptions.Layout = clTop
       Control = edt_Logradouro
       ControlOptions.OriginalHeight = 21
@@ -339,8 +373,8 @@ inherited Cad_Pessoa: TCad_Pessoa
     object lbl_RGIE: TdxLayoutItem
       Parent = dxLayoutGroup8
       AlignHorz = ahRight
-      LayoutLookAndFeel = LayoutObrigatorio
-      CaptionOptions.Text = 'RG*'
+      LayoutLookAndFeel = LayoutPadrao
+      CaptionOptions.Text = 'RG'
       CaptionOptions.Layout = clTop
       Control = edt_RGIE
       ControlOptions.OriginalHeight = 21
@@ -363,8 +397,8 @@ inherited Cad_Pessoa: TCad_Pessoa
     object lbl_numero: TdxLayoutItem
       Parent = dxLayoutGroup9
       AlignHorz = ahRight
-      LayoutLookAndFeel = LayoutObrigatorio
-      CaptionOptions.Text = 'N'#250'mero*'
+      LayoutLookAndFeel = LayoutPadrao
+      CaptionOptions.Text = 'N'#250'mero'
       CaptionOptions.Layout = clTop
       Control = edt_numero
       ControlOptions.OriginalHeight = 21
@@ -375,8 +409,8 @@ inherited Cad_Pessoa: TCad_Pessoa
     object lbl_Cep: TdxLayoutItem
       Parent = dxLayoutGroup9
       AlignHorz = ahRight
-      LayoutLookAndFeel = LayoutObrigatorio
-      CaptionOptions.Text = 'CEP*'
+      LayoutLookAndFeel = LayoutPadrao
+      CaptionOptions.Text = 'CEP'
       CaptionOptions.Layout = clTop
       Control = edt_Cep
       ControlOptions.OriginalHeight = 21
@@ -412,8 +446,8 @@ inherited Cad_Pessoa: TCad_Pessoa
     object lbl_Bairro: TdxLayoutItem
       Parent = dxLayoutGroup10
       AlignHorz = ahClient
-      LayoutLookAndFeel = LayoutObrigatorio
-      CaptionOptions.Text = 'Bairro*'
+      LayoutLookAndFeel = LayoutPadrao
+      CaptionOptions.Text = 'Bairro'
       CaptionOptions.Layout = clTop
       Control = edt_Bairro
       ControlOptions.OriginalHeight = 21
@@ -471,8 +505,8 @@ inherited Cad_Pessoa: TCad_Pessoa
     object lbl_Tel_Fixo: TdxLayoutItem
       Parent = dxLayoutGroup12
       AlignHorz = ahClient
-      LayoutLookAndFeel = LayoutObrigatorio
-      CaptionOptions.Text = 'Telefone Fixo*'
+      LayoutLookAndFeel = LayoutPadrao
+      CaptionOptions.Text = 'Telefone Fixo'
       CaptionOptions.Layout = clTop
       Control = edt_Tel_Fixo
       ControlOptions.OriginalHeight = 21

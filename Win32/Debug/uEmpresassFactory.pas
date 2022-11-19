@@ -15,7 +15,7 @@ uses uEmpresas, system.SysUtils, DBClient, uEmpresasDao, uDmConexao;
       function Excluir(oEmpresa: TEmpresas):Boolean;
       function Recuperar(var oEmpresa: TEmpresas):Boolean;
       procedure Pesquisar(sNome: string; var Dset: TClientDataSet);
-      function VerificarNome(Value: TEmpresas): boolean;
+      function VerificarCPFCNPJ(Value: TEmpresas): boolean;
       function VerificarExclusao(Value: TEmpresas): boolean;
   end;
 
@@ -71,9 +71,9 @@ begin
    result :=  EmpresaDao.VerificarExclusao(Value);
 end;
 
-function TEmpresasFactory.VerificarNome(Value: TEmpresas): boolean;
+function TEmpresasFactory.VerificarCPFCNPJ(Value: TEmpresas): boolean;
 begin
-   result := EmpresaDao.VerificarNome(Value);
+   result := EmpresaDao.VerificarCPFCNPJ(Value);
 end;
 
 end.

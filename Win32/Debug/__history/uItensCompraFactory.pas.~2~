@@ -1,0 +1,77 @@
+unit uItensCompraFactory;
+
+interface
+uses uItensCompra, system.SysUtils, DBClient, uItensCompraDao, uDmConexao,
+System.Generics.Collections, uCondicaoPagamento;
+  type
+  TItensCompraFactory = class(TObject)
+    private
+      ItensCompraDao : TItensCompraDao;
+    protected
+    public
+      constructor create;
+      destructor free;
+      function Inserir(oItensCompra: TItensCompra):Boolean;
+      function InserirParcelas(ListaParcelas: TList<TItensCompra>): boolean;
+      function Excluir(oItensCompra: TItensCompra):Boolean;
+      function ExcluirPorCondicaoPagamento(Id: Integer): Boolean;
+      function Recuperar(var oItensCompra: TItensCompra):Boolean;
+      function RecuperarPorCondicaoPagamento(Var CondicaoPagamento: TCondicaoPagamento): boolean;
+  end;
+
+  var
+  ItensCompraFactory: TItensCompraFactory;
+implementation
+
+{ TItensCompraFactory }
+
+
+
+constructor TItensCompraFactory.create;
+begin
+   ItensCompraDao := TItensCompraDao.Create;
+end;
+
+function TItensCompraFactory.Excluir(oItensCompra: TItensCompra): Boolean;
+begin
+   result := ItensCompraDao.Excluir(oItensCompra);
+end;
+
+function TItensCompraFactory.ExcluirPorCondicaoPagamento(
+  Id: Integer): Boolean;
+begin
+  result := ItensCompraDao.ExcluirPorCondicaoPagamento(Id);
+end;
+
+destructor TItensCompraFactory.free;
+begin
+   freeandnil(ItensCompraDao);
+end;
+
+function TItensCompraFactory.Inserir(oItensCompra: TItensCompra): Boolean;
+begin
+   oItensCompra.User_Insert := 'Bryan';
+   oItensCompra.User_Update := 'Bryan';
+   oItensCompra.DataCad := now;
+   oItensCompra.DataUltAlt := now;
+   result := ItensCompraDao.Inserir(oItensCompra);
+end;
+
+function TItensCompraFactory.InserirParcelas(
+  ListaParcelas: TList<TItensCompra>): boolean;
+begin
+  result := ItensCompraDao.InserirParcelas(ListaParcelas);
+end;
+
+function TItensCompraFactory.Recuperar(var oItensCompra: TItensCompra): Boolean;
+begin
+   result := ItensCompraDao.Recuperar(oItensCompra);
+end;
+
+function TItensCompraFactory.RecuperarPorCondicaoPagamento(
+  var CondicaoPagamento: TCondicaoPagamento): boolean;
+begin
+   result := ItensCompraDao.RecuperarPorCondicaoPagamento(CondicaoPagamento);
+end;
+
+end.

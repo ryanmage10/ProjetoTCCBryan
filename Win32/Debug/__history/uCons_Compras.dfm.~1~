@@ -1,0 +1,5 @@
+inherited Cons_Compras: TCons_Compras
+  Caption = 'Cons_Compras'
+  PixelsPerInch = 96
+  TextHeight = 13
+end

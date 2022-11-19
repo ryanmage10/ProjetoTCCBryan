@@ -103,6 +103,9 @@ begin
     edt_sigla.text := Pais.sigla;
     edt_DDI.text := Pais.DDI;
 
+    Grupo_Cad.Visible := True;
+    Grupo_Alt.Visible := True;
+
     lbl_Cad.Visible := True;
     lbl_DataCad.Visible := True;
     lbl_DataCad.Caption := Pais.User_Insert + '-' + DatetoStr(Pais.DataCad);

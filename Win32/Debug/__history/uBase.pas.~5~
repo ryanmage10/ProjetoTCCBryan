@@ -1,0 +1,255 @@
+unit uBase;
+
+interface
+
+uses System.DateUtils, System.SysUtils, System.Variants, System.Classes;
+
+type
+  TBase = class
+  private
+
+  protected
+    FID: integer;
+    FDataCad: TDateTime;
+    FDataUltAlt: TDateTime;
+    Fuser_insert: string;
+    Fuser_update: string;
+
+    function GetID: integer;
+    function GetDataCad: TDateTime;
+    function GetDataUltAlt: TDateTime;
+    function GetUser_Insert: string;
+    function GetUser_Update: string;
+    procedure SetID(value: integer);
+    procedure SetDataCad(value: TDateTime);
+    procedure SetDataUltAlt(value: TDateTime);
+    procedure setUser_insert(Value: string);
+    procedure setUser_Update(Value: string);
+
+  public
+
+    property ID: integer read GetID write SetID;
+    property DataCad: TDateTime read GetDataCad write SetDataCad;
+    property DataUltAlt: TDateTime read GetDataUltAlt write SetDataUltAlt;
+    property User_Insert: string read GetUser_Insert write SetUser_Insert;
+    property User_Update: string read GetUser_Update write SetUser_Update;
+
+    constructor Create;
+    procedure copiarDados(value: TBase);
+    function Clone: TBase;
+    procedure LimparDados;
+    destructor Free;
+
+    class function ValidaCpf( Value: string ): Boolean;
+    class function ValidaCnpj( Value: string ): Boolean;
+  end;
+
+implementation
+
+constructor TBase.Create;
+begin
+  LimparDados;
+end;
+
+procedure TBase.LimparDados;
+begin
+  FID := 0;
+  FDataCad := 0;
+  FDataUltAlt := 0;
+  FUser_Insert := '';
+  FUser_Update := '';
+end;
+
+procedure TBase.copiarDados(value: TBase);
+begin
+  ID := value.ID;
+  DataCad := value.DataCad;
+  DataUltAlt := value.DataUltAlt;
+  User_Insert := Value.User_Insert;
+  User_Update := Value.User_Update;
+end;
+
+function TBase.Clone: TBase;
+begin
+  result := TBase.Create;
+  result.copiarDados(Self);
+end;
+
+function TBase.GetID: integer;
+begin
+  result := FID;
+end;
+
+function TBase.GetUser_Insert: string;
+begin
+  result := Fuser_insert;
+end;
+
+function TBase.GetUser_Update: string;
+begin
+  result := Fuser_update;
+end;
+
+function TBase.GetDataCad: TDateTime;
+begin
+  result := FDataCad;
+end;
+
+function TBase.GetDataUltAlt: TDateTime;
+begin
+  result := FDataUltAlt;
+end;
+
+procedure TBase.SetID(value: integer);
+begin
+  FID := value;
+end;
+
+procedure TBase.setUser_insert(Value: string);
+begin
+  FUser_Insert := Value;
+end;
+
+procedure TBase.setUser_Update(Value: string);
+begin
+  FUser_Update := Value;
+end;
+
+class function TBase.ValidaCnpj(Value: string): Boolean;
+var
+  N1, N2, N3, N4, N5, N6, N7, N8, N9, N10, N11, N12: Integer;
+  D1, D2:                                            Integer;
+  Digitado, Calculado:                               string;
+  Aux : string;
+begin
+  Calculado := '***202';
+  Aux := StringReplace(Value, '.', '', [rfReplaceAll, rfIgnoreCase]);
+  Aux := StringReplace(Aux, '/', '', [rfReplaceAll, rfIgnoreCase]);
+  Aux := StringReplace(Aux, '-', '', [rfReplaceAll, rfIgnoreCase]);
+
+  if Length( Value ) < 14 then
+  begin
+    Result := False;
+    Exit;
+  end
+  else
+    try
+      if StrToFloat( Value ) = 0 then
+      begin
+        Result := False;
+        Exit;
+      end;
+    except
+    end;
+  try
+    N1  := StrToInt( Value[ 1 ] );
+    N2  := StrToInt( Value[ 2 ] );
+    N3  := StrToInt( Value[ 3 ] );
+    N4  := StrToInt( Value[ 4 ] );
+    N5  := StrToInt( Value[ 5 ] );
+    N6  := StrToInt( Value[ 6 ] );
+    N7  := StrToInt( Value[ 7 ] );
+    N8  := StrToInt( Value[ 8 ] );
+    N9  := StrToInt( Value[ 9 ] );
+    N10 := StrToInt( Value[ 10 ] );
+    N11 := StrToInt( Value[ 11 ] );
+    N12 := StrToInt( Value[ 12 ] );
+    D1  := N12 * 2 + N11 * 3 + N10 * 4 + N9 * 5 + N8 * 6 + N7 * 7 + N6 * 8 + N5 * 9 + N4 * 2 + N3 * 3 + N2 * 4 + N1 * 5;
+    D1  := 11 - ( D1 mod 11 );
+    if D1 >= 10 then
+      D1 := 0;
+    D2   := D1 * 2 + N12 * 3 + N11 * 4 + N10 * 5 + N9 * 6 + N8 * 7 + N7 * 8 + N6 * 9 + N5 * 2 + N4 * 3 + N3 * 4 + N2 * 5 + N1 * 6;
+    D2   := 11 - ( D2 mod 11 );
+    if D2 >= 10 then
+      D2      := 0;
+    Calculado := IntToStr( D1 ) + IntToStr( D2 );
+    Digitado  := Value[ 13 ] + Value[ 14 ];
+  except
+    // n1 := n1;
+    { result := false;
+      exit;
+      end; }
+  end;
+  if Calculado = Digitado then
+    Result := True
+  else
+    Result := False;
+end;
+
+class function TBase.ValidaCpf(Value: string): Boolean;
+var
+  N1, N2, N3, N4, N5, N6, N7, N8, N9: Integer;
+  D1, D2, Contador:                   Integer;
+  NroIguais:                          Boolean;
+  Digitado, Calculado:                string;
+begin
+  if ( Length( Value ) < 11 ) then
+  begin
+    Result := False;
+    Exit;
+  end;
+
+  NroIguais := True;
+  Contador  := 1;
+  while ( Contador < 10 ) do
+  begin
+    if ( Value[ Contador ] <> Value[ Contador + 1 ] ) then
+      NroIguais := False;
+    Inc( Contador );
+  end;
+
+  if ( NroIguais ) then
+  begin
+    Result := False;
+    Exit;
+  end;
+
+  try
+    N1 := StrToInt( Value[ 1 ] );
+    N2 := StrToInt( Value[ 2 ] );
+    N3 := StrToInt( Value[ 3 ] );
+    N4 := StrToInt( Value[ 4 ] );
+    N5 := StrToInt( Value[ 5 ] );
+    N6 := StrToInt( Value[ 6 ] );
+    N7 := StrToInt( Value[ 7 ] );
+    N8 := StrToInt( Value[ 8 ] );
+    N9 := StrToInt( Value[ 9 ] );
+    D1 := N9 * 2 + N8 * 3 + N7 * 4 + N6 * 5 + N5 * 6 + N4 * 7 + N3 * 8 + N2 * 9 + N1 * 10;
+    D1 := 11 - ( D1 mod 11 );
+    if D1 >= 10 then
+      D1 := 0;
+    D2   := D1 * 2 + N9 * 3 + N8 * 4 + N7 * 5 + N6 * 6 + N5 * 7 + N4 * 8 + N3 * 9 + N2 * 10 + N1 * 11;
+    D2   := 11 - ( D2 mod 11 );
+    if D2 >= 10 then
+      D2      := 0;
+    Calculado := IntToStr( D1 ) + IntToStr( D2 );
+    Digitado  := Value[ 10 ] + Value[ 11 ];
+  except
+    begin
+      Result := False;
+      Exit;
+    end;
+  end;
+
+  if Calculado = Digitado then
+    Result := True
+  else
+    Result := False;
+end;
+
+procedure TBase.SetDataCad(value: TDateTime);
+begin
+  FDataCad := value;
+end;
+
+procedure TBase.SetDataUltAlt(value: TDateTime);
+begin
+  FDataUltAlt := value;
+end;
+
+destructor TBase.Free;
+begin
+
+end;
+
+end.

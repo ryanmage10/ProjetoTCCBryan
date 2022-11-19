@@ -127,6 +127,9 @@ begin
   edt_Unidade.Text   := Produto.Unidade.Descricao;
   edt_NCM.Text       := Produto.NCM;
 
+  Grupo_Cad.Visible := True;
+  Grupo_Alt.Visible := True;
+
   lbl_Cad.Visible := True;
   lbl_DataCad.Visible := True;
   lbl_DataCad.Caption := Produto.User_Insert + '-' + DatetoStr(Produto.DataCad);
@@ -169,12 +172,12 @@ begin
     exit;
   end;
 
-  if not (length(edt_NCM.Text) > 0) then
-  begin
-    ShowMessage('Insira o NCM do Produto');
-    edt_NCM .setFocus;
-    exit;
-  end;
+//  if not (length(edt_NCM.Text) > 0) then
+//  begin
+//    ShowMessage('Insira o NCM do Produto');
+//    edt_NCM .setFocus;
+//    exit;
+//  end;
 
   result := True;
 end;

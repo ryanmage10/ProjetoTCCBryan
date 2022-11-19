@@ -46,8 +46,8 @@ type
     lbl_Cad: TcxLabel;
     dxLayoutItem6: TdxLayoutItem;
     dxLayoutGroup3: TdxLayoutGroup;
-    dxLayoutGroup4: TdxLayoutGroup;
-    dxLayoutGroup5: TdxLayoutGroup;
+    Grupo_Cad: TdxLayoutGroup;
+    Grupo_Alt: TdxLayoutGroup;
     lbl_DataCad: TcxLabel;
     dxLayoutItem7: TdxLayoutItem;
     lbl_DataAlt: TcxLabel;
@@ -58,6 +58,7 @@ type
     { Private declarations }
   public
     { Public declarations }
+
     Inclusao: boolean;
   end;
 

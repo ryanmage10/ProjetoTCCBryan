@@ -1,0 +1,73 @@
+unit uCons_Compras;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uCons_Base, cxGraphics, cxControls,
+  cxLookAndFeels, cxLookAndFeelPainters, dxSkinsCore, dxSkinBasic, dxSkinBlack,
+  dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkroom,
+  dxSkinDarkSide, dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
+  dxSkinGlassOceans, dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian,
+  dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2007Black,
+  dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
+  dxSkinOffice2010Silver, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinOffice2013White, dxSkinOffice2016Colorful, dxSkinOffice2016Dark,
+  dxSkinOffice2019Black, dxSkinOffice2019Colorful, dxSkinOffice2019DarkGray,
+  dxSkinOffice2019White, dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic,
+  dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringtime, dxSkinStardust,
+  dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinTheBezier,
+  dxSkinsDefaultPainters, dxSkinValentine, dxSkinVisualStudio2013Blue,
+  dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxSkinVS2010,
+  dxSkinWhiteprint, dxSkinXmas2008Blue, cxContainer, cxEdit, Vcl.Menus,
+  cxStyles, cxCustomData, cxFilter, cxData, cxDataStorage, cxNavigator,
+  dxDateRanges, dxScrollbarAnnotations, Data.DB, cxDBData,
+  dxLayoutcxEditAdapters, dxLayoutControlAdapters, dxLayoutContainer,
+  cxGridLevel, cxClasses, cxGridCustomView, cxGridCustomTableView,
+  cxGridTableView, cxGridDBTableView, cxGrid, Vcl.StdCtrls, cxButtons,
+  cxTextEdit, dxLayoutControl, uCompras, uComprasController, Datasnap.DBClient;
+
+type
+  TCons_Compras = class(TCons_Base)
+    DSET_COMPRA: TClientDataSet;
+    ds_Compra: TDataSource;
+    procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+    CompraControl : TComprasController;
+  public
+    { Public declarations }
+    Compra: TCompras;
+  end;
+
+var
+  Cons_Compras: TCons_Compras;
+
+implementation
+
+{$R *.dfm}
+
+{ TCons_Compras }
+
+procedure TCons_Compras.FormCreate(Sender: TObject);
+begin
+  CompraControl := TComprasController.Create;
+  Compra := TCompras.Create;
+
+  if ( not Dset_Compra.IsEmpty ) then
+    Dset_Compra.EmptyDataSet;
+  Dset_Compra.Active := False;
+  Dset_Compra.CreateDataSet;
+  Dset_Compra.Open;
+end;
+
+procedure TCons_Compras.FormShow(Sender: TObject);
+begin
+  inherited;
+  CompraControl.Pesquisar(edt_Pesquisa.Text, Dset_Compra);
+end;
+
+end.

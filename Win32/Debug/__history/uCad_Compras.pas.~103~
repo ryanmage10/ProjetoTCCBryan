@@ -1,0 +1,629 @@
+unit uCad_Compras;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uCad_Base, cxGraphics, cxControls,
+  cxLookAndFeels, cxLookAndFeelPainters, dxSkinsCore, dxSkinBasic, dxSkinBlack,
+  dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkroom,
+  dxSkinDarkSide, dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
+  dxSkinGlassOceans, dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian,
+  dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2007Black,
+  dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
+  dxSkinOffice2010Silver, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinOffice2013White, dxSkinOffice2016Colorful, dxSkinOffice2016Dark,
+  dxSkinOffice2019Black, dxSkinOffice2019Colorful, dxSkinOffice2019DarkGray,
+  dxSkinOffice2019White, dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic,
+  dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringtime, dxSkinStardust,
+  dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinTheBezier,
+  dxSkinsDefaultPainters, dxSkinValentine, dxSkinVisualStudio2013Blue,
+  dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxSkinVS2010,
+  dxSkinWhiteprint, dxSkinXmas2008Blue, cxContainer, cxEdit, Vcl.Menus,
+  dxLayoutcxEditAdapters, dxLayoutControlAdapters, cxClasses,
+  dxLayoutLookAndFeels, dxLayoutContainer, cxLabel, Vcl.StdCtrls, cxButtons,
+  cxTextEdit, dxLayoutControl, Vcl.ComCtrls, dxCore, cxDateUtils,
+  cxCurrencyEdit, cxMaskEdit, cxDropDownEdit, cxCalendar, cxStyles,
+  cxCustomData, cxFilter, cxData, cxDataStorage, cxNavigator, dxDateRanges,
+  dxScrollbarAnnotations, Data.DB, cxDBData, cxGridLevel, cxGridCustomView,
+  cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
+  uCompras, uComprasController, Datasnap.DBClient, uCons_Fornecedores,
+  uCons_CondicaoPagamento, uItensCompra, uProdutos, uCons_Produtos, uProdutosController;
+
+type
+  TCad_Compras = class(TCad_Base)
+    dxLayoutGroup6: TdxLayoutGroup;
+    dxLayoutGroup7: TdxLayoutGroup;
+    dxLayoutGroup8: TdxLayoutGroup;
+    dxLayoutGroup9: TdxLayoutGroup;
+    dxLayoutGroup10: TdxLayoutGroup;
+    dxLayoutGroup11: TdxLayoutGroup;
+    edt_CodFornecedor: TcxTextEdit;
+    dxLayoutItem12: TdxLayoutItem;
+    edt_Fornecedor: TcxTextEdit;
+    dxLayoutItem13: TdxLayoutItem;
+    edt_DataChegada: TcxDateEdit;
+    dxLayoutItem14: TdxLayoutItem;
+    edt_DataEmissao: TcxDateEdit;
+    dxLayoutItem15: TdxLayoutItem;
+    edt_Frete: TcxCurrencyEdit;
+    dxLayoutItem16: TdxLayoutItem;
+    edt_Despesas: TcxCurrencyEdit;
+    dxLayoutItem17: TdxLayoutItem;
+    edt_Pedagio: TcxCurrencyEdit;
+    dxLayoutItem18: TdxLayoutItem;
+    btn_PesquisarForn: TcxButton;
+    dxLayoutItem19: TdxLayoutItem;
+    edt_CodProduto: TcxTextEdit;
+    dxLayoutItem20: TdxLayoutItem;
+    edt_Produto: TcxTextEdit;
+    dxLayoutItem21: TdxLayoutItem;
+    edt_UnidProduto: TcxTextEdit;
+    dxLayoutItem22: TdxLayoutItem;
+    btn_PesquisarProd: TcxButton;
+    dxLayoutItem23: TdxLayoutItem;
+    Edt_Valor: TcxCurrencyEdit;
+    dxLayoutItem25: TdxLayoutItem;
+    edt_Total: TcxCurrencyEdit;
+    dxLayoutItem26: TdxLayoutItem;
+    Grid_ItensProdutoDBTableView1: TcxGridDBTableView;
+    Grid_ItensProdutoLevel1: TcxGridLevel;
+    Grid_ItensProduto: TcxGrid;
+    dxLayoutItem27: TdxLayoutItem;
+    edt_TotalLiquido: TcxCurrencyEdit;
+    dxLayoutItem28: TdxLayoutItem;
+    edt_CodCondicaoPag: TcxTextEdit;
+    dxLayoutItem29: TdxLayoutItem;
+    edt_CondicaoPag: TcxTextEdit;
+    dxLayoutItem30: TdxLayoutItem;
+    btn_PesquisarCond: TButton;
+    dxLayoutItem31: TdxLayoutItem;
+    btn_GerarParcelas: TcxButton;
+    dxLayoutItem32: TdxLayoutItem;
+    Grid_ParcelasDBTableView1: TcxGridDBTableView;
+    Grid_ParcelasLevel1: TcxGridLevel;
+    Grid_Parcelas: TcxGrid;
+    dxLayoutItem33: TdxLayoutItem;
+    edt_Serie: TEdit;
+    dxLayoutItem9: TdxLayoutItem;
+    edt_Numero: TEdit;
+    dxLayoutItem10: TdxLayoutItem;
+    edt_Modelo: TEdit;
+    dxLayoutItem11: TdxLayoutItem;
+    DSET_ITENS: TClientDataSet;
+    DSET_PARCELAS: TClientDataSet;
+    DS_PARCELAS: TDataSource;
+    DS_ITENS: TDataSource;
+    DSET_ITENSCODPRODUTO: TIntegerField;
+    DSET_ITENSPRODUTO: TStringField;
+    DSET_ITENSUND: TStringField;
+    DSET_ITENSQTD: TCurrencyField;
+    DSET_ITENSPRECO: TCurrencyField;
+    DSET_ITENSTOTAL: TCurrencyField;
+    DSET_ITENSDESC: TCurrencyField;
+    DSET_ITENSCUSTO: TCurrencyField;
+    Grid_ItensProdutoDBTableView1CODPRODUTO: TcxGridDBColumn;
+    Grid_ItensProdutoDBTableView1PRODUTO: TcxGridDBColumn;
+    Grid_ItensProdutoDBTableView1UND: TcxGridDBColumn;
+    Grid_ItensProdutoDBTableView1QTD: TcxGridDBColumn;
+    Grid_ItensProdutoDBTableView1PRECO: TcxGridDBColumn;
+    Grid_ItensProdutoDBTableView1TOTAL: TcxGridDBColumn;
+    Grid_ItensProdutoDBTableView1CUSTO: TcxGridDBColumn;
+    DSET_PARCELASVENCIMENTO: TDateField;
+    DSET_PARCELASVALOR: TCurrencyField;
+    DSET_PARCELASFORMAPGTO: TStringField;
+    Grid_ParcelasDBTableView1NUMPARCELA: TcxGridDBColumn;
+    Grid_ParcelasDBTableView1VENCIMENTO: TcxGridDBColumn;
+    Grid_ParcelasDBTableView1VALOR: TcxGridDBColumn;
+    Grid_ParcelasDBTableView1FORMAPGTO: TcxGridDBColumn;
+    btn_Inserir: TcxButton;
+    dxLayoutItem34: TdxLayoutItem;
+    btn_Alterar: TcxButton;
+    dxLayoutItem35: TdxLayoutItem;
+    btn_Excluir: TcxButton;
+    dxLayoutItem36: TdxLayoutItem;
+    DSET_ITENSNUMITEM: TIntegerField;
+    edt_Qtd: TcxCurrencyEdit;
+    dxLayoutItem24: TdxLayoutItem;
+    Edt_Desconto: TcxCurrencyEdit;
+    dxLayoutItem37: TdxLayoutItem;
+    dxLayoutGroup12: TdxLayoutGroup;
+    DSET_ITENSDESCONTO: TCurrencyField;
+    Grid_ItensProdutoDBTableView1NUMITEM: TcxGridDBColumn;
+    Grid_ItensProdutoDBTableView1DESCONTO: TcxGridDBColumn;
+    DSET_PARCELASNUMPARCELA: TIntegerField;
+    edt_TotalItens: TcxCurrencyEdit;
+    dxLayoutItem38: TdxLayoutItem;
+    dxLayoutGroup4: TdxLayoutGroup;
+    procedure btn_PesquisarFornClick(Sender: TObject);
+    procedure btn_PesquisarCondClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure btn_InserirClick(Sender: TObject);
+    procedure btn_AlterarClick(Sender: TObject);
+    procedure btn_ExcluirClick(Sender: TObject);
+    procedure btn_PesquisarProdClick(Sender: TObject);
+    procedure btn_SalvarClick(Sender: TObject);
+    procedure Edt_ValorExit(Sender: TObject);
+    procedure edt_QtdExit(Sender: TObject);
+    procedure Edt_DescontoExit(Sender: TObject);
+  private
+    { Private declarations }
+    ItemCompra : TItensCompra;
+    Produto: TProdutos;
+    ProdutoControl: TProdutosController;
+    Alterar: boolean;
+    NroParcela: Integer;
+    procedure popularInterface;
+    procedure Act_AdicionarItem;
+    procedure Act_AlterarItem;
+    procedure Act_ExcluirItem;
+    function ValidarItem: boolean;
+    procedure Act_LimparCamposParcela;
+    procedure Act_PopulaCamposAlterar;
+    procedure Act_ExecutarAlteracao;
+    function validarDados: boolean;
+    procedure popularObjeto;
+    procedure CalcularTotalItem;
+    procedure RecalcularTotalItens;
+  public
+    { Public declarations }
+    Compra : TCompras;
+    CompraControl: TComprasController;
+  end;
+
+var
+  Cad_Compras: TCad_Compras;
+
+implementation
+
+{$R *.dfm}
+
+procedure TCad_Compras.Act_AdicionarItem;
+begin
+  if ValidarItem then
+  begin
+    dset_Itens.Append;
+    dset_ItensNUMITEM.AsInteger := dset_Itens.RecordCount + 1;
+    dset_ItensCODPRODUTO.AsInteger := StrToInt(edt_CodProduto.Text);
+    dset_ItensPRODUTO.AsString := edt_Produto.Text;
+    dset_ItensUND.AsString := edt_unidProduto.text;
+    dset_ItensQTD.AsCurrency := edt_Qtd.EditValue;
+    dset_ItensPreco.AsCurrency := Edt_Valor.EditValue;
+    dset_ItensDesconto.AsCurrency := Edt_Desconto.EditValue;
+    dset_ItensTotal.AsCurrency := Edt_Total.EditValue;
+    dset_Itens.Post;
+
+    Act_LimparCamposParcela;
+    RecalcularTotalItens;
+  end;
+end;
+
+procedure TCad_Compras.Act_AlterarItem;
+begin
+  if Dset_Itens.RecordCount = 0 then
+  begin
+     ShowMessage('Erro ao alterar: Lista de Itens Vazia');
+     exit;
+  end;
+
+  if Alterar then
+    Act_PopulaCamposAlterar
+  Else
+    Act_ExecutarAlteracao;
+
+  RecalcularTotalItens;
+end;
+
+procedure TCad_Compras.Act_ExcluirItem;
+  var i: integer;
+begin
+  if Dset_Itens.RecordCount = 0 then
+  begin
+     ShowMessage('Erro ao Excluir: Lista de Itens Vazia');
+     exit;
+  end;
+
+  dset_ITENS.Delete;
+
+  dset_ITENS.First;
+  for I := 0 to dset_ITENS.RecordCount - 1 do
+  begin
+    dset_ITENS.Edit;
+    dset_ITENSNumitem.AsInteger := I+1;
+    dset_ITENS.Post;
+  end;
+
+  RecalcularTotalItens;
+end;
+
+procedure TCad_Compras.Act_ExecutarAlteracao;
+begin
+  if ValidarItem then
+  begin
+    dset_Itens.Edit;
+    dset_ItensCODPRODUTO.AsInteger := StrToInt(edt_CodProduto.Text);
+    dset_ItensPRODUTO.AsString := edt_Produto.Text;
+    dset_ItensUND.AsString := edt_unidProduto.text;
+    dset_ItensQTD.AsCurrency := edt_Qtd.EditValue;
+    dset_ItensPreco.AsCurrency := Edt_Valor.EditValue;
+    dset_ItensDesconto.AsCurrency := Edt_Desconto.EditValue;
+    dset_ItensTotal.AsCurrency := Edt_Total.EditValue;
+    dset_Itens.Post;
+
+    Alterar := True;
+    btn_Inserir.Enabled := True;
+    btn_Excluir.Enabled := True;
+    btn_salvar.Enabled := True;
+    Grid_ItensProduto.Enabled := True;
+    Act_LimparCamposParcela;
+  end;
+end;
+
+procedure TCad_Compras.Act_LimparCamposParcela;
+begin
+  ItemCompra.LimparDados;
+  edt_CodProduto.Clear;
+  edt_Produto.Clear;
+  edt_UnidProduto.Clear;
+  edt_Qtd.EditValue := 0;
+  Edt_Valor.EditValue := 0;
+  edt_Desconto.EditValue := 0;
+  edt_Total.EditValue := 0;
+end;
+
+procedure TCad_Compras.Act_PopulaCamposAlterar;
+begin
+  Grid_ItensProduto.Enabled := False;
+  //NroParcela := Dset_ParcelasNumero.AsInteger;
+  edt_CodProduto.Text := IntToStr(dset_ItensCODPRODUTO.AsInteger);
+  edt_Produto.Text := dset_ItensPRODUTO.AsString;
+  edt_unidProduto.text := dset_ItensUND.AsString;
+  edt_Qtd.EditValue := dset_ItensQTD.AsCurrency;
+  Edt_Valor.EditValue := dset_ItensPreco.AsCurrency;
+  Edt_Desconto.EditValue := dset_ItensDesconto.AsCurrency;
+  Edt_Total.EditValue := dset_ItensTotal.AsCurrency;
+  ProdutoControl.Recuperar(Produto);
+
+  Alterar := False;
+  btn_Inserir.Enabled := False;
+  btn_Excluir.Enabled := False;
+  btn_salvar.Enabled := False;
+end;
+
+procedure TCad_Compras.btn_AlterarClick(Sender: TObject);
+begin
+  Act_AlterarItem;
+end;
+
+procedure TCad_Compras.btn_ExcluirClick(Sender: TObject);
+begin
+  Act_ExcluirItem;
+end;
+
+procedure TCad_Compras.btn_InserirClick(Sender: TObject);
+begin
+  Act_AdicionarItem;
+end;
+
+procedure TCad_Compras.btn_PesquisarCondClick(Sender: TObject);
+var ConsCondicaoPagamentoForm: TCons_CondicaoPagamento;
+begin
+   ConsCondicaoPagamentoForm := TCons_CondicaoPagamento.Create(nil);
+   try
+      ConsCondicaoPagamentoForm.Selecao := True;
+      ConsCondicaoPagamentoForm.ShowModal;
+      Compra.CondicaoPagamento := (ConsCondicaoPagamentoForm.CondicaoPagamento.clone);
+      edt_CondicaoPag.text := Compra.CondicaoPagamento.Descricao;
+      edt_CodCondicaoPag.text := IntToStr(Compra.CondicaoPagamento.ID);
+   finally
+      FreeAndNil(ConsCondicaoPagamentoForm);
+   end;
+end;
+
+procedure TCad_Compras.btn_PesquisarFornClick(Sender: TObject);
+var ConsFornecedorForm: TCons_Fornecedores;
+begin
+   ConsFornecedorForm := TCons_Fornecedores.Create(nil);
+   try
+      ConsFornecedorForm.Selecao := True;
+      ConsFornecedorForm.ShowModal;
+      Compra.Fornecedor := (ConsFornecedorForm.Fornecedor.clone);
+      edt_Fornecedor.text := Compra.Fornecedor.Nome;
+      edt_CodFornecedor.text := IntToStr(Compra.Fornecedor.ID);
+   finally
+      FreeAndNil(ConsFornecedorForm);
+   end;
+end;
+
+procedure TCad_Compras.btn_PesquisarProdClick(Sender: TObject);
+  var ConsProdutoForm: TCons_Produtos;
+begin
+   ConsProdutoForm := TCons_Produtos.Create(nil);
+   try
+      ConsProdutoForm.Selecao := True;
+      ConsProdutoForm.ShowModal;
+      Produto := (ConsProdutoForm.Produto.clone);
+      edt_Produto.text := Produto.Descricao;
+      edt_CodProduto.text := IntToStr(Produto.ID);
+      edt_UnidProduto.Text := Produto.Unidade.sigla;
+   finally
+      FreeAndNil(ConsProdutoForm);
+   end;
+end;
+
+procedure TCad_Compras.btn_SalvarClick(Sender: TObject);
+begin
+  inherited;
+  if validarDados then
+  begin
+     popularObjeto;
+
+     if not CompraControl.VerificarExiste(Compra) then
+     begin
+       if Inclusao then
+          CompraControl.Inserir(Compra)
+       else
+          CompraControl.Alterar(Compra);
+
+       Self.Close;
+     end
+     else
+      raise Exception.Create('Já Existe uma Compra cadastrada com essa Série, modelo e número');
+  end;
+end;
+
+procedure TCad_Compras.CalcularTotalItem;
+begin
+  RecalcularTotalItens;
+end;
+
+procedure TCad_Compras.Edt_DescontoExit(Sender: TObject);
+begin
+  inherited;
+  CalcularTotalItem;
+end;
+
+procedure TCad_Compras.edt_QtdExit(Sender: TObject);
+begin
+  inherited;
+  CalcularTotalItem;
+end;
+
+procedure TCad_Compras.Edt_ValorExit(Sender: TObject);
+begin
+  inherited;
+  CalcularTotalItem;
+end;
+
+procedure TCad_Compras.FormCreate(Sender: TObject);
+begin
+  inherited;
+  Compra := TCompras.Create;
+  CompraControl := TComprasController.Create;
+
+  ItemCompra := TItensCompra.Create;
+  //ItemCompraControl := TItemCompraController.Create;
+
+  Produto := TProdutos.Create;
+  ProdutoControl := TProdutosController.Create;
+
+  edt_DataEmissao.EditValue := TDate(Now);
+  Edt_DataChegada.EditValue := TDate(Now);
+
+  edt_Frete.EditValue := 0;
+  edt_Pedagio.EditValue := 0;
+  edt_Despesas.EditValue := 0;
+
+  Alterar := True;
+  NroParcela := 0;
+
+  if ( not Dset_ITENS.IsEmpty ) then
+    Dset_ITENS.EmptyDataSet;
+  Dset_ITENS.Active := False;
+  Dset_ITENS.CreateDataSet;
+  Dset_ITENS.Open;
+
+  if ( not Dset_Parcelas.IsEmpty ) then
+    Dset_Parcelas.EmptyDataSet;
+  Dset_Parcelas.Active := False;
+  Dset_Parcelas.CreateDataSet;
+  Dset_Parcelas.Open;
+end;
+
+procedure TCad_Compras.FormShow(Sender: TObject);
+begin
+  inherited;
+  edt_DataEmissao.EditValue := TDate(Now);
+  edt_DataChegada.EditValue := TDate(Now);
+
+  if not inclusao then
+    popularInterface;
+end;
+
+procedure TCad_Compras.popularInterface;
+var i: Integer;
+    //ItemCompra : TItensCompra;
+begin
+  edt_id.text := inttostr(Compra.ID);
+  edt_modelo.text := Compra.Modelo;
+  edt_Serie.text := Compra.Serie;
+  edt_numero.text := Compra.Numero;
+  edt_codfornecedor.text := IntToStr(Compra.Fornecedor.ID);
+  edt_fornecedor.text := Compra.Fornecedor.nome;
+  edt_DataEmissao.EditValue := TDate(Compra.DataEmissao);
+  edt_DataChegada.EditValue := TDate(Compra.DataChegada);
+  edt_Frete.EditValue := Compra.Frete;
+  edt_Pedagio.EditValue := Compra.Pedagio;
+  edt_Despesas.EditValue := Compra.Despesas;
+  edt_codCondicaoPag.text := IntToStr(Compra.CondicaoPagamento.ID);
+  edt_CondicaoPag.text := Compra.CondicaoPagamento.Descricao;
+
+  for I := 0 to Compra.ListaItens.Count - 1 do
+  begin
+     ItemCompra := Compra.ListaItens.Items[I];
+     with DSET_ITENS do
+     begin
+       Append;
+       dset_ItensNUMITEM.AsInteger := I + 1;
+       dset_ItensCODPRODUTO.AsInteger := ItemCompra.Produto.Id;
+       dset_ItensPRODUTO.AsString := ItemCompra.Produto.Descricao;
+       dset_ItensUND.AsString := ItemCompra.Produto.Unidade.Descricao;
+       dset_ItensQTD.AsCurrency := ItemCompra.Qtd;
+       dset_ItensPreco.AsCurrency := ItemCompra.Preco;
+       dset_ItensDesconto.AsCurrency := ItemCompra.Desconto;
+       dset_ItensTotal.AsCurrency := ItemCompra.Total;
+       dset_ItensCusto.AsCurrency := ItemCompra.Custo;
+       post;
+     end;
+  end;
+  RecalcularTotalItens;
+
+  Grupo_Cad.Visible := True;
+  Grupo_Alt.Visible := True;
+
+  lbl_Cad.Visible := True;
+  lbl_DataCad.Visible := True;
+  lbl_DataCad.Caption := Compra.User_Insert + '-' + DatetoStr(Compra.DataCad);
+
+  lbl_DataAlt.Caption := Compra.User_Update + '-' + DatetoStr(Compra.DataUltAlt);
+  Lbl_Alt.Visible := True;
+  lbl_DataAlt.Visible := True;
+end;
+
+procedure TCad_Compras.popularObjeto;
+var i : integer;
+    ItemCompra : TItensCompra;
+begin
+  Compra.Modelo := edt_modelo.Text;
+  Compra.Serie := edt_Serie.Text;
+  Compra.Numero := edt_Numero.Text;
+  Compra.DataEmissao := edt_DataEmissao.EditValue;
+  Compra.DataChegada := edt_DataChegada.EditValue;
+  Compra.Frete := edt_Frete.EditValue;
+  Compra.Pedagio := edt_Pedagio.EditValue;
+  Compra.Despesas := edt_Despesas.EditValue;
+  Compra.Total := edt_TotalLiquido.EditValue;
+
+  Compra.ListaItens.Clear;
+  dset_Itens.First;
+  for I := 0 to Dset_Itens.RecordCount - 1 do
+  begin
+     ItemCompra := TItensCompra.Create;
+     ItemCompra.Qtd := dset_ItensQTD.AsCurrency;
+     ItemCompra.Preco := dset_ItensPRECO.AsCurrency;
+     ItemCompra.Total := dset_ItensTOTAL.AsCurrency;
+     ItemCompra.Desconto := dset_ItensDESCONTO.AsCurrency;
+     ItemCompra.Custo := dset_ItensCUSTO.AsCurrency;
+     ItemCompra.Produto.ID := dset_ItensCODPRODUTO.AsInteger;
+     dset_Itens.Next;
+     Compra.ListaItens.Add(ItemCompra);
+  end;
+end;
+
+procedure TCad_Compras.RecalcularTotalItens;
+var Total : Currency;
+    I: Integer;
+begin
+  Total := 0;
+  for I := 0 to Dset_Itens.RecordCount - 1 do
+  begin
+     Total := Total + Dset_ItensTotal.AsCurrency;
+  end;
+
+  edt_TotalItens.EditValue := Total;
+  edt_TotalLiquido.EditValue := Total + edt_Frete.EditValue
+  + edt_Pedagio.EditValue + edt_Despesas.EditValue;
+end;
+
+function TCad_Compras.validarDados: boolean;
+var I: Integer;
+begin
+  result := false;
+  if not (length(edt_Modelo.Text) > 0) then
+  begin
+    ShowMessage('Insira o modelo da compra');
+    edt_Modelo.setFocus;
+    exit;
+  end;
+
+  if not (length(edt_Serie.Text) > 0) then
+  begin
+    ShowMessage('Insira a serie da compra');
+    edt_Serie.setFocus;
+    exit;
+  end;
+
+  if not (length(edt_Numero.Text) > 0) then
+  begin
+    ShowMessage('Insira o numero da compra');
+    edt_Numero.setFocus;
+    exit;
+  end;
+
+  if not (length(edt_Fornecedor.Text) > 0) then
+  begin
+    ShowMessage('Insira o fornecedor da compra');
+    edt_Fornecedor.setFocus;
+    exit;
+  end;
+
+  if (edt_dataEmissao.Date < StrToDate('01/01/1922')) then
+  begin
+    ShowMessage('Insira Corretamente a data de emissão da compra');
+    edt_dataEmissao.setFocus;
+    exit;
+  end;
+
+  if (edt_dataChegada.Date < StrToDate('01/01/1922')) then
+  begin
+    ShowMessage('Insira Corretamente a data de chegada da compra');
+    edt_dataChegada.setFocus;
+    exit;
+  end;
+
+//  if not (Dset_ITENS.RecordCount > 0) then
+//  begin
+//    ShowMessage('É necessario Inserir produtos na compra');
+//    exit;
+//  end;
+
+//  if not (Dset_Parcelas.RecordCount > 0) then
+//  begin
+//    ShowMessage('É necessario gerar as parcelas do contas a pagar');
+//    exit;
+//  end;
+
+  result := true;
+end;
+
+function TCad_Compras.ValidarItem: boolean;
+begin
+  result := False;
+
+  if not (Length(edt_CodProduto.Text) > 0)  then
+  begin
+    ShowMessage('Selecione o produto do item da compra.');
+    btn_PesquisarProd.SetFocus;
+    exit;
+  end;
+
+  if not (edt_Qtd.EditValue > 0) then
+  begin
+    ShowMessage('Informe a quantidade do item.');
+    edt_Qtd.SetFocus;
+    exit;
+  end;
+
+  if not (Edt_Valor.EditValue > 0) then
+  begin
+    ShowMessage('Informe o valor do item.');
+    Edt_Valor.SetFocus;
+    exit;
+  end;
+
+  result := True;
+end;
+end.

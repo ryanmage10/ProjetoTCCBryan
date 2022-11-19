@@ -52,8 +52,6 @@ type
     dxLayoutItem14: TdxLayoutItem;
     edt_Percentual: TcxCurrencyEdit;
     dxLayoutItem15: TdxLayoutItem;
-    edt_Dias: TcxMaskEdit;
-    dxLayoutItem16: TdxLayoutItem;
     btn_Adicionar: TcxButton;
     dxLayoutItem17: TdxLayoutItem;
     btn_Alterar: TcxButton;
@@ -72,10 +70,12 @@ type
     ds_parcelas: TDataSource;
     dset_parcelas: TClientDataSet;
     dset_parcelasNumero: TIntegerField;
-    dset_parcelasPercentual: TCurrencyField;
     dset_parcelasdias: TIntegerField;
     dset_parcelasForma_Pagamento: TStringField;
     dset_parcelasIdForma_Pagamento: TIntegerField;
+    edt_Dias: TcxCurrencyEdit;
+    dxLayoutItem21: TdxLayoutItem;
+    dset_parcelasPercentual: TFloatField;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -149,6 +149,12 @@ end;
 procedure TCad_CondicaoPagamento.Act_ExcluirParcela;
 var i: integer;
 begin
+  if Dset_Parcelas.RecordCount = 0 then
+  begin
+     ShowMessage('Erro ao Excluir: Lista de Parcelas Vazia');
+     exit;
+  end;
+
   dset_parcelas.Delete;
 
   dset_parcelas.First;
@@ -184,8 +190,8 @@ procedure TCad_CondicaoPagamento.Act_LimparCamposParcela;
 begin
   Forma_Pagamento.LimparDados;
   Edt_FormaPagamento.Clear;
-  edt_Percentual.Clear;
-  Edt_Dias.Clear;
+  edt_Percentual.EditValue := 0;
+  Edt_Dias.EditValue := 0;
 end;
 
 procedure TCad_CondicaoPagamento.Act_PopulaCamposAlterar;
@@ -313,6 +319,9 @@ begin
      end;
   end;
 
+  Grupo_Cad.Visible := True;
+  Grupo_Alt.Visible := True;
+
   lbl_Cad.Visible := True;
   lbl_DataCad.Visible := True;
   lbl_DataCad.Caption := CondicaoPag.User_Insert + '-' + DatetoStr(CondicaoPag.DataCad);
@@ -360,21 +369,21 @@ begin
     exit;
   end;
 
-  if not (edt_Juros.EditValue > 0) then
+  if not (edt_Juros.EditValue >= 0) then
   begin
     ShowMessage('Insira um valor de juros valído');
     edt_Juros.setFocus;
     exit;
   end;
 
-  if not (edt_Multa.EditValue > 0) then
+  if not (edt_Multa.EditValue >= 0) then
   begin
     ShowMessage('Insira um valor de Multa valído');
     edt_Multa.setFocus;
     exit;
   end;
 
-  if not (edt_Desconto.EditValue > 0) then
+  if not (edt_Desconto.EditValue >= 0) then
   begin
     ShowMessage('Insira um valor de Desconto valído');
     edt_Desconto.setFocus;
@@ -388,8 +397,12 @@ begin
   end;
 
   Percentual := 0;
-  for I := 0 to CondicaoPag.ParcelaModelos.Count - 1 do
-     Percentual := Percentual + CondicaoPag.ParcelaModelos.Items[I].Percentual;
+  Dset_Parcelas.First;
+  for I := 0 to Dset_Parcelas.RecordCount - 1 do
+  begin
+     Percentual := Percentual + Dset_ParcelasPercentual.AsCurrency;
+     Dset_Parcelas.Next;
+  end;
 
   if not (Percentual = 100) then
   begin
@@ -411,16 +424,16 @@ begin
     exit;
   end;
 
-  if not (edt_percentual.EditValue > 0) then
+  if (not (edt_percentual.EditValue > 0)) or  (edt_percentual.EditValue > 100) then
   begin
-    ShowMessage('Informe o percentual da parcela.');
+    ShowMessage('Informe corretamente o percentual da parcela.');
     edt_percentual.SetFocus;
     exit;
   end;
 
-  if not (edt_Dias.EditValue > 0) then
+  if (not (edt_Dias.EditValue > 0)) or (edt_Dias.EditValue > 365) then
   begin
-    ShowMessage('Informe a quantidade de dias de pagamento da parcela.');
+    ShowMessage('Informe corretamente a quantidade de dias de pagamento da parcela.');
     edt_Dias.SetFocus;
     exit;
   end;
@@ -429,4 +442,3 @@ begin
 end;
 
 end.
-

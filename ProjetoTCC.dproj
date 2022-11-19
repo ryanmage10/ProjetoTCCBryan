@@ -138,7 +138,6 @@
         <DCCReference Include="Win32\Debug\uEmpresasDao.pas"/>
         <DCCReference Include="Win32\Debug\uEmpresasFactory.pas"/>
         <DCCReference Include="Win32\Debug\uEmpresasService.pas"/>
-        <DCCReference Include="Win32\Debug\uEmpresassFactory.pas"/>
         <DCCReference Include="Win32\Debug\uEstados.pas"/>
         <DCCReference Include="Win32\Debug\uEstadosController.pas"/>
         <DCCReference Include="Win32\Debug\uEstadosDao.pas"/>
@@ -227,10 +226,6 @@
             <Form>Cad_FormaPagamento</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Win32\Debug\uCad_Forncedores.pas">
-            <Form>Cad_Fornecedores</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="Win32\Debug\uCons_Base.pas">
             <Form>Cons_Base</Form>
             <FormType>dfm</FormType>
@@ -295,6 +290,28 @@
             <Form>Cad_Funcionarios</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Win32\Debug\uCons_Compras.pas">
+            <Form>Cons_Compras</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Win32\Debug\UCad_Paises.pas">
+            <Form>Cad_Paises</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Win32\Debug\uCad_Fornecedores.pas">
+            <Form>Cad_Fornecedores</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Win32\Debug\uCad_Unidades.pas">
+            <Form>Cad_Unidades</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Win32\Debug\uCad_Produtos.pas">
+            <Form>Cad_Produtos</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Win32\Debug\uItensCompraFactory.pas"/>
+        <DCCReference Include="Win32\Debug\uItensCompraDao.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

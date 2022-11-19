@@ -1,7 +1,7 @@
 unit uPessoas;
 interface
 
-uses uBase, uCidades, System.DateUtils;
+uses uBase, uCidades, System.DateUtils, uCondicaoPagamento;
 
 type
   TSexo = (TpIndefinido = -1, TpMasculino = 0, TpFeminino = 1);
@@ -27,6 +27,7 @@ type
     FRGIE:          string;
     FRazaoSocial:   string;
     FTipo:          TTipoPessoa;
+    FcondicaoPagamento: TCondicaoPagamento;
 
     function GetNome: string;
     function GetEndereco: string;
@@ -43,6 +44,7 @@ type
     function getRGIE: string;
     function getRazaoSocial: string;
     function getTipo: TTipoPessoa;
+    function getcondicaoPagamento: TCondicaoPagamento;
 
     procedure SetNome(value: string);
     procedure Setendereco(value: string);
@@ -59,6 +61,7 @@ type
     procedure setRGIE(Value: string);
     procedure setRazaoSocial(Value: string);
     procedure setTipo(Value: TTipoPessoa);
+    procedure setCondicaoPagamento(Value: TCondicaoPagamento);
 
   public
     property Nome: string read GetNome write SetNome;
@@ -76,6 +79,7 @@ type
     property RGIE: string read GetRGIE write setRGIE;
     property RazaoSocial: string read GetRazaoSocial write setRazaoSocial;
     property Tipo: TTipoPessoa read GetTipo write setTipo;
+    property CondicaoPagamento: TCondicaoPagamento read getcondicaoPagamento write setCondicaoPagamento;
 
     constructor Create;
     procedure copiarDados(value: TPessoas);
@@ -90,6 +94,7 @@ constructor TPessoas.Create;
 begin
   inherited;
   FCidade := TCidades.Create;
+  FCondicaoPagamento := TCondicaoPagamento.Create;
   LimparDados;
 end;
 
@@ -111,6 +116,7 @@ begin
     FRGIE     := '';
     FRazaoSocial := '';
     FTipo   := TTipoPessoa.TpIndef;
+    FCondicaoPagamento.LimparDados;
 end;
 
 procedure TPessoas.copiarDados(value: TPessoas);
@@ -131,6 +137,7 @@ begin
     FRGIE     := Value.RGIE;
     FRazaoSocial := Value.RazaoSocial;
     FTipo   := Value.Tipo;
+    FCondicaoPagamento.CopiarDados(Value.CondicaoPagamento);
 end;
 
 function TPessoas.Clone: TPessoas;
@@ -259,6 +266,11 @@ begin
   FSexo := Value;
 end;
 
+procedure TPessoas.setCondicaoPagamento(Value: TCondicaoPagamento);
+begin
+  FCondicaoPagamento.copiarDados(Value);
+end;
+
 procedure TPessoas.setCPFCNPJ(Value: string);
 begin
   FCPFCNPJ := Value;
@@ -279,6 +291,11 @@ begin
   result := FSexo;
 end;
 
+function TPessoas.getcondicaoPagamento: TCondicaoPagamento;
+begin
+  result := FCondicaoPagamento;
+end;
+
 function TPessoas.getCPFCNPJ: string;
 begin
    result := FCPFCNPJ;
@@ -292,6 +309,7 @@ end;
 destructor TPessoas.Free;
 begin
    FCidade.Free;
+   FCondicaoPagamento.Free;
 end;
 
 end.

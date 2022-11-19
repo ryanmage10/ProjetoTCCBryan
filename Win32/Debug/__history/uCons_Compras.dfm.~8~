@@ -1,0 +1,32 @@
+inherited Cons_Compras: TCons_Compras
+  Caption = 'Cons_Compras'
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited dxLayoutControl1: TdxLayoutControl
+    inherited btn_Pesquisar: TcxButton
+      OnClick = btn_PesquisarClick
+    end
+    inherited btn_Novo: TcxButton
+      OnClick = btn_NovoClick
+    end
+    inherited btn_Alterar: TcxButton
+      OnClick = btn_AlterarClick
+    end
+    inherited btn_Selecionar: TcxButton
+      OnClick = btn_SelecionarClick
+    end
+  end
+  object DSET_COMPRA: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 240
+    Top = 160
+  end
+  object ds_Compra: TDataSource
+    DataSet = DSET_COMPRA
+    Left = 184
+    Top = 176
+  end
+end

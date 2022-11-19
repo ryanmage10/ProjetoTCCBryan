@@ -1,0 +1,213 @@
+unit uItensCompraDao;
+
+interface
+
+uses
+  System.SysUtils, System.Classes,
+  System.Generics.Collections, Data.FMTBcd, Data.DB, Data.SqlExpr,
+  Datasnap.Provider, Datasnap.DBClient, uDmConexao, uItensCompra, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, uFormaPagamento, uFormaPagamentoDao,
+  uCondicaoPagamento, uCompras;
+
+type
+  TItensCompraDao = class(TObject)
+
+  private
+    { Private declarations }
+    constructor Create;
+    destructor free;
+    procedure FieldToObj(var oItensCompra: TItensCompra; Qry: TFDQuery);
+    procedure ObjToField(var oItensCompra: TItensCompra; Qry: TFDQuery);
+  public
+    { Public declarations }
+    function Recuperar(Var oItensCompra: TItensCompra): boolean;
+    function RecuperarPorCompra(Var Compra: TCompras): boolean;
+    function inserir(oItensCompra: TItensCompra): boolean;
+    function InserirItens(ListaItens: TList<TItensCompra>): boolean;
+    function Excluir(oItensCompra: TItensCompra): boolean;
+    function ExcluirPorCompra(Id: Integer): Boolean;
+    //function RetornaUltIdCondicao: Integer;
+
+  end;
+
+var
+  ItensCompraDao: TItensCompraDao;
+
+implementation
+
+
+constructor TItensCompraDao.Create;
+begin
+   //
+end;
+
+function TItensCompraDao.Excluir(oItensCompra: TItensCompra): boolean;
+begin
+    result := False;
+    with DmConexao.Qry do
+    begin
+      Sql.Clear;
+      Sql.Add('DELETE FROM ITENS_COMPRA WHERE ID = :ID');
+      paramByName('ID').AsInteger := oItensCompra.ID;
+      ExecSql();
+      result := true;
+      close;
+    end;
+end;
+
+function TItensCompraDao.ExcluirPorCompra(Id: Integer): Boolean;
+begin
+   result := False;
+    with DmConexao.Qry do
+    begin
+      Sql.Clear;
+      Sql.Add('DELETE FROM ITENS_COMPRA WHERE ID_COMPRA = :ID');
+      paramByName('ID').AsInteger := ID;
+      ExecSql();
+      result := true;
+      close;
+    end;
+end;
+
+procedure TItensCompraDao.FieldToObj(var oItensCompra: TItensCompra; Qry: TFDQuery);
+begin
+  with oItensCompra, Qry do
+  begin
+    ID := FieldByName('ID').AsInteger;
+    Qtd := FieldByName('QTD').AsCurrency;
+    Preco := FieldByName('PRECO').AsCurrency;
+    Total := FieldByName('TOTAL').AsCurrency;
+    Desconto := FieldByName('DESCONTO').AsCurrency;
+    Custo := FieldByName('CUSTO').AsCurrency;
+
+    DataCad := FieldByName('date_insert').AsDatetime;
+    DataUltAlt := FieldByName('date_update').AsDatetime;
+    user_insert := FieldByName('User_Insert').AsString;
+    user_update := FieldByName('User_Update').AsString;
+  end;
+end;
+
+destructor TItensCompraDao.free;
+begin
+  //
+end;
+
+function TItensCompraDao.inserir(oItensCompra: TItensCompra): boolean;
+begin
+  result := False;
+  with DmConexao.Qry, oItensCompra do
+  begin
+      Sql.Clear;
+
+      sql.add('INSERT INTO ITENS_COMPRA ( NUMERO, ID_COMPRA, ID_PRODUTO, QTD, PRECO,)');
+      sql.add('TOTAL, DESCONTO, CUSTO, USER_INSERT, USER_UPDATE, DATE_INSERT, DATE_UPDATE)');
+      Sql.add(' VALUES (:NUMERO, :ID_COMPRA, :ID_PRODUTO, :QTD, :PRECO,');
+      sql.add(':TOTAL, :DESCONTO, :CUSTO, :USER_INSERT, :USER_UPDATE, :DATE_INSERT, :DATE_UPDATE)');
+
+      ObjToField(oItensCompra, DmConexao.Qry);
+      ExecSql();
+      result := true;
+      Close;
+  end;
+end;
+
+function TItensCompraDao.InserirItens(
+  ListaItens: TList<TItensCompra>): boolean;
+  var i: Integer;
+begin
+    for I := 0 to ListaItens.Count - 1 do
+    begin
+        if not Self.Inserir(ListaItens.Items[I]) then
+          raise Exception.Create('Erro Ao Inserir os Itens');
+    end;
+end;
+
+procedure TItensCompraDao.ObjToField(var oItensCompra: TItensCompra; Qry: TFDQuery);
+begin
+  with oItensCompra, Qry do
+  begin
+    FieldByName('QTD').AsCurrency := Qtd;
+    Preco := FieldByName('PRECO').AsCurrency;
+    Total := FieldByName('TOTAL').AsCurrency;
+    Desconto := FieldByName('DESCONTO').AsCurrency;
+    Custo := FieldByName('CUSTO').AsCurrency;
+    paramByName('date_insert').AsDatetime := DataCad;
+    paramByName('date_update').AsDatetime := DataUltAlt;
+    paramByName('User_Insert').AsString := user_insert;
+    paramByName('User_Update').AsString := user_update;
+  end;
+end;
+
+function TItensCompraDao.Recuperar(var oItensCompra: TItensCompra): boolean;
+var FormaPagamento: TFormaPagamento;
+    FormaPagamentoDao: TFormaPagamentoDao;
+begin
+    result := False;
+    with DmConexao.Qry do
+    begin
+      sql.clear;
+      FormaPagamento := TFormaPagamento.Create;
+      Sql.Add('SELECT * FROM PARCELA_MODELO WHERE ID = :ID');
+      paramByName('ID').AsInteger := oItensCompra.ID;
+      open;
+      FieldtoObj(oItensCompra, DmConexao.Qry);
+      FormaPagamento.Id := FieldByName('ID_FORMA_PAGAMENTO').AsInteger;
+      result := true;
+      close;
+
+      FormaPagamentoDao := TFormaPagamentoDao.Create;
+      try
+         FormaPagamentoDao.Recuperar(FormaPagamento);
+         oItensCompra.FormaPag.CopiarDados(FormaPagamento);
+      finally
+         FormaPagamentoDao.Free;
+         FormaPagamento.Free;
+      end;
+    end;
+end;
+
+function TItensCompraDao.RecuperarPorCompra(
+  var Compra: TCompras): boolean;
+  var oItensCompra : TItensCompra;
+      FormaPagamento: TFormaPagamento;
+      FormaPagamentoDao: TFormaPagamentoDao;
+      I: Integer;
+begin
+  result := False;
+  with DmConexao.Qry do
+  begin
+    Sql.Clear;
+    FormaPagamento := TFormaPagamento.Create;
+    FormaPagamentoDao := TFormaPagamentoDao.Create;
+    Sql.Add('SELECT * FROM PARCELA_MODELO WHERE ID_CONDICAO_PAGAMENTO = :ID');
+    paramByName('ID').AsInteger := CondicaoPagamento.ID;
+    open;
+    while (not eof) do
+    begin
+        oItensCompra := TItensCompra.Create;
+        FieldtoObj(oItensCompra, DmConexao.Qry);
+        oItensCompra.FormaPag.Id := FieldByName('ID_FORMA_PAGAMENTO').AsInteger;
+        CondicaoPagamento.ItensCompras.Add(oItensCompra);
+        Next;
+    end;
+
+    close;
+
+    for I := 0 to CondicaoPagamento.ItensCompras.Count - 1 do
+    begin
+       oItensCompra := CondicaoPagamento.ItensCompras.Items[I];
+       FormaPagamento.id := oItensCompra.FormaPag.Id;
+       FormaPagamentoDao.Recuperar(FormaPagamento);
+       oItensCompra.FormaPag.CopiarDados(FormaPagamento);
+    end;
+
+    Result:= True;
+
+    FormaPagamento.Free;
+    FormaPagamentoDao.Free;
+  end;
+end;
+
+end.

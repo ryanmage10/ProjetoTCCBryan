@@ -72,6 +72,7 @@ inherited Cad_Contratos: TCad_Contratos
       Top = 137
       Properties.CharCase = ecUpperCase
       Properties.MaxLength = 50
+      Properties.ReadOnly = True
       Style.HotTrack = False
       Style.TransparentBorder = False
       TabOrder = 5
@@ -89,6 +90,7 @@ inherited Cad_Contratos: TCad_Contratos
     object edt_Valor: TcxCurrencyEdit [12]
       Left = 316
       Top = 137
+      EditValue = 0c
       Style.HotTrack = False
       Style.TransparentBorder = False
       TabOrder = 7
@@ -99,6 +101,7 @@ inherited Cad_Contratos: TCad_Contratos
       Top = 183
       Properties.CharCase = ecUpperCase
       Properties.MaxLength = 50
+      Properties.ReadOnly = True
       Style.HotTrack = False
       Style.TransparentBorder = False
       TabOrder = 8

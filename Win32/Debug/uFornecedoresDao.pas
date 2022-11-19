@@ -7,7 +7,8 @@ uses
   Datasnap.Provider, Datasnap.DBClient, uDmConexao, uFornecedores, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client, uPessoas, uCidades, uCidadesDao;
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, uPessoas, uCidades, uCidadesDao,
+  uCondicaoPagamento, uCondicaoPagamentoDao;
 
 type
   TFornecedoresDao = class(TObject)
@@ -42,7 +43,7 @@ begin
   begin
     Sql.Clear;
     sql.add('UPDATE Fornecedores SET Fornecedor = :Fornecedor, ENDERECO = :ENDERECO, BAIRRO = :BAIRRO, CPFCNPJ = :CPFCNPJ, RGIE = :RGIE, RAZAO_SOCIAL = :RAZAO_SOCIAL, TIPO = :TIPO, ');
-    sql.add('NUMERO = :NUMERO, COMPLEMENTO = :COMPLEMENTO, SEXO = :SEXO, ID_CIDADE = :ID_CIDADE, CEP = :CEP, TEL_FIXO = :TEL_FIXO, TEL_CEL = :TEL_CEL, DATA_NASC = :DATA_NASC, ');
+    sql.add('NUMERO = :NUMERO, COMPLEMENTO = :COMPLEMENTO, SEXO = :SEXO, ID_CIDADE = :ID_CIDADE, CEP = :CEP, TEL_FIXO = :TEL_FIXO, TEL_CEL = :TEL_CEL, DATA_NASC = :DATA_NASC, ID_CONDICAO = :ID_CONDICAO, ');
     Sql.Add('USER_INSERT = :USER_INSERT, USER_UPDATE = :USER_UPDATE, DATE_INSERT = :DATE_INSERT, DATE_UPDATE = :DATE_UPDATE');
     Sql.Add(' WHERE ID = :ID');
 
@@ -111,9 +112,9 @@ begin
   begin
       Sql.Clear;
       sql.add('INSERT INTO Fornecedores (Fornecedor, ENDERECO, BAIRRO, NUMERO, COMPLEMENTO, CEP, TEL_FIXO, TEL_CEL, DATA_NASC, ');
-      sql.add('SEXO, CPFCNPJ, RGIE, RAZAO_SOCIAL, TIPO, ID_CIDADE, USER_INSERT,USER_UPDATE, DATE_INSERT, DATE_UPDATE)');
+      sql.add('SEXO, CPFCNPJ, RGIE, RAZAO_SOCIAL, TIPO, ID_CIDADE, ID_CONDICAO, USER_INSERT,USER_UPDATE, DATE_INSERT, DATE_UPDATE)');
       Sql.add(' VALUES (:Fornecedor, :ENDERECO, :BAIRRO, :NUMERO, :COMPLEMENTO, :CEP, :TEL_FIXO, :TEL_CEL, :DATA_NASC, ');
-      sql.add(':SEXO, :CPFCNPJ, :RGIE, :RAZAO_SOCIAL, :TIPO, :ID_CIDADE, :USER_INSERT, :USER_UPDATE, :DATE_INSERT, :DATE_UPDATE)');
+      sql.add(':SEXO, :CPFCNPJ, :RGIE, :RAZAO_SOCIAL, :TIPO, :ID_CIDADE, :ID_CONDICAO, :USER_INSERT, :USER_UPDATE, :DATE_INSERT, :DATE_UPDATE)');
       ObjToField(oFornecedor, DmConexao.Qry);
       ExecSql();
       result := true;
@@ -140,6 +141,7 @@ begin
     paramByName('RAZAO_SOCIAL').AsString := RazaoSocial;
     paramByName('TIPO').AsInteger := Integer(Tipo);
     paramByName('ID_CIDADE').AsInteger := cidade.id;
+    paramByName('ID_CONDICAO').AsInteger := condicaopagamento.id;
     paramByName('date_insert').AsDatetime := DataCad;
     paramByName('date_update').AsDatetime := DataUltAlt;
     paramByName('User_Insert').AsString := user_insert;
@@ -182,17 +184,21 @@ end;
 function TFornecedoresDao.Recuperar(var oFornecedor: TFornecedores): boolean;
 var CidadeAux : TCidades;
     CidadesDao: TCidadesDao;
+    CondicaoAux : TCondicaoPagamento;
+    CondicaoDao: TCondicaoPagamentoDao;
 begin
     result := False;
     with DmConexao.Qry do
     begin
       sql.clear;
       CidadeAux := TCidades.Create;
+      CondicaoAux := TCondicaoPagamento.Create;
       Sql.Add('SELECT * FROM Fornecedores WHERE ID = :ID');
       paramByName('ID').AsInteger := oFornecedor.ID;
       open;
       FieldtoObj(oFornecedor, DmConexao.Qry);
       CidadeAux.id := FieldbyName('Id_CIDADE').AsInteger;
+      CondicaoAux.id := FieldbyName('Id_Condicao').AsInteger;
       result := true;
       close;
 
@@ -204,22 +210,44 @@ begin
         CidadesDao.Free;
         CidadeAux.Free;
       end;
+
+      CondicaoDao := TCondicaoPagamentoDao.Create;
+      try
+        CondicaoDao.Recuperar(CondicaoAux);
+        oFornecedor.CondicaoPagamento.CopiarDados(CondicaoAux);
+      finally
+        CondicaoDao.Free;
+        CondicaoAux.Free;
+      end;
     end;
 end;
 
 function TFornecedoresDao.VerificarExclusao(Value: TFornecedores): boolean;
 begin
    result := False;
-   {with DmConexao.Qry do
+   with DmConexao.Qry do
     begin
       sql.clear;
-      Sql.Add('SELECT * FROM ESTADOS WHERE ID_Fornecedor = :ID_Fornecedor');
-      paramByName('ID_Fornecedor').AsInteger := Value.id;
+      Sql.Add('SELECT * FROM CONTRATOS WHERE ID_FORNECEDOR = :ID_FORNECEDOR');
+      paramByName('ID_FORNECEDOR').AsInteger := Value.Id;
       open;
       if not IsEmpty then
         result := true;
       close;
-    end;}
+
+      if not result then
+      begin
+        sql.clear;
+        Sql.Add('SELECT * FROM COMPRAS WHERE ID_FORNECEDOR = :ID_FORNECEDOR');
+        paramByName('ID_FORNECEDOR').AsInteger := Value.Id;
+        open;
+        if not IsEmpty then
+          result := true;
+        close;
+      end;
+
+
+    end;
 end;
 
 function TFornecedoresDao.VerificarCpfCnpj(Value: TFornecedores): boolean;

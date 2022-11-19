@@ -72,8 +72,9 @@ end;
 
 function TCondicaoPagamentoFactory.Recuperar(var oCondicaoPagamento: TCondicaoPagamento): Boolean;
 begin
-   if CondicaoPagamentoDao.Recuperar(oCondicaoPagamento) then
-    result := ParcelaModeloFactory.RecuperarPorCondicaoPagamento(oCondicaoPagamento);
+    result := CondicaoPagamentoDao.Recuperar(oCondicaoPagamento);
+//   if CondicaoPagamentoDao.Recuperar(oCondicaoPagamento) then
+//    result := ParcelaModeloFactory.RecuperarPorCondicaoPagamento(oCondicaoPagamento);
 end;
 
 function TCondicaoPagamentoFactory.VerificarExclusao(Value: TCondicaoPagamento): boolean;

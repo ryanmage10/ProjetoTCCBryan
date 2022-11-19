@@ -125,6 +125,9 @@ begin
   edt_codIbge.text := Cidade.CodIbge;
   edt_estado.text := Cidade.Estado.Nome;
 
+  Grupo_Cad.Visible := True;
+  Grupo_Alt.Visible := True;
+
   lbl_Cad.Visible := True;
   lbl_DataCad.Visible := True;
   lbl_DataCad.Caption := Cidade.User_Insert + '-' + DatetoStr(Cidade.DataCad);

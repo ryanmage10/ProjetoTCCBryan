@@ -58,6 +58,8 @@ inherited Cad_CondicaoPagamento: TCad_CondicaoPagamento
     object edt_Juros: TcxCurrencyEdit [8]
       Left = 10
       Top = 121
+      EditValue = 0c
+      Properties.DisplayFormat = ' ,0.00;- ,0.00'
       Style.BorderColor = clSkyBlue
       Style.BorderStyle = ebs3D
       Style.HotTrack = False
@@ -68,6 +70,8 @@ inherited Cad_CondicaoPagamento: TCad_CondicaoPagamento
     object Edt_Multa: TcxCurrencyEdit [9]
       Left = 162
       Top = 121
+      EditValue = 0c
+      Properties.DisplayFormat = 'R$,0.00;- R$,0.00'
       Style.BorderColor = clSkyBlue
       Style.BorderStyle = ebs3D
       Style.HotTrack = False
@@ -78,6 +82,8 @@ inherited Cad_CondicaoPagamento: TCad_CondicaoPagamento
     object edt_Desconto: TcxCurrencyEdit [10]
       Left = 315
       Top = 121
+      EditValue = 0c
+      Properties.DisplayFormat = ' ,0.00;- ,0.00'
       Style.BorderColor = clSkyBlue
       Style.BorderStyle = ebs3D
       Style.HotTrack = False
@@ -110,26 +116,16 @@ inherited Cad_CondicaoPagamento: TCad_CondicaoPagamento
     object edt_Percentual: TcxCurrencyEdit [13]
       Left = 22
       Top = 231
+      EditValue = 0c
+      Properties.DisplayFormat = ' ,0.00;- ,0.00'
       Style.BorderColor = clSkyBlue
       Style.BorderStyle = ebs3D
       Style.HotTrack = False
       Style.TransparentBorder = False
       TabOrder = 7
-      Width = 102
+      Width = 110
     end
-    object edt_Dias: TcxMaskEdit [14]
-      Left = 130
-      Top = 231
-      Properties.MaxLength = 3
-      Style.BorderColor = clSkyBlue
-      Style.BorderStyle = ebs3D
-      Style.HotTrack = False
-      Style.TransparentBorder = False
-      TabOrder = 8
-      Text = '   '
-      Width = 92
-    end
-    object btn_Adicionar: TcxButton [15]
+    object btn_Adicionar: TcxButton [14]
       Left = 228
       Top = 227
       Width = 59
@@ -138,7 +134,7 @@ inherited Cad_CondicaoPagamento: TCad_CondicaoPagamento
       TabOrder = 9
       OnClick = btn_AdicionarClick
     end
-    object btn_Alterar: TcxButton [16]
+    object btn_Alterar: TcxButton [15]
       Left = 293
       Top = 227
       Width = 75
@@ -147,7 +143,7 @@ inherited Cad_CondicaoPagamento: TCad_CondicaoPagamento
       TabOrder = 10
       OnClick = btn_AlterarClick
     end
-    object btn_Excluir: TcxButton [17]
+    object btn_Excluir: TcxButton [16]
       Left = 374
       Top = 227
       Width = 75
@@ -156,7 +152,7 @@ inherited Cad_CondicaoPagamento: TCad_CondicaoPagamento
       TabOrder = 11
       OnClick = btn_ExcluirClick
     end
-    object Grid: TcxGrid [18]
+    object Grid: TcxGrid [17]
       Left = 22
       Top = 258
       Width = 427
@@ -169,6 +165,7 @@ inherited Cad_CondicaoPagamento: TCad_CondicaoPagamento
         DataController.Summary.DefaultGroupSummaryItems = <>
         DataController.Summary.FooterSummaryItems = <>
         DataController.Summary.SummaryGroups = <>
+        OptionsData.Editing = False
         OptionsView.GroupByBox = False
         object GridDBTableView1Numero: TcxGridDBColumn
           DataBinding.FieldName = 'Numero'
@@ -189,6 +186,19 @@ inherited Cad_CondicaoPagamento: TCad_CondicaoPagamento
       object GridLevel1: TcxGridLevel
         GridView = GridDBTableView1
       end
+    end
+    object edt_Dias: TcxCurrencyEdit [18]
+      Left = 138
+      Top = 231
+      EditValue = 0c
+      Properties.DecimalPlaces = 0
+      Properties.DisplayFormat = '0;-0'
+      Style.BorderColor = clSkyBlue
+      Style.BorderStyle = ebs3D
+      Style.HotTrack = False
+      Style.TransparentBorder = False
+      TabOrder = 8
+      Width = 84
     end
     inherited dxLayoutControl1Group_Root: TdxLayoutGroup
       ItemIndex = 3
@@ -302,17 +312,6 @@ inherited Cad_CondicaoPagamento: TCad_CondicaoPagamento
       ControlOptions.ShowBorder = False
       Index = 0
     end
-    object dxLayoutItem16: TdxLayoutItem
-      Parent = dxLayoutGroup9
-      AlignHorz = ahClient
-      CaptionOptions.Text = 'Dias'
-      CaptionOptions.Layout = clTop
-      Control = edt_Dias
-      ControlOptions.OriginalHeight = 21
-      ControlOptions.OriginalWidth = 68
-      ControlOptions.ShowBorder = False
-      Index = 1
-    end
     object dxLayoutItem17: TdxLayoutItem
       Parent = dxLayoutGroup9
       AlignHorz = ahRight
@@ -360,6 +359,16 @@ inherited Cad_CondicaoPagamento: TCad_CondicaoPagamento
       ControlOptions.ShowBorder = False
       Index = 2
     end
+    object dxLayoutItem21: TdxLayoutItem
+      Parent = dxLayoutGroup9
+      CaptionOptions.Text = 'Dias'
+      CaptionOptions.Layout = clTop
+      Control = edt_Dias
+      ControlOptions.OriginalHeight = 21
+      ControlOptions.OriginalWidth = 84
+      ControlOptions.ShowBorder = False
+      Index = 1
+    end
   end
   inherited dxLayoutLookAndFeelList1: TdxLayoutLookAndFeelList
     inherited LayoutObrigatorio: TdxLayoutCxLookAndFeel
@@ -382,9 +391,6 @@ inherited Cad_CondicaoPagamento: TCad_CondicaoPagamento
     object dset_parcelasNumero: TIntegerField
       FieldName = 'Numero'
     end
-    object dset_parcelasPercentual: TCurrencyField
-      FieldName = 'Percentual'
-    end
     object dset_parcelasdias: TIntegerField
       FieldName = 'dias'
     end
@@ -393,6 +399,9 @@ inherited Cad_CondicaoPagamento: TCad_CondicaoPagamento
     end
     object dset_parcelasIdForma_Pagamento: TIntegerField
       FieldName = 'IdForma_Pagamento'
+    end
+    object dset_parcelasPercentual: TFloatField
+      FieldName = 'Percentual'
     end
   end
 end

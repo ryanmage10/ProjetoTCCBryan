@@ -99,17 +99,19 @@ end;
 
 procedure TCad_FormaPagamento.popularInterface;
 begin
-    edt_id.text := inttostr(FormaPagamento.ID);
-    edt_Descricao.text := FormaPagamento.Descricao;
+  edt_id.text := inttostr(FormaPagamento.ID);
+  edt_Descricao.text := FormaPagamento.Descricao;
 
+  Grupo_Cad.Visible := True;
+  Grupo_Alt.Visible := True;
 
-    lbl_Cad.Visible := True;
-    lbl_DataCad.Visible := True;
-    lbl_DataCad.Caption := FormaPagamento.User_Insert + '-' + DatetoStr(FormaPagamento.DataCad);
+  lbl_Cad.Visible := True;
+  lbl_DataCad.Visible := True;
+  lbl_DataCad.Caption := FormaPagamento.User_Insert + '-' + DatetoStr(FormaPagamento.DataCad);
 
-    lbl_DataAlt.Caption := FormaPagamento.User_Update + '-' + DatetoStr(FormaPagamento.DataUltAlt);
-    Lbl_Alt.Visible := True;
-    lbl_DataAlt.Visible := True;
+  lbl_DataAlt.Caption := FormaPagamento.User_Update + '-' + DatetoStr(FormaPagamento.DataUltAlt);
+  Lbl_Alt.Visible := True;
+  lbl_DataAlt.Visible := True;
 end;
 
 procedure TCad_FormaPagamento.PopularObjeto;

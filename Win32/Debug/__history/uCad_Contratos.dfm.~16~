@@ -1,0 +1,292 @@
+inherited Cad_Contratos: TCad_Contratos
+  Caption = 'Cadastro de Contratos'
+  ClientHeight = 253
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  ExplicitHeight = 292
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited dxLayoutControl1: TdxLayoutControl
+    Height = 253
+    ExplicitHeight = 253
+    inherited btn_Salvar: TcxButton
+      Top = 211
+      TabOrder = 10
+      OnClick = btn_SalvarClick
+      ExplicitTop = 211
+    end
+    inherited btn_Cancelar: TcxButton
+      Top = 211
+      TabOrder = 11
+      ExplicitTop = 211
+    end
+    inherited Lbl_Alt: TcxLabel
+      Top = 230
+      ExplicitTop = 230
+    end
+    inherited lbl_Cad: TcxLabel
+      Top = 211
+      ExplicitTop = 211
+    end
+    inherited lbl_DataCad: TcxLabel
+      Top = 211
+      ExplicitTop = 211
+    end
+    inherited lbl_DataAlt: TcxLabel
+      Top = 230
+      ExplicitTop = 230
+    end
+    object edt_CodDoc: TcxTextEdit [7]
+      Left = 10
+      Top = 90
+      Properties.CharCase = ecUpperCase
+      Properties.MaxLength = 6
+      Style.HotTrack = False
+      Style.TransparentBorder = False
+      TabOrder = 2
+      Width = 68
+    end
+    object edt_Descricao: TcxTextEdit [8]
+      Left = 84
+      Top = 90
+      Properties.CharCase = ecUpperCase
+      Properties.MaxLength = 50
+      Style.HotTrack = False
+      Style.TransparentBorder = False
+      TabOrder = 3
+      Width = 272
+    end
+    object edt_Moeda: TcxTextEdit [9]
+      Left = 362
+      Top = 90
+      Properties.CharCase = ecUpperCase
+      Properties.MaxLength = 2
+      Style.HotTrack = False
+      Style.TransparentBorder = False
+      TabOrder = 4
+      Width = 75
+    end
+    object Edt_Cliente_Fornecedor: TcxTextEdit [10]
+      Left = 10
+      Top = 137
+      Properties.CharCase = ecUpperCase
+      Properties.MaxLength = 50
+      Style.HotTrack = False
+      Style.TransparentBorder = False
+      TabOrder = 5
+      Width = 219
+    end
+    object btn_CliFor: TcxButton [11]
+      Left = 235
+      Top = 133
+      Width = 75
+      Height = 25
+      Caption = 'Pesquisar'
+      TabOrder = 6
+      OnClick = btn_CliForClick
+    end
+    object edt_Valor: TcxCurrencyEdit [12]
+      Left = 316
+      Top = 137
+      Style.HotTrack = False
+      Style.TransparentBorder = False
+      TabOrder = 7
+      Width = 121
+    end
+    object edt_Empresa: TcxTextEdit [13]
+      Left = 10
+      Top = 183
+      Properties.CharCase = ecUpperCase
+      Properties.MaxLength = 50
+      Style.HotTrack = False
+      Style.TransparentBorder = False
+      TabOrder = 8
+      Width = 346
+    end
+    object btn_Pesquisar: TcxButton [14]
+      Left = 362
+      Top = 179
+      Width = 75
+      Height = 25
+      Caption = 'Pesquisar'
+      TabOrder = 9
+      OnClick = btn_PesquisarClick
+    end
+    object rg_Tipo: TcxRadioGroup [15]
+      Left = 331
+      Top = 10
+      Caption = 'Tipo de Contrato'
+      ParentBackground = False
+      ParentColor = False
+      Properties.Items = <
+        item
+          Caption = 'A Receber'
+          Value = 0
+        end
+        item
+          Caption = 'A Pagar'
+          Value = 1
+        end>
+      ItemIndex = 0
+      Style.Color = clSkyBlue
+      Style.TransparentBorder = False
+      TabOrder = 1
+      OnClick = rg_TipoClick
+      Height = 55
+      Width = 106
+    end
+    inherited dxLayoutControl1Group_Root: TdxLayoutGroup
+      ItemIndex = 3
+    end
+    inherited dxLayoutGroup2: TdxLayoutGroup
+      Index = 4
+    end
+    object dxLayoutGroup6: TdxLayoutGroup
+      Parent = dxLayoutControl1Group_Root
+      AlignHorz = ahClient
+      AlignVert = avClient
+      CaptionOptions.Text = 'New Group'
+      LayoutDirection = ldHorizontal
+      ShowBorder = False
+      Index = 1
+    end
+    object dxLayoutGroup7: TdxLayoutGroup
+      Parent = dxLayoutControl1Group_Root
+      AlignHorz = ahClient
+      AlignVert = avClient
+      CaptionOptions.Text = 'New Group'
+      LayoutDirection = ldHorizontal
+      ShowBorder = False
+      Index = 2
+    end
+    object dxLayoutGroup8: TdxLayoutGroup
+      Parent = dxLayoutControl1Group_Root
+      AlignHorz = ahClient
+      AlignVert = avClient
+      CaptionOptions.Text = 'New Group'
+      LayoutDirection = ldHorizontal
+      ShowBorder = False
+      Index = 3
+    end
+    object dxLayoutItem9: TdxLayoutItem
+      Parent = dxLayoutGroup6
+      AlignHorz = ahLeft
+      LayoutLookAndFeel = LayoutObrigatorio
+      CaptionOptions.Text = 'C'#243'd. Doc.*'
+      CaptionOptions.Layout = clTop
+      Control = edt_CodDoc
+      ControlOptions.OriginalHeight = 21
+      ControlOptions.OriginalWidth = 68
+      ControlOptions.ShowBorder = False
+      Index = 0
+    end
+    object dxLayoutItem10: TdxLayoutItem
+      Parent = dxLayoutGroup6
+      AlignHorz = ahClient
+      LayoutLookAndFeel = LayoutObrigatorio
+      CaptionOptions.Text = 'Descri'#231#227'o*'
+      CaptionOptions.Layout = clTop
+      Control = edt_Descricao
+      ControlOptions.OriginalHeight = 21
+      ControlOptions.OriginalWidth = 121
+      ControlOptions.ShowBorder = False
+      Index = 1
+    end
+    object dxLayoutItem11: TdxLayoutItem
+      Parent = dxLayoutGroup6
+      AlignHorz = ahRight
+      LayoutLookAndFeel = LayoutObrigatorio
+      CaptionOptions.Text = 'Moeda*'
+      CaptionOptions.Layout = clTop
+      Control = edt_Moeda
+      ControlOptions.OriginalHeight = 21
+      ControlOptions.OriginalWidth = 75
+      ControlOptions.ShowBorder = False
+      Index = 2
+    end
+    object lbl_cliente_fornecedor: TdxLayoutItem
+      Parent = dxLayoutGroup7
+      AlignHorz = ahClient
+      LayoutLookAndFeel = LayoutObrigatorio
+      CaptionOptions.Text = 'Cliente*'
+      CaptionOptions.Layout = clTop
+      Control = Edt_Cliente_Fornecedor
+      ControlOptions.OriginalHeight = 21
+      ControlOptions.OriginalWidth = 121
+      ControlOptions.ShowBorder = False
+      Index = 0
+    end
+    object dxLayoutItem14: TdxLayoutItem
+      Parent = dxLayoutGroup7
+      AlignHorz = ahRight
+      Offsets.Top = 15
+      CaptionOptions.Text = 'cxButton1'
+      CaptionOptions.Visible = False
+      Control = btn_CliFor
+      ControlOptions.OriginalHeight = 25
+      ControlOptions.OriginalWidth = 75
+      ControlOptions.ShowBorder = False
+      Index = 1
+    end
+    object dxLayoutItem13: TdxLayoutItem
+      Parent = dxLayoutGroup7
+      AlignHorz = ahRight
+      LayoutLookAndFeel = LayoutObrigatorio
+      CaptionOptions.Text = 'Valor'
+      CaptionOptions.Layout = clTop
+      Control = edt_Valor
+      ControlOptions.OriginalHeight = 21
+      ControlOptions.OriginalWidth = 121
+      ControlOptions.ShowBorder = False
+      Index = 2
+    end
+    object dxLayoutItem15: TdxLayoutItem
+      Parent = dxLayoutGroup8
+      AlignHorz = ahClient
+      LayoutLookAndFeel = LayoutObrigatorio
+      CaptionOptions.Text = 'Empresa*'
+      CaptionOptions.Layout = clTop
+      Control = edt_Empresa
+      ControlOptions.OriginalHeight = 21
+      ControlOptions.OriginalWidth = 121
+      ControlOptions.ShowBorder = False
+      Index = 0
+    end
+    object dxLayoutItem16: TdxLayoutItem
+      Parent = dxLayoutGroup8
+      AlignHorz = ahRight
+      Offsets.Top = 15
+      CaptionOptions.Text = 'cxButton2'
+      CaptionOptions.Visible = False
+      Control = btn_Pesquisar
+      ControlOptions.OriginalHeight = 25
+      ControlOptions.OriginalWidth = 75
+      ControlOptions.ShowBorder = False
+      Index = 1
+    end
+    object dxLayoutItem17: TdxLayoutItem
+      Parent = dxLayoutGroup1
+      AlignHorz = ahRight
+      LayoutLookAndFeel = LayoutObrigatorio
+      CaptionOptions.Text = 'cxRadioGroup1'
+      CaptionOptions.Visible = False
+      CaptionOptions.Layout = clTop
+      Control = rg_Tipo
+      ControlOptions.AutoColor = True
+      ControlOptions.OriginalHeight = 55
+      ControlOptions.OriginalWidth = 106
+      ControlOptions.ShowBorder = False
+      Index = 1
+    end
+  end
+  inherited dxLayoutLookAndFeelList1: TdxLayoutLookAndFeelList
+    Left = 176
+    inherited LayoutObrigatorio: TdxLayoutCxLookAndFeel
+      PixelsPerInch = 96
+    end
+    inherited LayoutPadrao: TdxLayoutStandardLookAndFeel
+      PixelsPerInch = 96
+    end
+  end
+end

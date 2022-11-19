@@ -27,7 +27,7 @@ uses
   dxLayoutcxEditAdapters, dxLayoutControlAdapters, cxClasses,
   dxLayoutLookAndFeels, dxLayoutContainer, cxGroupBox, cxRadioGroup,
   cxDropDownEdit, cxCalendar, cxMaskEdit, cxLabel, cxButtons, cxTextEdit,
-  dxLayoutControl;
+  dxLayoutControl, uBase;
 
 type
   TCad_Empresa = class(TCad_Pessoa)
@@ -107,7 +107,7 @@ end;
 procedure TCad_Empresa.FormShow(Sender: TObject);
 begin
   inherited;
-
+  edt_dataNasc.EditValue := TDate(Now);
   if not inclusao then
     popularInterface;
 end;
@@ -168,61 +168,61 @@ begin
     exit;
   end;
 
-  if not (length(edt_Razao_Social.Text) > 0) then
-  begin
-    ShowMessage('Insira a Razao social da Empresa');
-    edt_Razao_Social.setFocus;
-    exit;
-  end;
+//  if not (length(edt_Razao_Social.Text) > 0) then
+//  begin
+//    ShowMessage('Insira a Razao social da Empresa');
+//    edt_Razao_Social.setFocus;
+//    exit;
+//  end;
 
-  if edt_CPFCNPJ.Text = '  .   .   /    -  ' then
+  if ((edt_CPFCNPJ.Text = '  .   .   /    -  ') or (not TBase.ValidaCnpj(edt_CPFCNPJ.EditValue))) then
   begin
     ShowMessage('Insira o CNPJ da empresa');
     edt_CPFCNPJ.setFocus;
     exit;
   end;
 
-  if not (length(edt_RGIE.Text) > 0) then
-  begin
-    ShowMessage('Insira a Incrição Estadual da empresa');
-    edt_RGIE.setFocus;
-    exit;
-  end;
+//  if not (length(edt_RGIE.Text) > 0) then
+//  begin
+//    ShowMessage('Insira a Incrição Estadual da empresa');
+//    edt_RGIE.setFocus;
+//    exit;
+//  end;
 
-  if not (length(edt_Logradouro.Text) > 0) then
-  begin
-    ShowMessage('Insira o Logradouro da empresa');
-    edt_Logradouro.setFocus;
-    exit;
-  end;
+//  if not (length(edt_Logradouro.Text) > 0) then
+//  begin
+//    ShowMessage('Insira o Logradouro da empresa');
+//    edt_Logradouro.setFocus;
+//    exit;
+//  end;
 
-  if not (length(edt_numero.Text) > 0) then
-  begin
-    ShowMessage('Insira o Numero da empresa');
-    edt_numero.setFocus;
-    exit;
-  end;
+//  if not (length(edt_numero.Text) > 0) then
+//  begin
+//    ShowMessage('Insira o Numero da empresa');
+//    edt_numero.setFocus;
+//    exit;
+//  end;
 
-  if not (length(edt_CEP.Text) > 0) then
-  begin
-    ShowMessage('Insira o CEP da empresa');
-    edt_CEP.setFocus;
-    exit;
-  end;
-
-  if not (length(edt_Bairro.Text) > 0) then
-  begin
-    ShowMessage('Insira o Bairro da empresa');
-     edt_Bairro.setFocus;
-    exit;
-  end;
-
-  if not (length(edt_Tel_Fixo.Text) > 0) then
-  begin
-    ShowMessage('Insira o Telefone Fixo da empresa');
-    edt_Tel_Fixo.setFocus;
-    exit;
-  end;
+//  if not (length(edt_CEP.Text) > 0) then
+//  begin
+//    ShowMessage('Insira o CEP da empresa');
+//    edt_CEP.setFocus;
+//    exit;
+//  end;
+//
+//  if not (length(edt_Bairro.Text) > 0) then
+//  begin
+//    ShowMessage('Insira o Bairro da empresa');
+//     edt_Bairro.setFocus;
+//    exit;
+//  end;
+//
+//  if not (length(edt_Tel_Fixo.Text) > 0) then
+//  begin
+//    ShowMessage('Insira o Telefone Fixo da empresa');
+//    edt_Tel_Fixo.setFocus;
+//    exit;
+//  end;
 
   if not (length(edt_Tel_Cel.Text) > 0) then
   begin

@@ -27,16 +27,22 @@ uses
   dxLayoutcxEditAdapters, dxLayoutControlAdapters, cxClasses,
   dxLayoutLookAndFeels, dxLayoutContainer, cxGroupBox, cxRadioGroup,
   cxDropDownEdit, cxCalendar, cxMaskEdit, cxLabel, cxButtons, cxTextEdit,
-  dxLayoutControl;
+  dxLayoutControl, uBase, uCondicaoPagamento, uCons_CondicaoPagamento;
 
 type
   TCad_Fornecedores = class(TCad_Pessoa)
+    dxLayoutGroup4: TdxLayoutGroup;
+    edt_Condicao: TcxTextEdit;
+    dxLayoutItem9: TdxLayoutItem;
+    btn_PesquisarCondicao: TcxButton;
+    dxLayoutItem10: TdxLayoutItem;
     procedure btn_PesquisarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure Rg_TipoPessoaClick(Sender: TObject);
     procedure btn_SalvarClick(Sender: TObject);
+    procedure btn_PesquisarCondicaoClick(Sender: TObject);
   private
     { Private declarations }
     procedure popularInterface;
@@ -85,7 +91,7 @@ begin
     lbl_RGIE.Caption := 'IE';
     edt_RGIE.Properties.EditMask := '';
     edt_RGIE.Text := '';
-    lbl_dataNasc.Caption := 'Data DE Fundação';
+    lbl_dataNasc.Caption := 'Data Fundação';
     lbl_dataNasc.LookAndFeel := LayoutPadrao;
   end;
 end;
@@ -102,6 +108,20 @@ begin
       edt_uf.text := Fornecedor.Cidade.Estado.uf;
    finally
       FreeAndNil(ConsCidadeForm);
+   end;
+end;
+
+procedure TCad_Fornecedores.btn_PesquisarCondicaoClick(Sender: TObject);
+var ConsCondicaoForm: TCons_CondicaoPagamento;
+begin
+   ConsCondicaoForm := TCons_CondicaoPagamento.Create(nil);
+   try
+      ConsCondicaoForm.Selecao := True;
+      ConsCondicaoForm.ShowModal;
+      Fornecedor.CondicaoPagamento := (ConsCondicaoForm.CondicaoPagamento.clone);
+      edt_Condicao.text := Fornecedor.CondicaoPagamento.Descricao;
+   finally
+      FreeAndNil(ConsCondicaoForm);
    end;
 end;
 
@@ -143,6 +163,7 @@ end;
 procedure TCad_Fornecedores.FormShow(Sender: TObject);
 begin
   inherited;
+  edt_dataNasc.EditValue := TDate(Now);
   if not inclusao then
     popularInterface;
 end;
@@ -167,6 +188,10 @@ begin
   edt_Tel_Cel.Text := Fornecedor.TelCel;
   edt_DataNasc.Date := Fornecedor.DtNasc;
   rg_Sexo.ItemIndex := Integer(Fornecedor.Sexo);
+  edt_Condicao.text := Fornecedor.CondicaoPagamento.Descricao;
+
+  Grupo_Cad.Visible := True;
+  Grupo_Alt.Visible := True;
 
   lbl_Cad.Visible := True;
   lbl_DataCad.Visible := True;
@@ -207,109 +232,116 @@ begin
   result := false;
   if not (length(edt_Nome.Text) > 0) then
   begin
-    ShowMessage('Insira o nome do cliente');
+    ShowMessage('Insira o nome do Fornecedor');
     edt_Nome.setFocus;
     exit;
   end;
 
-  if not (length(edt_Logradouro.Text) > 0) then
-  begin
-    ShowMessage('Insira o Logradouro do cliente');
-    edt_Logradouro.setFocus;
-    exit;
-  end;
-
-  if not (length(edt_numero.Text) > 0) then
-  begin
-    ShowMessage('Insira o Numero do cliente');
-    edt_numero.setFocus;
-    exit;
-  end;
-
-  if not (length(edt_CEP.Text) > 0) then
-  begin
-    ShowMessage('Insira o CEP do cliente');
-    edt_CEP.setFocus;
-    exit;
-  end;
-
-  if not (length(edt_Bairro.Text) > 0) then
-  begin
-    ShowMessage('Insira o Bairro do cliente');
-     edt_Bairro.setFocus;
-    exit;
-  end;
-
-  if not (length(edt_Tel_Fixo.Text) > 0) then
-  begin
-    ShowMessage('Insira o Telefone Fixo do cliente');
-    edt_Tel_Fixo.setFocus;
-    exit;
-  end;
+//  if not (length(edt_Logradouro.Text) > 0) then
+//  begin
+//    ShowMessage('Insira o Logradouro do cliente');
+//    edt_Logradouro.setFocus;
+//    exit;
+//  end;
+//
+//  if not (length(edt_numero.Text) > 0) then
+//  begin
+//    ShowMessage('Insira o Numero do cliente');
+//    edt_numero.setFocus;
+//    exit;
+//  end;
+//
+//  if not (length(edt_CEP.Text) > 0) then
+//  begin
+//    ShowMessage('Insira o CEP do cliente');
+//    edt_CEP.setFocus;
+//    exit;
+//  end;
+//
+//  if not (length(edt_Bairro.Text) > 0) then
+//  begin
+//    ShowMessage('Insira o Bairro do cliente');
+//     edt_Bairro.setFocus;
+//    exit;
+//  end;
+//
+//  if not (length(edt_Tel_Fixo.Text) > 0) then
+//  begin
+//    ShowMessage('Insira o Telefone Fixo do cliente');
+//    edt_Tel_Fixo.setFocus;
+//    exit;
+//  end;
 
   if not (length(edt_Tel_Cel.Text) > 0) then
   begin
-    ShowMessage('Insira o Telefone Celular do cliente');
+    ShowMessage('Insira o Telefone Celular do Fornecedor');
     edt_Tel_Cel.setFocus;
     exit;
   end;
 
   if not (length(edt_Cidade.Text) > 0) then
   begin
-    ShowMessage('Insira a Cidade do cliente');
+    ShowMessage('Insira a Cidade do Fornecedor');
+    btn_Pesquisar.setFocus;
+    exit;
+  end;
+
+  if not (length(edt_Condicao.Text) > 0) then
+  begin
+    ShowMessage('Insira a Condicao de Pagamento do Fornecedor');
     btn_Pesquisar.setFocus;
     exit;
   end;
 
   if rg_TipoPessoa.ItemIndex = 1 then
   begin
-    if not (length(edt_Razao_Social.Text) > 0) then
-    begin
-      ShowMessage('Insira a Razao social do cliente');
-      edt_Razao_Social.setFocus;
-      exit;
-    end;
+//    if not (length(edt_Razao_Social.Text) > 0) then
+//    begin
+//      ShowMessage('Insira a Razao social do cliente');
+//      edt_Razao_Social.setFocus;
+//      exit;
+//    end;
 
-    if edt_CPFCNPJ.Text = '  .   .   /    -  ' then
+    if ((edt_CPFCNPJ.Text = '  .   .   /    -  ') or (not TBase.ValidaCnpj(edt_CPFCNPJ.EditValue))) then
     begin
-      ShowMessage('Insira o CNPJ do cliente');
+      ShowMessage('Insira o CNPJ do Fornecedor');
       edt_CPFCNPJ.setFocus;
       exit;
     end;
 
-    if not (length(edt_RGIE.Text) > 0) then
-    begin
-      ShowMessage('Insira a Incrição Estadual do cliente');
-      edt_RGIE.setFocus;
-      exit;
-    end;
+//    if not (length(edt_RGIE.Text) > 0) then
+//    begin
+//      ShowMessage('Insira a Incrição Estadual do cliente');
+//      edt_RGIE.setFocus;
+//      exit;
+//    end;
   end
   else
   begin
-    if (edt_CPFCNPJ.Text = '   .   .   -  ')then
+    if ((edt_CPFCNPJ.Text = '   .   .   -  ') or (not TBase.ValidaCpf(edt_CPFCNPJ.EditValue))) then
     begin
-      ShowMessage('Insira o CPF do cliente');
+      ShowMessage('Insira o CPF do Fornecedor');
       edt_CPFCNPJ.setFocus;
       exit;
     end;
 
-    if (edt_RGIE.Text = '  .   .   - ') then
-    begin
-      ShowMessage('Insira o RG do cliente');
-      edt_RGIE.setFocus;
-      exit;
-    end;
+//    if (edt_RGIE.Text = '  .   .   - ') then
+//    begin
+//      ShowMessage('Insira o RG do cliente');
+//      edt_RGIE.setFocus;
+//      exit;
+//    end;
 
     if not rg_sexo.ItemIndex >= 0 then
     begin
-      ShowMessage('Insira o Sexo do cliente');
+      ShowMessage('Insira o Sexo do Fornecedor');
       rg_sexo.setFocus;
       exit;
     end;
 
     if (edt_dataNasc.Date > StrToDate('01/01/2004')) or (edt_dataNasc.Date < StrToDate('01/01/1922')) then
     begin
-      ShowMessage('Insira Corretamente a data de Nascimento do cliente');
+      ShowMessage('Insira Corretamente a data de Nascimento do Fornecedor');
       edt_dataNasc.setFocus;
       exit;
     end;

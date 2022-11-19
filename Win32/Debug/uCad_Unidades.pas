@@ -100,17 +100,20 @@ end;
 
 procedure TCad_Unidades.popularInterface;
 begin
-    edt_id.text := inttostr(Unidade.ID);
-    edt_Descricao.text := Unidade.Descricao;
-    edt_Sigla.Text     := Unidade.Sigla;
+  edt_id.text := inttostr(Unidade.ID);
+  edt_Descricao.text := Unidade.Descricao;
+  edt_Sigla.Text     := Unidade.Sigla;
 
-    lbl_Cad.Visible := True;
-    lbl_DataCad.Visible := True;
-    lbl_DataCad.Caption := Unidade.User_Insert + '-' + DatetoStr(Unidade.DataCad);
+  Grupo_Cad.Visible := True;
+  Grupo_Alt.Visible := True;
 
-    lbl_DataAlt.Caption := Unidade.User_Update + '-' + DatetoStr(Unidade.DataUltAlt);
-    Lbl_Alt.Visible := True;
-    lbl_DataAlt.Visible := True;
+  lbl_Cad.Visible := True;
+  lbl_DataCad.Visible := True;
+  lbl_DataCad.Caption := Unidade.User_Insert + '-' + DatetoStr(Unidade.DataCad);
+
+  lbl_DataAlt.Caption := Unidade.User_Update + '-' + DatetoStr(Unidade.DataUltAlt);
+  Lbl_Alt.Visible := True;
+  lbl_DataAlt.Visible := True;
 end;
 
 procedure TCad_Unidades.PopularObjeto;
