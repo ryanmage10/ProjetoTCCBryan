@@ -1,0 +1,9 @@
+unit uContasPagar;
+
+interface
+
+uses
+  uBase, uFormaPagamento;
+implementation
+
+end.

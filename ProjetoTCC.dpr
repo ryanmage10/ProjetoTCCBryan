@@ -112,7 +112,10 @@ uses
   uCad_Unidades in 'Win32\Debug\uCad_Unidades.pas' {Cad_Unidades},
   uCad_Produtos in 'Win32\Debug\uCad_Produtos.pas' {Cad_Produtos},
   uItensCompraFactory in 'Win32\Debug\uItensCompraFactory.pas',
-  uItensCompraDao in 'Win32\Debug\uItensCompraDao.pas';
+  uItensCompraDao in 'Win32\Debug\uItensCompraDao.pas',
+  uContasPagar in 'Win32\Debug\uContasPagar.pas',
+  uContasPagarFactory in 'Win32\Debug\uContasPagarFactory.pas',
+  uContasPagarDao in 'Win32\Debug\uContasPagarDao.pas';
 
 {$R *.res}
 

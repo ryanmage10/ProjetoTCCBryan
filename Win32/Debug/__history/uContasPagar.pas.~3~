@@ -1,0 +1,53 @@
+unit uContasPagar;
+
+interface
+
+uses
+  uBase, uFormaPagamento;
+
+  type
+  TTipoConta = (TpIndefinido = -1, TpPagar = 0, TpReceber = 1);
+
+  TContasPagar = class(TBase)
+  protected
+    FSeq: Integer;
+    Fid_compra: integer;
+    FTipo: TTipoConta;
+    FValor: Currency;
+    FData_Venc: TDateTime;
+    FFormaPagamento: TFormaPagamento;
+
+    function GetSeq: Integer;
+    function Getid_compra: integer;
+    function GetTipo: TTipoConta;
+    function GetValor: Currency;
+    function GetData_Venc: TDateTime;
+    function GetFormaPagamento: TFormaPagamento;
+
+    procedure SetSeq(Value: Integer);
+    procedure Setid_compra(Value: integer);
+    procedure SetTipo(Value: TTipoConta);
+    procedure SetValor(Value: Currency);
+    procedure SetData_Venc(Value: TDateTime);
+    procedure SetFormaPagamento(Value: TFormaPagamento);
+
+  public
+    property Seq: Integer read GetSeq write SetSeq;
+    property id_compra: integer read Getid_compra write Setid_compra;
+    property Tipo: TTipoConta read GetTipo write SetTipo;
+    property Valor: Currency read GetValor write SetValor;
+    property Data_Venc: TDateTime read GetData_Venc write SetData_Venc;
+    property FormaPagamento: TFormaPagamento read GetFormaPagamento write SetFormaPagamento;
+
+    constructor Create;
+    Destructor Free;
+    function clone: TParcelaModelo;
+    procedure CopiarDados(Value: TContasPagar);
+    procedure LimparDados;
+  end;
+
+
+
+implementation
+
+end.

@@ -4,7 +4,7 @@ interface
 
 uses
   uBase, uUnidades, System.Generics.Collections, System.SysUtils, uFornecedores,
-  uItensCompra, uCondicaoPagamento;
+  uItensCompra, uCondicaoPagamento, uEmpresas, uContasPagar;
 
 type
   TCompras = class(TBase)
@@ -21,6 +21,8 @@ type
       FPedagio: Currency;
       FDespesas: Currency;
       FTotal: Currency;
+      FEmpresa: TEmpresas;
+      FContasPagar: TObjectList<TContasPagar>;
 
       function GetModelo: string;
       function GetSerie: string;
@@ -28,12 +30,14 @@ type
       function GetFornecedor : TFornecedores;
       function GetDataEmissao: TDateTime;
       function GetDataChegada: TDateTime;
-      function GetListaProdutos: TObjectList<TItensCompra>;
+      function GetListaItens: TObjectList<TItensCompra>;
       function GetCondicaoPagamento: TCondicaoPagamento;
       function GetFrete: Currency;
       function GetPedagio: Currency;
       function GetDespesas: Currency;
       function GetTotal: Currency;
+      function GetEmpresa: TEmpresas;
+      function GetContasPagar: TObjectList<TContasPagar>;
 
       procedure SetModelo(Value: string);
       procedure SetSerie(Value: string);
@@ -41,12 +45,13 @@ type
       procedure SetFornecedor(Value: TFornecedores);
       procedure SetDataEmissao(Value: TDateTime);
       procedure SetDataChegada(Value: TDateTime);
-      procedure SetListaItens(Value: TObjectList<TProdutos>);
+      procedure SetListaItens(Value: TObjectList<TItensCompra>);
       procedure SetCondicaoPagamento(Value: TCondicaoPagamento);
       procedure SetFrete(Value: Currency);
       procedure SetPedagio(Value: Currency);
       procedure SetDespesas(Value: Currency);
       procedure SetTotal(Value: Currency);
+      procedure SetEmpresa(Value: TEmpresas);
 
   public
     property Modelo: string read GetModelo Write SetModelo;
@@ -56,12 +61,13 @@ type
     property Fornecedor : TFornecedores read GetFornecedor Write SetFornecedor;
     property DataEmissao: TDateTime read GetDataEmissao Write SetDataEmissao;
     property DataChegada: TDateTime read GetDataChegada Write SetDataChegada;
-    property ListaItens: TObjectList<TItensCompra> read GetListaProdutos Write SetListaProdutos;
+    property ListaItens: TObjectList<TItensCompra> read GetListaItens Write SetListaItens;
     property CondicaoPagamento: TCondicaoPagamento read GetCondicaoPagamento Write SetCondicaoPagamento;
     property Frete: Currency read GetFrete Write SetFrete;
     property Pedagio: Currency read GetPedagio Write SetPedagio;
     property Despesas: Currency read GetDespesas Write SetDespesas;
     property Total: Currency read GetTotal Write SetTotal;
+    property Empresa: TEmpresas read Get
 
     constructor Create;
     Destructor Free;
@@ -86,27 +92,31 @@ begin
   inherited CopiarDados(Value);
   Modelo := Value.Modelo;
   Serie := Value.Serie;
-  Numero :=Value.Numero;
+  Numero := Value.Numero;
   Fornecedor.CopiarDados(Value.Fornecedor);
-  DataEmissao := now;
-  DataChegada := now;
-  ListaProdutos.Clear;
-  CondicaoPagamento.LimparDados;
-  Frete := 0;
-  Pedagio := 0;
-  Despesas := 0;
-  Total := 0;
+  DataEmissao := Value.DataEmissao;
+  DataChegada := Value.DataChegada;
+  ListaItens := Value.ListaItens;
+  CondicaoPagamento.CopiarDados(Value.CondicaoPagamento);
+  Frete := Value.Frete;
+  Pedagio := Value.Pedagio;
+  Despesas := Value.Despesas;
+  Total := Value.Total;
 end;
 
 constructor TCompras.Create;
 begin
   Inherited;
-
+  FFornecedor := TFornecedores.Create;
+  FListaItens := TObjectList<TItensCompra>.Create;
+  FCondicaoPagamento := TCondicaoPagamento.Create;
 end;
 
 destructor TCompras.Free;
 begin
-
+  FFornecedor.Free;
+  FListaItens.Free;
+  FCondicaoPagamento.Free;
   inherited;
 end;
 
@@ -130,6 +140,11 @@ begin
   result := FDespesas;
 end;
 
+function TCompras.GetEmpresa: TEmpresas;
+begin
+  result := FEmpresa;
+end;
+
 function TCompras.GetFornecedor: TFornecedores;
 begin
   result := FFornecedor;
@@ -140,9 +155,9 @@ begin
   result := FFrete;
 end;
 
-function TCompras.GetListaProdutos: TObjectList<TProdutos>;
+function TCompras.GetListaItens: TObjectList<TItensCompra>;
 begin
-  result := FListaProdutos;
+  result := FListaItens;
 end;
 
 function TCompras.GetModelo: string;
@@ -179,7 +194,7 @@ begin
   FFornecedor.LimparDados;
   FDataEmissao := now;
   FDataChegada := now;
-  FListaProdutos.Clear;
+  FListaItens.Clear;
   FCondicaoPagamento.LimparDados;
   FFrete := 0;
   FPedagio := 0;
@@ -208,6 +223,11 @@ begin
    FDespesas := Value;
 end;
 
+procedure TCompras.SetEmpresa(Value: TEmpresas);
+begin
+
+end;
+
 procedure TCompras.SetFornecedor(Value: TFornecedores);
 begin
    FFornecedor.CopiarDados(Value);
@@ -218,9 +238,9 @@ begin
    FFrete := Value;
 end;
 
-procedure TCompras.SetListaProdutos(Value: TObjectList<TProdutos>);
+procedure TCompras.SetListaItens(Value: TObjectList<TItensCompra>);
 begin
-   FListaProdutos := Value;
+   FListaItens := Value;
 end;
 
 procedure TCompras.SetModelo(Value: string);
@@ -249,3 +269,4 @@ begin
 end;
 
 end.
+

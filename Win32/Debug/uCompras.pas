@@ -4,7 +4,7 @@ interface
 
 uses
   uBase, uUnidades, System.Generics.Collections, System.SysUtils, uFornecedores,
-  uItensCompra, uCondicaoPagamento, uEmpresas;
+  uItensCompra, uCondicaoPagamento, uEmpresas, uContasPagar;
 
 type
   TCompras = class(TBase)
@@ -22,6 +22,7 @@ type
       FDespesas: Currency;
       FTotal: Currency;
       FEmpresa: TEmpresas;
+      FContasPagar: TObjectList<TContasPagar>;
 
       function GetModelo: string;
       function GetSerie: string;
@@ -36,6 +37,7 @@ type
       function GetDespesas: Currency;
       function GetTotal: Currency;
       function GetEmpresa: TEmpresas;
+      function GetContasPagar: TObjectList<TContasPagar>;
 
       procedure SetModelo(Value: string);
       procedure SetSerie(Value: string);
@@ -50,6 +52,7 @@ type
       procedure SetDespesas(Value: Currency);
       procedure SetTotal(Value: Currency);
       procedure SetEmpresa(Value: TEmpresas);
+      procedure SetContasPagar(Value: TObjectList<TContasPagar>);
 
   public
     property Modelo: string read GetModelo Write SetModelo;
@@ -65,7 +68,8 @@ type
     property Pedagio: Currency read GetPedagio Write SetPedagio;
     property Despesas: Currency read GetDespesas Write SetDespesas;
     property Total: Currency read GetTotal Write SetTotal;
-    property Empresa: TEmpresas read Get
+    property Empresa: TEmpresas read GetEmpresa write SetEmpresa;
+    property ContasPagar: TObjectList<TContasPagar> read GetContasPagar write SetContasPagar;
 
     constructor Create;
     Destructor Free;
@@ -100,6 +104,8 @@ begin
   Pedagio := Value.Pedagio;
   Despesas := Value.Despesas;
   Total := Value.Total;
+  Empresa := Value.Empresa;
+  ContasPagar := Value.ContasPagar;
 end;
 
 constructor TCompras.Create;
@@ -108,6 +114,8 @@ begin
   FFornecedor := TFornecedores.Create;
   FListaItens := TObjectList<TItensCompra>.Create;
   FCondicaoPagamento := TCondicaoPagamento.Create;
+  FEmpresa := TEmpresa.Create;
+  FContasPagar := TObjectList<TContasPagar>.Create;
 end;
 
 destructor TCompras.Free;
@@ -115,12 +123,19 @@ begin
   FFornecedor.Free;
   FListaItens.Free;
   FCondicaoPagamento.Free;
+  FEmpresa.Free;
+  FContasPagar.Free;
   inherited;
 end;
 
 function TCompras.GetCondicaoPagamento: TCondicaoPagamento;
 begin
   result := FCondicaoPagamento;
+end;
+
+function TCompras.GetContasPagar: TObjectList<TContasPagar>;
+begin
+  result := FContasPagar;
 end;
 
 function TCompras.GetDataChegada: TDateTime;
@@ -198,12 +213,17 @@ begin
   FPedagio := 0;
   FDespesas := 0;
   FTotal := 0;
+  FContasPagar.Clear;
 end;
-
 
 procedure TCompras.SetCondicaoPagamento(Value: TCondicaoPagamento);
 begin
    FCondicaoPagamento.CopiarDados(Value);
+end;
+
+procedure TCompras.SetContasPagar(Value: TObjectList<TContasPagar>);
+begin
+   FContasPagar := Value;
 end;
 
 procedure TCompras.SetDataChegada(Value: TDateTime);
@@ -223,7 +243,7 @@ end;
 
 procedure TCompras.SetEmpresa(Value: TEmpresas);
 begin
-
+   FEmpresa.copiarDados(Value);
 end;
 
 procedure TCompras.SetFornecedor(Value: TFornecedores);

@@ -312,6 +312,9 @@
         </DCCReference>
         <DCCReference Include="Win32\Debug\uItensCompraFactory.pas"/>
         <DCCReference Include="Win32\Debug\uItensCompraDao.pas"/>
+        <DCCReference Include="Win32\Debug\uContasPagar.pas"/>
+        <DCCReference Include="Win32\Debug\uContasPagarFactory.pas"/>
+        <DCCReference Include="Win32\Debug\uContasPagarDao.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
