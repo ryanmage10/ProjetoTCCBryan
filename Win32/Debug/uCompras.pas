@@ -4,7 +4,7 @@ interface
 
 uses
   uBase, uUnidades, System.Generics.Collections, System.SysUtils, uFornecedores,
-  uItensCompra, uCondicaoPagamento;
+  uItensCompra, uCondicaoPagamento, uEmpresas;
 
 type
   TCompras = class(TBase)
@@ -21,6 +21,7 @@ type
       FPedagio: Currency;
       FDespesas: Currency;
       FTotal: Currency;
+      FEmpresa: TEmpresas;
 
       function GetModelo: string;
       function GetSerie: string;
@@ -34,6 +35,7 @@ type
       function GetPedagio: Currency;
       function GetDespesas: Currency;
       function GetTotal: Currency;
+      function GetEmpresa: TEmpresas;
 
       procedure SetModelo(Value: string);
       procedure SetSerie(Value: string);
@@ -47,6 +49,7 @@ type
       procedure SetPedagio(Value: Currency);
       procedure SetDespesas(Value: Currency);
       procedure SetTotal(Value: Currency);
+      procedure SetEmpresa(Value: TEmpresas);
 
   public
     property Modelo: string read GetModelo Write SetModelo;
@@ -62,6 +65,7 @@ type
     property Pedagio: Currency read GetPedagio Write SetPedagio;
     property Despesas: Currency read GetDespesas Write SetDespesas;
     property Total: Currency read GetTotal Write SetTotal;
+    property Empresa: TEmpresas read Get
 
     constructor Create;
     Destructor Free;
@@ -132,6 +136,11 @@ end;
 function TCompras.GetDespesas: Currency;
 begin
   result := FDespesas;
+end;
+
+function TCompras.GetEmpresa: TEmpresas;
+begin
+  result := FEmpresa;
 end;
 
 function TCompras.GetFornecedor: TFornecedores;
@@ -210,6 +219,11 @@ end;
 procedure TCompras.SetDespesas(Value: Currency);
 begin
    FDespesas := Value;
+end;
+
+procedure TCompras.SetEmpresa(Value: TEmpresas);
+begin
+
 end;
 
 procedure TCompras.SetFornecedor(Value: TFornecedores);
